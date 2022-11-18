@@ -15,7 +15,8 @@ import FilterSelection from '../src/core/screens/catalog/pages/products/selectio
 import Drawer from '../src/core/base/components/drawer';
 import Login from '../src/core/screens/customer/pages/login';
 import ProductDetail from '../src/core/screens/catalog/pages/product/product';
-import Cart from '../src/core/screens/checkout/pages/cart';
+// import Cart from '../src/core/screens/checkout/pages/cart';
+import Cart from '../src/customize/checkout/pages/cart';
 import Checkout from '../src/core/screens/checkout/pages/checkout';
 import CheckoutWebView from '../src/core/screens/checkout/pages/webview';
 import Thankyou from '../src/core/screens/checkout/pages/thankyou';

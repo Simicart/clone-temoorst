@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, Button, View, Input, Item, Toast, Accordion, Icon } from 'native-base';
-import { TouchableOpacity } from 'react-native'
+import { Text, Button, View, Item, Toast, Accordion, Icon } from 'native-base';
+import { TextInput, TouchableOpacity } from 'react-native'
 import Identify from '@helper/Identify';
 import NewConnection from '@base/network/NewConnection';
 import Events from '@helper/config/events';
@@ -12,7 +12,6 @@ class Coupon extends React.Component {
     constructor(props) {
         super(props)
         this.parent = this.props.parent;
-
         if (this.props.is_cart) {
             couponCode = this.parent.props.data.total.coupon_code ? this.parent.props.data.total.coupon_code : '';
         } else {
@@ -83,13 +82,16 @@ class Coupon extends React.Component {
                     })
                 }}
             >
-                <Text style={{ fontFamily: material.fontBold }}>
+                <Text style={{}}>
                     {item.title}
                 </Text>
-                {expanded
-                    ? <Icon style={{ fontSize: 18, color: '#c3c3c3' }} name="ios-arrow-up" />
-                    : <Icon style={{ fontSize: 18, color: '#c3c3c3' }} name="ios-arrow-down" />}
+
             </TouchableOpacity>
+            //     {
+            //     expanded
+            //         ? <Icon style={{ fontSize: 18, color: '#c3c3c3' }} name="ios-arrow-up" />
+            //         : <Icon style={{ fontSize: 18, color: '#c3c3c3' }} name="ios-arrow-down" />
+            // }
         );
     }
     _renderContent(show) {
@@ -105,16 +107,28 @@ class Coupon extends React.Component {
         if (couponCode !== '') {
             this.state.coupon = couponCode;
         }
-        if (show) {
-            return (
-                <View style={{ flex: 3, flexDirection: 'row', paddingTop: 15 }}>
-                    <Item style={{ flex: 2, marginRight: 20, height: 45, borderBottomWidth: 2 }}>
-                        <Input disabled={hasCouponCode} style={{ paddingStart: 10 }} placeholder={Identify.__('Enter a coupon code')} placeholderTextColor={Identify.hexToRgb(material.textColor, 0.65)} defaultValue={this.state.coupon} onChangeText={(code) => { this.couponChange(code) }} />
-                    </Item>
-                    <Button onPress={() => { this.couponHandle(hasCouponCode) }}><Text style={{ textAlign: 'center' }}>{hasCouponCode ? Identify.__('Remove') : Identify.__('Apply')}</Text></Button>
+        // if (show) {
+        //     return (
+        //         <View style={{ flex: 3, flexDirection: 'row', paddingTop: 15 }}>
+        //             <Item style={{ flex: 2, marginRight: 20, height: 45, borderBottomWidth: 2 }}>
+        //                 <TextInput disabled={hasCouponCode} style={{ paddingStart: 10 }} placeholder={Identify.__('Enter a coupon code')} placeholderTextColor={Identify.hexToRgb(material.textColor, 0.65)} defaultValue={this.state.coupon} onChangeText={(code) => { this.couponChange(code) }} />
+        //             </Item>
+        //             <Button onPress={() => { this.couponHandle(hasCouponCode) }}><Text style={{ textAlign: 'center' }}>{hasCouponCode ? Identify.__('Remove') : Identify.__('Apply')}</Text></Button>
+        //         </View>
+        //     );
+        // }
+        return (
+            <View style={{ flex: 1, flexDirection: 'row', paddingTop: 15, }}>
+                <View style={{ width: '70%', paddingRight: 20 }}>
+                    <TextInput disabled={hasCouponCode} style={{ flex: 1, padding: 10, height: 50, borderColor: '#e0e0e0', borderWidth: 1, paddingRight: 20, borderRadius: 8 }} placeholder={Identify.__('Enter a coupon code')} placeholderTextColor={Identify.hexToRgb(material.textColor, 0.65)} defaultValue={this.state.coupon} onChangeText={(code) => { this.couponChange(code) }} />
                 </View>
-            );
-        }
+                <TouchableOpacity style={{ width: '30%' }} onPress={() => { this.couponHandle(hasCouponCode) }}>
+                    <View style={{ width: '100%', height: 50, borderWidth: 1, borderRadius: 8, borderColor: Identify.theme.button_background, justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ textAlign: 'center', color: Identify.theme.button_background, fontWeight: 'bold' }}>{hasCouponCode ? Identify.__('Remove') : Identify.__('Apply')}</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        );
     }
 
     render() {
@@ -127,7 +141,8 @@ class Coupon extends React.Component {
                     marginBottom: 10
                 }}
             >
-                {this._renderHeader({ title: Identify.__('Coupon Code').toUpperCase() }, this.state.useCouponCode)}
+
+                {this._renderHeader({ title: Identify.__('Promo Code') }, this.state.useCouponCode)}
                 {this._renderContent(this.state.useCouponCode)}
             </View>
         )
