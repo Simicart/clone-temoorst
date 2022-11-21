@@ -6,7 +6,7 @@ export default {
         login: require('../../etc/layout/plugins/simi_fblogin_40/login').default
     },
     simi_simivideo_40: {
-      product: require('../../etc/layout/plugins/simi_simivideo_40/product').default,
+        product: require('../../etc/layout/plugins/simi_simivideo_40/product').default,
     },
     simi_addressautofill_40: {
         address: require('../../etc/layout/plugins/simi_addressautofill_40/address').default,
@@ -28,5 +28,8 @@ export default {
     },
     simi_simiproductreview_40: {
         product: require('../../etc/layout/plugins/simi_simiproductreview_40/product').default
+    },
+    customize: {
+        cart: require('./customize/cart').default,
     }
 }
