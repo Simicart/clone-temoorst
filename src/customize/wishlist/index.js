@@ -176,7 +176,7 @@ class Wishlist extends SimiPageComponent {
                 this.openProduct(item)
             }}>
                 <Image resizeMode="contain" source={{ uri: item.product_image }} style={styles.imageListItem} />
-                {!item.stock_status && <Text style={styles.outOfStock}>{Identify.__('Out of stock')}</Text>}
+                {/* {!item.stock_status && <Text style={styles.outOfStock}>{Identify.__('Out of stock')}</Text>} */}
             </TouchableOpacity>
         )
     }
@@ -250,35 +250,35 @@ class Wishlist extends SimiPageComponent {
         )
     }
 
-    renderItem(item) {
-        return (
-            <TouchableOpacity
-                onPress={() => { this.openProduct(item) }}
-                onPressIn={() => { this.onPressIn() }}
-                onPressOut={() => { this.onPressOut() }}
-            >
-                <Animated.View key={item.wishlist_item_id} style={{
-                    borderRadius: 12, shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 1,
-                    },
-                    shadowOpacity: 0.20,
-                    shadowRadius: 1.41,
-                    borderColor: "#e0e0e0",
-                    borderWidth: 1,
-                    elevation: 2,
-                    marginBottom: 10,
-                    transform: [{ scale: this.scaleAnimation }],
-                }}>
-                    <View style={[styles.itemView, { borderRadius: 12 }]}>
-                        {this.renderWishListItemImage(item)}
-                        {this.renderItemRight(item)}
-                    </View>
-                </Animated.View>
-            </TouchableOpacity>
-        );
-    }
+    // renderItem(item) {
+    //     return (
+    //         <TouchableOpacity
+    //             onPress={() => { this.openProduct(item) }}
+    //             onPressIn={() => { this.onPressIn() }}
+    //             onPressOut={() => { this.onPressOut() }}
+    //         >
+    //             <Animated.View key={item.wishlist_item_id} style={{
+    //                 borderRadius: 12, shadowColor: "#000",
+    //                 shadowOffset: {
+    //                     width: 0,
+    //                     height: 1,
+    //                 },
+    //                 shadowOpacity: 0.20,
+    //                 shadowRadius: 1.41,
+    //                 borderColor: "#e0e0e0",
+    //                 borderWidth: 1,
+    //                 elevation: 2,
+    //                 marginBottom: 10,
+    //                 transform: [{ scale: this.scaleAnimation }],
+    //             }}>
+    //                 <View style={[styles.itemView, { borderRadius: 12 }]}>
+    //                     {this.renderWishListItemImage(item)}
+    //                     {this.renderItemRight(item)}
+    //                 </View>
+    //             </Animated.View>
+    //         </TouchableOpacity>
+    //     );
+    // }
 
     loadMore = () => {
         if (this.offset + this.limit < this.state.data.total && !this.isLoadingMore) {
@@ -308,9 +308,6 @@ class Wishlist extends SimiPageComponent {
                     {...this.generatePropsToFlatlist()}
                     keyExtractor={(item) => item.wishlist_item_id}
                     renderItem={({ item }) =>
-                        // <View>
-                        //     {this.renderItem(item)}
-                        // </View>
                         <WishlistItem item={item} renderWishListItemImage={this.renderWishListItemImage(item)} renderItemRight={this.renderItemRight(item)} />
                     }
                 />

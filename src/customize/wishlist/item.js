@@ -30,16 +30,20 @@ const WishlistItem = (props) => {
                 onPressOut={onPressOut}
             >
                 <Animated.View key={props.item.wishlist_item_id} style={{
-                    borderRadius: 12, shadowColor: "#000",
+                    borderRadius: 12,
+                    shadowColor: "#000",
                     shadowOffset: {
                         width: 0,
-                        height: 1,
+                        height: 0.5,
                     },
                     shadowOpacity: 0.20,
                     shadowRadius: 1.41,
+
+                    elevation: 2,
+
                     borderColor: "#e0e0e0",
                     borderWidth: 1,
-                    elevation: 2,
+
                     marginBottom: 15,
                     transform: [{ scale: scaleAnimation }],
 
