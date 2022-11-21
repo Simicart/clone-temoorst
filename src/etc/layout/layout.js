@@ -32,5 +32,6 @@ export default {
     customize: {
         cart: require('./customize/cart').default,
         standard: require('./customize/standard').default,
+        header: require('./customize/header').default,
     }
 }
