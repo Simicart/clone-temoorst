@@ -11,10 +11,10 @@ class SimiCart {
   // static fullSplash = "FULL_SPLASH";
   // static colorSplash = "COLOR_SPLASH";
 
-  static merchant_url = "https://pwa-commerce.com/";
+  static merchant_url = "https://max24311.pwa-commerce.com/";
   static merchant_authorization = "kVg8CTFUroHRJ6aHgegk7hfsyWaamF";
   static simicart_url = "https://www.simicart.com/appdashboard/rest/app_configs/";
-  static simicart_authorization = "FHBVPdOv7gUP7DWhlcwCwDTM5rIgC4VhMxcCK18";
+  static simicart_authorization = "sLVQgI2OCZOiqXDwKVUsVDvxubbGfGw8VRzm17b";
   static isDemo = "1";
   static appVersion = '1.0';
   static appID = "com.simicart";
