@@ -22,6 +22,8 @@
     "color": "^3.0.0",
     "compare-versions": "^4.1.2",
     "create-react-class": "^15.6.3",
+    "lottie-ios": "^3.1.8",
+    "lottie-react-native": "^4.0.3",
     "metro-react-native-babel-preset": "^0.66.2",
     "native-base": "^2.13.8",
     "react": "16.8.6",

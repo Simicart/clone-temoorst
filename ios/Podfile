@@ -26,7 +26,7 @@ target 'SimiCart' do
     pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
     pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
     pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-
+    pod 'lottie-ios', :path => '../node_modules/lottie-ios'
     pod 'GoogleUtilities', '6.6.0'
   pod 'Firebase/Core', '~> 6.13.0'
   pod 'Firebase/Messaging', '~> 6.13.0'

@@ -97,8 +97,8 @@
 	<string>Permission for get current device location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Permission for get current device location</string>
-  <key>NSUserTrackingUsageDescription</key>
-  <string>This will help us to customize better shopping experience for you</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This will help us to customize better shopping experience for you</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>
