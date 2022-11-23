@@ -15,6 +15,7 @@ import OutStockLabel from '../product/outStockLabel';
 import material from '@theme/variables/material';
 import AppStorage from '@helper/storage';
 const width = Dimensions.get('window').width;
+import AddWishlist from '@customize/wishlist/addWishlist'
 class VerticalProductItem extends SimiComponent {
     constructor(props) {
         super(props)
@@ -180,8 +181,23 @@ class VerticalProductItem extends SimiComponent {
                 padding: 10,
                 margin: 5,
                 borderRadius: 16,
-
+                position: 'relative'
             }}>
+                <View style={{
+                    backgroundColor: 'white', position: "absolute", top: 5,
+                    right: 5, padding: 5, borderRadius: 8, borderColor: '#e0e0e0', borderWidth: 1, zIndex: 99,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 0.5,
+                    },
+                    shadowOpacity: 0.20,
+                    shadowRadius: 1.41,
+
+                    elevation: 2,
+                }}>
+                    <AddWishlist product={this.props.product} />
+                </View>
                 {this.renderImage()}
                 {this.renderName()}
                 {/* <View style={{ flexDirection: this.props.showList ? 'row' : 'column', paddingLeft: this.props.showList ? 10 : 5, paddingRight: this.props.showList ? 10 : 5, paddingBottom: this.props.showList ? 10 : 5 }}>
