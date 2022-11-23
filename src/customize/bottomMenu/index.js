@@ -48,6 +48,15 @@ const BottomMenu = (props) => {
         }
     }, [])
     useEffect(() => {
+        if (props.navigation.state.routeName == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
+            NavigationManager.openPage(props.navigation, "Login");
+        }
+        if (props.navigation.state.routeName !== props.bottomAction) {
+            console.log("props.navigation.state.routeName: ", props.navigation.state.routeName);
+            props.storeData('bottomAction', props.navigation.state.routeName);
+        }
+    }, [props.navigation.state.routeName])
+    useEffect(() => {
         if (!listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
             setCheck(true);
         }
@@ -77,6 +86,7 @@ const BottomMenu = (props) => {
                                 key={index}
                                 routeName={props.navigation.state.routeName}
                                 navigation={props.navigation}
+                                customer_data={props.customer_data}
                             />
                         ))
                     }
