@@ -41,7 +41,8 @@ const initialState = {
         show: false,
         urlApp: ''
     },
-    currentURL: ''
+    currentURL: '',
+    bottomAction: 'Home'
 }
 
 export function redux_data(state = initialState, action) {
@@ -114,7 +115,7 @@ function processSingleAction(state, action) {
             return {
                 ...state, ...{
                     'quoteitems': {},
-                    'order_review_data' : {},
+                    'order_review_data': {},
                     'orders_onepage': {},
                     'checkout_steps': {
                         'selected_shipping_address': false,
@@ -160,6 +161,8 @@ function processSingleAction(state, action) {
             return { ...state, ...{ 'showUpdate': action.data } };
         case 'currentURL':
             return { ...state, ...{ 'currentURL': action.data } };
+        case 'bottomAction':
+            return { ...state, ...{ 'bottomAction': action.data } };
         default:
             let customData = {};
             customData[action.type] = action.data;

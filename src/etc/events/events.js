@@ -18,5 +18,6 @@ export default {
     simi_loyalty_40: require('../../etc/events/plugins/simi_loyalty_40/events').default,
     simi_simiproductreview_40: require('../../etc/events/plugins/simi_simiproductreview_40/events').default,
     simi_simiavenue_40: require('./plugins/simi_simiavenue_40/events').default,
-    simi_simipayfort_40: require('./plugins/simi_simipayfort_40/events').default
+    simi_simipayfort_40: require('./plugins/simi_simipayfort_40/events').default,
+    customize: require('./customize/events').default,
 }
