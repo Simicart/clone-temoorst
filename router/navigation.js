@@ -17,7 +17,10 @@ import Filter from '../src/core/screens/catalog/pages/products/filter';
 import FilterSelection from '../src/core/screens/catalog/pages/products/selection';
 // import Drawer from '../src/core/base/components/drawer';
 import Drawer from '../src/customize/drawer';
-import Login from '../src/core/screens/customer/pages/login';
+// import Login from '../src/core/screens/customer/pages/login';
+import Login from '../src/customize/customer/pages/login';
+
+
 import ProductDetail from '../src/core/screens/catalog/pages/product/product';
 // import Cart from '../src/core/screens/checkout/pages/cart';
 import Cart from '../src/customize/checkout/pages/cart';
@@ -67,7 +70,8 @@ import ReviewDetail from '../src/plugins/review/reviewDetail';
 import ReviewPage from '../src/plugins/review/reviewPage';
 import AddReview from '../src/plugins/review/addreview/addReview';
 
-import ForgotPassword from '../src/core/screens/customer/pages/forgotPassword';
+// import ForgotPassword from '../src/core/screens/customer/pages/forgotPassword';
+import ForgotPassword from '../src/customize/customer/pages/forgotPassword';
 
 //payfort
 import SimiPayfort from '../src/plugins/payfort';
