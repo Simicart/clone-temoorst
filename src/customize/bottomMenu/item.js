@@ -12,9 +12,9 @@ const Item = (props) => {
             toValue: 15,
             duration: 200
         }).start();
-        if (props.bottomAction == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
-            NavigationManager.openPage(props.navigation, "Login");
-        }
+        // if (props.bottomAction == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
+        //     NavigationManager.openPage(props.navigation, "Login");
+        // }
     }, [props.bottomAction]);
     return (
         <TouchableOpacity
