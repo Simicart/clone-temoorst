@@ -1,21 +1,31 @@
 import { View, Text, TouchableOpacity, Animated, Image } from 'react-native'
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import material from "@theme/variables/material";
 import NavigationManager from '@helper/NavigationManager';
 import { Badge } from 'native-base'
+import { connect } from 'react-redux';
 const Item = (props) => {
+    console.log("active in Item: ", props);
+    const padding = useRef(new Animated.Value(5)).current;
+    useEffect(() => {
+        Animated.timing(padding, {
+            toValue: 15,
+            duration: 200
+        }).start();
+        if (props.bottomAction == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
+            NavigationManager.openPage(props.navigation, "Login");
+        }
+    }, [props.bottomAction]);
     return (
         <TouchableOpacity
             onPress={() => {
-                console.log("props in Item onPress: ", props);
-                console.log("active onPress: ", props?.data?.route_name);
-                props.setActive(props?.data?.route_name);
+                props.storeData('bottomAction', props?.data?.route_name);
                 NavigationManager.openRootPage(props?.navigation, props?.data?.route_name, {});
             }}
         >
             <View style={{ paddingHorizontal: 10 }}>
                 {
-                    props?.routeName === props?.data?.route_name ? (
+                    props?.bottomAction === props?.data?.route_name ? (
                         <View style={{}}>
                             <Animated.View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#ff9800', padding: 5, paddingHorizontal: props?.padding, borderRadius: 8 }}>
                                 <View style={{ marginRight: 10 }}>
@@ -43,4 +53,18 @@ const Item = (props) => {
     )
 }
 
-export default Item
+const mapStateToProps = (state) => {
+    return {
+        bottomAction: state.redux_data.bottomAction,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Item); 

@@ -34,20 +34,6 @@ const listBottomButtons = [
 
 const BottomMenu = (props) => {
     const [check, setCheck] = useState(false);
-    const [active, setActive] = useState('Home');
-    const padding = useRef(new Animated.Value(5)).current;
-    useEffect(() => {
-        if (!listBottomButtons?.map((item) => item.route_name).includes(props.navigation.state.routeName)) {
-            setCheck(true);
-        }
-        Animated.timing(padding, {
-            toValue: 15,
-            duration: 200
-        }).start();
-        if (props.navigation.state.routeName == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
-            NavigationManager.openPage(props.navigation, "Login");
-        }
-    }, [props.navigation.state.routeName]);
 
     useEffect(() => {
         if (!Identify.isEmpty(props.customer_data)) {
@@ -61,17 +47,11 @@ const BottomMenu = (props) => {
             })
         }
     }, [])
-
-    // useEffect(() => {
-    //     Animated.timing(padding, {
-    //         toValue: 15,
-    //         duration: 200
-    //     }).start();
-    //     if (active == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
-    //         console.log("props.customer_data: ", props.customer_data);
-    //         NavigationManager.openPage(props.navigation, "Login");
-    //     }
-    // }, [active])
+    useEffect(() => {
+        if (!listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
+            setCheck(true);
+        }
+    }, [props.bottomAction])
     if (check) {
         return null;
     } else {
@@ -97,9 +77,6 @@ const BottomMenu = (props) => {
                                 key={index}
                                 routeName={props.navigation.state.routeName}
                                 navigation={props.navigation}
-                                padding={padding}
-                                setActive={setActive}
-                                active={active}
                             />
                         ))
                     }
@@ -115,7 +92,8 @@ const mapStateToProps = (state) => {
         data: state.redux_data.customize_show_noti_success,
         customer_data: state.redux_data.customer_data,
         redux_data: state.redux_data,
-        quoteitems: state.redux_data.quoteitems
+        quoteitems: state.redux_data.quoteitems,
+        bottomAction: state.redux_data.bottomAction,
     };
 }
 
