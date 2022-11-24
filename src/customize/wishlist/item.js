@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, Animated } from 'react-native'
 import React from 'react'
 import styles from './styles'
 const WishlistItem = (props) => {
-    console.log("props in item: ", props);
     const animation = new Animated.Value(0);
     const inputRange = [0, 1];
     const outputRange = [1, 0.95];

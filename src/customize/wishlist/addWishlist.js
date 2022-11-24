@@ -21,9 +21,7 @@ class AddWishlist extends React.Component {
         if (!Identify.isEmpty(this.props.customer_data)) {
             isLogin = true;
         }
-        console.log(this.addedToWishlist);
         if (isLogin) {
-            console.log(this.addedToWishlist);
             if (this.addedToWishlist == true) {
                 this.removeProductFromWishlist();
             } else {

@@ -9,13 +9,17 @@ const width = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
 class Categories extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
 
     renderCategoryItems(data) {
         let views = [];
         if (data.length > 0) {
             data.forEach(element => {
                 views.push(
-                    <CategoryItem element={element}/>
+                    <CategoryItem element={element} {...this.props} />
                 )
             });
         }
@@ -24,12 +28,12 @@ class Categories extends React.Component {
 
     render() {
         data = this.props.parent.categoryData.categories;
-        let height = deviceHeight  - parseInt(material.toolbarHeight) - parseInt(material.isIphoneX ? 76 : 56) - parseInt(material.isIphoneX ? 40 : 20);
+        let height = deviceHeight - parseInt(material.toolbarHeight) - parseInt(material.isIphoneX ? 76 : 56) - parseInt(material.isIphoneX ? 40 : 20);
         return (
-            <View style={{ width: width, height: height}}>
-                <ScrollView scrollEnabled={true} style={{flex: 1}}>
+            <View style={{ width: width, height: height }}>
+                <ScrollView scrollEnabled={true} style={{ flex: 1 }}>
                     <View style={styles.listCategories} >
-                        {this.renderCategoryItems(data)}    
+                        {this.renderCategoryItems(data)}
                     </View>
                 </ScrollView>
             </View>

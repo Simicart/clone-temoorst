@@ -23,7 +23,6 @@ class Category extends SimiPageComponent {
             cat_name: this.cateName,
             cat_id: this.cateId
         };
-        console.log("this.props.data: ", this.props.data);
     }
 
     componentWillMount() {

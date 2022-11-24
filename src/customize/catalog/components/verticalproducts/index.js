@@ -12,7 +12,6 @@ export default class VerticalProducts extends SimiComponent {
     constructor(props) {
         super(props);
         let showList = this.props.parent.state.showList;
-        console.log("this.props in VerticalProducts: ", this.props);
     }
 
     componentDidMount() {
