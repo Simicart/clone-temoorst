@@ -13,7 +13,6 @@ class AddWishlist extends React.Component {
         this.addedToWishlist = false;
         this.didRemoveProductFromWishlist = false;
         this.wishlistItemId = '';
-        console.log("in addWishlist")
     }
 
     wishlistButtonAction() {

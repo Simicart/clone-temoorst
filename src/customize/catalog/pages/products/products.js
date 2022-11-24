@@ -64,7 +64,6 @@ class Products extends SimiPageComponent {
     }
     setData(data) {
         this.categoryData = data;
-        console.log("data in setData: ", data);
         this.cateChilds = [
             {
                 name: Identify.__('VIEW ALL'),
@@ -80,7 +79,6 @@ class Products extends SimiPageComponent {
         this.setState({ selectedCate: this.cateChilds[0] })
         let categoryData = {};
         categoryData[this.cateId] = data;
-        console.log("xuong day");
         this.props.storeData('actions', [
             { type: 'showLoading', data: { type: 'none' } },
             { type: 'add_category_data', data: categoryData }
@@ -109,7 +107,6 @@ class Products extends SimiPageComponent {
     onSelectedCategory(cate) {
         this.setState({ selectedCate: cate })
         this.test = cate;
-        console.log("in onSeclecred", this.state.selectedCate);
     }
 
     renderPhoneLayout() {

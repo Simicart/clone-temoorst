@@ -23,7 +23,6 @@ class VerticalProductItem extends SimiComponent {
         this.state = {
             quantity: '1'
         }
-        console.log("this.props.product: ", this.props.product);
     }
 
     renderOutStock() {
@@ -227,9 +226,7 @@ class VerticalProductItem extends SimiComponent {
                                 <TextInput style={{ height: 40 }} value={this.state.quantity} onChangeText={(e) => this.setState({ quantity: e })} keyboardType="numeric" />
                                 <TouchableOpacity
                                     onPress={() => {
-                                        console.log("(parseInt(this.state.quantity) + 1): ", (parseInt(this.state.quantity) + 1))
                                         this.setState({ quantity: (parseInt(this.state.quantity) + 1).toString() })
-                                        console.log("this.state.quantity: ", this.state.quantity)
                                     }}
                                 >
                                     <View style={{ width: 30, height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
