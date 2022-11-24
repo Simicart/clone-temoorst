@@ -7,7 +7,6 @@ import NavigationManager from '@helper/NavigationManager';
 import Identify from '@helper/Identify';
 
 const CustomizeHeaderBody = (props) => {
-    console.log("props: ", props);
     function renderShowTitle() {
         return (
             <Title style={{ color: variable.toolbarBtnColor, textAlign: 'center', width: '100%' }}>{Identify.__(props.parent.props.title)}</Title>

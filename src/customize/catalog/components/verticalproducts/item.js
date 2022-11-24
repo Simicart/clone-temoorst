@@ -181,7 +181,8 @@ class VerticalProductItem extends SimiComponent {
                 padding: 10,
                 margin: 5,
                 borderRadius: 16,
-                position: 'relative'
+                position: 'relative',
+
             }}>
                 <View style={{
                     backgroundColor: 'white', position: "absolute", top: 10,

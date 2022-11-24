@@ -1,14 +1,3 @@
-// import { View, Text } from 'react-native'
-// import React from 'react'
-// import LeftHeader from '@base/components/layout/header/left';
-// const left = (props) => {
-//     return (
-//         <LeftHeader {...props} />
-//     )
-// }
-
-// export default left
-
 import React from 'react';
 import { Icon } from 'native-base';
 import { View, Alert } from 'react-native'
@@ -16,6 +5,7 @@ import variable from "@theme/variables/material";
 import Identify from '@helper/Identify';
 import Events from '@helper/config/events';
 import NavigationManager from '@helper/NavigationManager';
+import { connect } from 'react-redux';
 const LeftHeader = (props) => {
     const routeName = props.navigation.state.routeName;
     function dispatchCheckRootPages(routeName) {
@@ -49,9 +39,11 @@ const LeftHeader = (props) => {
             );
         }
         else if (props.navigation.state.routeName === 'Login') {
+            props.storeData('bottomAction', 'Home');
             NavigationManager.openPage(props.navigation, 'Home', {});
         }
         else {
+            props.storeData('bottomAction', props.navigation.state.params.previousRoute);
             props.parent.goBack();
         }
     }
@@ -86,4 +78,18 @@ const LeftHeader = (props) => {
         return null
     }
 }
-export default LeftHeader;
+const mapStateToProps = (state) => {
+    return {
+        bottomAction: state.redux_data.bottomAction,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftHeader);

@@ -7,7 +7,6 @@ import QuoteItem from './item';
 
 const ListItems = (props) => {
     let list = props.list ? props.list : props.parent.list;
-    console.log("list in ListItems: ", list);
     function generatePropsFlatlist(list) {
         return {
             data: list,

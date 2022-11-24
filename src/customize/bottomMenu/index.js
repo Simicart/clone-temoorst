@@ -34,34 +34,15 @@ const listBottomButtons = [
 
 const BottomMenu = (props) => {
     const [check, setCheck] = useState(false);
-
-    useEffect(() => {
-        if (!Identify.isEmpty(props.customer_data)) {
-            let customer = props.customer_data;
-            listBottomButtons.map((item) => {
-                if (item.route_name === "MyAccount") {
-                    item.title = customer.firstname + ' ' + customer.lastname;
-                    return item;
-                }
-                return item;
-            })
-        }
-    }, [])
     useEffect(() => {
         if (props.navigation.state.routeName == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
             NavigationManager.openPage(props.navigation, "Login");
         }
-        if (props.navigation.state.routeName !== props.bottomAction) {
-            console.log("props.navigation.state.routeName: ", props.navigation.state.routeName);
+        if (props.navigation.state.routeName != props.bottomAction) {
             props.storeData('bottomAction', props.navigation.state.routeName);
         }
     }, [props.navigation.state.routeName])
-    useEffect(() => {
-        if (!listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
-            setCheck(true);
-        }
-    }, [props.bottomAction])
-    if (check) {
+    if (!listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
         return null;
     } else {
         return (
