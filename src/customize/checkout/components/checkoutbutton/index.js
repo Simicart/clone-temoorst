@@ -18,8 +18,7 @@ const Checkoutbutton = (props) => {
     //       type: 'warning',
     //       duration: 4000
     //   });
-    // }
-    console.log("props.parent.props.data.cart_total: ", props.parent.props.data.cart_total);
+    // }    
     const { checkout, paypal_express_config } = Identify.getMerchantConfig().storeview;
 
     function openAddressBook() {
