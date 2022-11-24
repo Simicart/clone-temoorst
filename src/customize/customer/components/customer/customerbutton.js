@@ -40,13 +40,7 @@ export default class CustomerButton extends React.Component {
             text = 'Save';
         }
         return (
-            // <Button style={{ position: 'absolute', bottom: 0, width: '100%', height: 56 }}
-            //     full
-            //     disabled={!this.state.buttonEnabled}
-            //     onPress={() => { this.onClickButton() }}>
-            //     <Text> {Identify.__(text)} </Text>
-            // </Button>
-            <Button style={{ marginTop: 30, flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}
+            <Button style={{ width: '100%', marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}
                 full
                 disabled={!this.state.buttonEnabled}
                 onPress={() => {  onClickButton() }}>

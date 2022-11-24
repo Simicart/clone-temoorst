@@ -1,12 +1,13 @@
 import React from 'react';
 import SimiComponent from '@base/components/SimiComponent';
 import SimiForm from '@base/components/form/SimiForm';
-import FloatingInput from '@base/components/form/FloatingInput';
+import FloatingInput from '../../../form/FloatingInput';
 import PickerInput from '@base/components/form/PickerInput';
 import DateInput from '@base/components/form/DateInput';
 import DropDownInput from '@base/components/form/DropDownInput';
 import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
+import { ScrollView } from 'react-native';
 
 export default class CustomerForm extends SimiComponent {
 
@@ -191,10 +192,12 @@ export default class CustomerForm extends SimiComponent {
 
     renderPhoneLayout() {
         return (
-            <SimiForm fields={this.createFields()}
-                parent={this}
-                onRef={ref => (this.form = ref)}
-                initData={this.initData} />
+            <ScrollView scrollEnabled={true} style={{flex: 1}}>
+                <SimiForm fields={this.createFields()}
+                    parent={this}
+                    onRef={ref => (this.form = ref)}
+                    initData={this.initData} />
+            </ScrollView>
         );
     }
 

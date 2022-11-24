@@ -1,7 +1,7 @@
 export default {
     container: {
         default_customer_button: {
-            active: true,
+            active: false,
             sort_order: 1000,
             content: require('../../../customize/customer/components/customer/customerbutton').default
         },
@@ -11,6 +11,11 @@ export default {
             active: true,
             sort_order: 1000,
             content: require('../../../customize/customer/components/customer/customerform').default
+        },
+        default_customer_button: {
+            active: true,
+            sort_order: 2000,
+            content: require('../../../customize/customer/components/customer/customerbutton').default
         },
     }
 }
