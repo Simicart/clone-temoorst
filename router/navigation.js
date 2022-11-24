@@ -31,14 +31,14 @@ import Thankyou from '../src/core/screens/checkout/pages/thankyou';
 import NewAddress from '../src/core/screens/customer/pages/address';
 import OrderHistory from '../src/core/screens/customer/pages/orders';
 import OrderHistoryDetail from '../src/core/screens/customer/pages/order';
-import MyAccount from '../src/core/screens/customer/pages/myaccount';
+import MyAccount from '../src/customize/customer/pages/myaccount';
 import AddressBook from '../src/core/screens/customer/pages/addressbook';
 import WebViewPage from '../src/core/screens/webview';
 import WebAppPage from '../src/core/screens/webview/WebApp';
 import TechSpecs from '../src/core/screens/catalog/pages/product/techspecs';
 import FullImage from '../src/core/screens/catalog/pages/product/fullimage';
 import SearchProducts from '../src/core/screens/catalog/pages/search';
-import Customer from '../src/core/screens/customer/pages/customer';
+import Customer from '../src/customize/customer/pages/customer';
 import NotificationHistory from '../src/core/screens/notification/pages';
 import CreditCard from '../src/core/screens/checkout/pages/creditcard';
 

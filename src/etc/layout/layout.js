@@ -37,5 +37,6 @@ export default {
         header: require('./customize/header').default,
         products: require('./customize/products').default,
         customer: require('./customize/customer').default,
+        myaccount: require('./customize/myaccount').default,
     }
 }
