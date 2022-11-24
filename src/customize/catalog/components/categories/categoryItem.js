@@ -12,7 +12,6 @@ export default class CategoryItem extends SimiComponent {
             this.state = {
                 animatePress: new Animated.Value(1)
             }
-        console.log("this.props CategoryItem: ", this.props);
     }
 
     animatePressIn() {
@@ -43,8 +42,12 @@ export default class CategoryItem extends SimiComponent {
     }
     render() {
         let image = "";
-        if (!this.props.element.image?.includes("https"))
-            image = SimiCart.merchant_url + this.props.element.image;
+        if (!this.props.element?.image_url?.includes("https")) {
+            image = SimiCart.merchant_url + this.props.element?.image_url;
+        } else {
+            image = this.props.element?.image_url;
+        }
+
         return (
             <TouchableOpacity
                 key={this.props.element.entity_id}
