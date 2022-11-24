@@ -1,7 +1,7 @@
 import React from 'react';
 import SimiComponent from '@base/components/SimiComponent';
 import SimiForm from '@base/components/form/SimiForm';
-import BorderedInput from '@base/components/form/BorderedInput';
+import BorderedInput from '../../../form/BorderedInput';
 import AppStorage from '@helper/storage';
 import Identify from "@helper/Identify";
 import { View, Text } from 'react-native'
@@ -50,24 +50,12 @@ export default class LoginForm extends SimiComponent {
     
     createFields() {
         let fields = [];
-        fields.push(
-            <View style={{ flexDirection: 'row',  marginTop: 30 }}>
-                <Text>Email</Text>
-                <Text style={{ color: 'red' }}> *</Text>
-            </View>
-        )
-        fields.push(this.createInput('email', 'email', Identify.__('Please enter your email'), 'email', null, this.state.email, true, true));
-        fields.push(
-            <View style={{ flexDirection: 'row', marginTop: 30 }}>
-                <Text>Password</Text>
-                <Text style={{ color: 'red' }}> *</Text>
-            </View>
-        )
-        fields.push(this.createInput('password', 'password', Identify.__('Please enter your password'), 'password', null, this.state.password, true, false));
+        fields.push(this.createInput('email', 'email', Identify.__('email'), 'email', null, this.state.email, true, true, 'Email'));
+        fields.push(this.createInput('password', 'password', Identify.__('password'), 'password', null, this.state.password, true, false, 'Password'));
         return fields;
     }
 
-    createInput(key, inputKey, inputTitle, inputType, iconName, inputValue, required, needWarning) {
+    createInput(key, inputKey, inputTitle, inputType, iconName, inputValue, required, needWarning, header) {
         return(
             <BorderedInput key={key}
                             inputKey={inputKey}
@@ -77,7 +65,8 @@ export default class LoginForm extends SimiComponent {
                             inputValue={inputValue}
                             required={required}
                             needWarning={needWarning}
-                            extraIcon={undefined} />
+                            extraIcon={undefined} 
+                            header={header}/>
         );
     }
 
