@@ -184,24 +184,27 @@ class VerticalProductItem extends SimiComponent {
                 position: 'relative',
 
             }}>
-                <View style={{
-                    backgroundColor: 'white', position: "absolute", top: 10,
-                    right: 10, padding: 5, borderRadius: 8, borderColor: '#e0e0e0', borderWidth: 1, zIndex: 99,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 0.5,
-                    },
-                    shadowOpacity: 0.20,
-                    shadowRadius: 1.41,
+                <TouchableOpacity style={this.props.itemStyle}
+                    onPress={() => { this.openProductDetail() }}>
+                    <View style={{
+                        backgroundColor: 'white', position: "absolute", top: 10,
+                        right: 10, padding: 5, borderRadius: 8, borderColor: '#e0e0e0', borderWidth: 1, zIndex: 99,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 0.5,
+                        },
+                        shadowOpacity: 0.20,
+                        shadowRadius: 1.41,
 
-                    elevation: 2,
-                }}>
-                    <AddWishlist product={this.props.product} />
-                </View>
-                {this.renderImage()}
-                {this.renderName()}
-                {this.renderPrice()}
+                        elevation: 2,
+                    }}>
+                        <AddWishlist product={this.props.product} />
+                    </View>
+                    {this.renderImage()}
+                    {this.renderName()}
+                    {this.renderPrice()}
+                </TouchableOpacity>
                 {
                     this.props.product.is_salable == '0' ? (
                         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -234,12 +237,16 @@ class VerticalProductItem extends SimiComponent {
                                     </View>
                                 </TouchableOpacity>
                             </View>
+
                             <View style={{ height: 40, width: 40, backgroundColor: Identify.theme.button_background, borderRadius: 12, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Image
-                                    source={require('@customize/images/cart.png')}
-                                    style={{ height: 25, width: 25, tintColor: 'white' }}
-                                />
+                                <TouchableOpacity onPress={() => { this.onAddToCart() }}>
+                                    <Image
+                                        source={require('@customize/images/cart.png')}
+                                        style={{ height: 25, width: 25, tintColor: 'white' }}
+                                    />
+                                </TouchableOpacity>
                             </View>
+
                         </View>
                     )
                 }
@@ -255,12 +262,13 @@ class VerticalProductItem extends SimiComponent {
     }
 
     renderPhoneLayout() {
-        return (
-            <TouchableOpacity style={this.props.itemStyle}
-                onPress={() => { this.openProductDetail() }}>
-                {this.renderItem()}
-            </TouchableOpacity>
-        );
+        // return (
+        //     <TouchableOpacity style={this.props.itemStyle}
+        //         onPress={() => { this.openProductDetail() }}>
+        //         {this.renderItem()}
+        //     </TouchableOpacity>
+        // );
+        return this.renderItem();
     }
 
     dispatchContent() {
