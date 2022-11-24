@@ -13,6 +13,7 @@ class AddWishlist extends React.Component {
         this.addedToWishlist = false;
         this.didRemoveProductFromWishlist = false;
         this.wishlistItemId = '';
+        console.log("in addWishlist")
     }
 
     wishlistButtonAction() {
@@ -78,13 +79,17 @@ class AddWishlist extends React.Component {
                 this.addedToWishlist = true;
             }
         }
-        let color = "white";
+
         if (this.addedToWishlist == true) {
-            color = "red";
+            return (
+                <Icon type='AntDesign' name="heart" style={{ color: 'red', fontSize: 20 }} onPress={() => { this.wishlistButtonAction() }} />
+            );
+        } else {
+            return (
+                <Icon type='AntDesign' name="hearto" style={{ color: 'black', fontSize: 20 }} onPress={() => { this.wishlistButtonAction() }} />
+            );
         }
-        return (
-            <Icon name="md-heart" style={{ color: color }} onPress={() => { this.wishlistButtonAction() }} />
-        );
+
     }
 
     tracking() {
