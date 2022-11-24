@@ -3,19 +3,25 @@ import { I18nManager, Platform, Dimensions } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator } from 'react-navigation-stack';
-import Splash from '../src/core/screens/splash/pages/index';
+// import Splash from '../src/core/screens/splash/pages/index';
+import Splash from '../src/customize/splash/pages/index';
 import Maintain from '../src/core/screens/splash/pages/maintain';
-import Category from '../src/core/screens/catalog/pages/categories/catagories';
+// import Category from '../src/core/screens/catalog/pages/categories/catagories';
+import Category from '../src/customize/catalog/pages/categories/catagories';
 // import Home from '../src/core/screens/home/pages';
 import Home from '../src/customize/home/pages';
-import Products from '../src/core/screens/catalog/pages/products/products';
+// import Products from '../src/core/screens/catalog/pages/products/products';
+import Products from '../src/customize/catalog/pages/products/products';
 import Settings from '../src/core/screens/settings/pages/settings';
 import Sort from '../src/core/screens/catalog/pages/products/sort';
 import Filter from '../src/core/screens/catalog/pages/products/filter';
 import FilterSelection from '../src/core/screens/catalog/pages/products/selection';
 // import Drawer from '../src/core/base/components/drawer';
 import Drawer from '../src/customize/drawer';
-import Login from '../src/core/screens/customer/pages/login';
+// import Login from '../src/core/screens/customer/pages/login';
+import Login from '../src/customize/customer/pages/login';
+
+
 import ProductDetail from '../src/core/screens/catalog/pages/product/product';
 // import Cart from '../src/core/screens/checkout/pages/cart';
 import Cart from '../src/customize/checkout/pages/cart';
@@ -47,7 +53,8 @@ import ContactUs from '../src/plugins/contactus';
 import StoreLocator from '../src/plugins/storelocator';
 import StoreLocatorDetail from '../src/plugins/storelocator/detail';
 import StoreLocatorSearch from '../src/plugins/storelocator/search';
-import Wishlist from '../src/plugins/wishlist';
+// import Wishlist from '../src/plugins/wishlist';
+import Wishlist from '../src/customize/wishlist';
 import BarCode from '../src/plugins/barcode';
 import MyReward from '../src/plugins/rewardpoint/MyReward';
 import SettingReward from '../src/plugins/rewardpoint/SettingReward';
@@ -65,7 +72,8 @@ import ReviewDetail from '../src/plugins/review/reviewDetail';
 import ReviewPage from '../src/plugins/review/reviewPage';
 import AddReview from '../src/plugins/review/addreview/addReview';
 
-import ForgotPassword from '../src/core/screens/customer/pages/forgotPassword';
+// import ForgotPassword from '../src/core/screens/customer/pages/forgotPassword';
+import ForgotPassword from '../src/customize/customer/pages/forgotPassword';
 
 //payfort
 import SimiPayfort from '../src/plugins/payfort';

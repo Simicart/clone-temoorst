@@ -4,15 +4,19 @@ import material from "@theme/variables/material";
 import NavigationManager from '@helper/NavigationManager';
 import { Badge } from 'native-base'
 import { connect } from 'react-redux';
-import Identify from '@helper/Identify'
+import Identify from '@helper/Identify';
+
+
 const Item = (props) => {
-    console.log("active in Item: ", props);
     const padding = useRef(new Animated.Value(5)).current;
     useEffect(() => {
         Animated.timing(padding, {
             toValue: 15,
             duration: 200
         }).start();
+        // if (props.bottomAction == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
+        //     NavigationManager.openPage(props.navigation, "Login");
+        // }
 
     }, [props.bottomAction]);
     return (

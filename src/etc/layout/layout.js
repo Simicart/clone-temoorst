@@ -30,8 +30,11 @@ export default {
         product: require('../../etc/layout/plugins/simi_simiproductreview_40/product').default
     },
     customize: {
+        category: require('./customize/category').default,
+        login: require('./customize/login').default,
         cart: require('./customize/cart').default,
         standard: require('./customize/standard').default,
         header: require('./customize/header').default,
+        products: require('./customize/products').default,
     }
 }
