@@ -7,7 +7,6 @@ import Events from '@helper/config/events';
 import NavigationManager from '@helper/NavigationManager';
 import { connect } from 'react-redux';
 const LeftHeader = (props) => {
-    console.log("props in LeftHeader: ", props);
     const routeName = props.navigation.state.routeName;
     function dispatchCheckRootPages(routeName) {
         for (let i = 0; i < Events.events.root_pages.length; i++) {
