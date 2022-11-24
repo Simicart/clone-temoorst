@@ -90,6 +90,7 @@ export default class VerticalProducts extends SimiComponent {
                         }
                         } />
                     <Spinner color={Identify.theme.loading_color} style={(showLoadMore) ? {} : { display: 'none' }} />
+                    <View style={{ height: 60 }} />
                 </ScrollView>
             );
         }

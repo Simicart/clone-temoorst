@@ -203,7 +203,7 @@ class VerticalProductItem extends SimiComponent {
                 {this.renderPrice()}
                 {
                     this.props.product.is_salable == '0' ? (
-                        <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             {this.renderOutStock()}
                         </View>
                     ) : (
