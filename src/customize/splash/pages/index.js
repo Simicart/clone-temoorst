@@ -181,12 +181,13 @@ class Splash extends SimiPageComponent {
                     alignItems: 'center',
                     backgroundColor: simiCart.colorSplash
                 }}>
-                    <Lottie
+                    <ImageSplash />
+                    {/* <Lottie
                         style={{ flex: 1 }}
                         source={require('../../images/splash.json')}
                         autoPlay
                         loop
-                    />
+                    /> */}
                     <AppSettings isLoading={false} key={this.key_1} />
                     <DashboardSettings isLoading={false} key={this.key_2} />
                     <NetworkApp />

@@ -23,6 +23,7 @@ class VerticalProductItem extends SimiComponent {
         this.state = {
             quantity: '1'
         }
+        console.log("this.props.product: ", this.props.product);
     }
 
     renderOutStock() {
@@ -75,7 +76,6 @@ class VerticalProductItem extends SimiComponent {
                 <View style={styles.image}>
                     {this.renderSpecialPriceLabel()}
                     <Image resizeMode='contain' source={source} style={styles.image} />
-                    {this.renderOutStock()}
                     {this.dispatchContent()}
                 </View>
             </CardItem>
@@ -184,8 +184,8 @@ class VerticalProductItem extends SimiComponent {
                 position: 'relative'
             }}>
                 <View style={{
-                    backgroundColor: 'white', position: "absolute", top: 5,
-                    right: 5, padding: 5, borderRadius: 8, borderColor: '#e0e0e0', borderWidth: 1, zIndex: 99,
+                    backgroundColor: 'white', position: "absolute", top: 10,
+                    right: 10, padding: 5, borderRadius: 8, borderColor: '#e0e0e0', borderWidth: 1, zIndex: 99,
                     shadowColor: "#000",
                     shadowOffset: {
                         width: 0,
@@ -200,46 +200,48 @@ class VerticalProductItem extends SimiComponent {
                 </View>
                 {this.renderImage()}
                 {this.renderName()}
-                {/* <View style={{ flexDirection: this.props.showList ? 'row' : 'column', paddingLeft: this.props.showList ? 10 : 5, paddingRight: this.props.showList ? 10 : 5, paddingBottom: this.props.showList ? 10 : 5 }}>
-                    {this.renderPrice()}
-                    {this.renderAddBtn()}
-                </View> */}
                 {this.renderPrice()}
-                {/* {this.renderAddBtn()} */}
-                {/* <View style={{ height: 60 }} /> */}
-                <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', zIndex: 99, marginTop: 10, zIndex: 100 }}>
-                    <View style={{ width: (width / 2) - 90, height: 40, borderRadius: 12, borderColor: '#e0e0e0', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
-                        <TouchableOpacity
-                            disabled={this.state.quantity == '1'} onPress={() => {
-                                if (this.state.quantity !== '1') {
-                                    this.setState({ quantity: (parseInt(this.state.quantity) - 1).toString() });
-                                }
-                            }}
-                        >
-                            <View style={{ width: 30, height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
-                                <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 20, color: this.state.quantity == '1' ? '#e0e0e0' : Identify.theme.button_background }} type="AntDesign" name="minus" color="pink" />
+                {
+                    this.props.product.is_salable == '0' ? (
+                        <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                            {this.renderOutStock()}
+                        </View>
+                    ) : (
+                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', zIndex: 99, marginTop: 10, zIndex: 100 }}>
+                            <View style={{ width: (width / 2) - 90, height: 40, borderRadius: 12, borderColor: '#e0e0e0', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
+                                <TouchableOpacity
+                                    disabled={this.state.quantity == '1'} onPress={() => {
+                                        if (this.state.quantity !== '1') {
+                                            this.setState({ quantity: (parseInt(this.state.quantity) - 1).toString() });
+                                        }
+                                    }}
+                                >
+                                    <View style={{ width: 30, height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
+                                        <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 20, color: this.state.quantity == '1' ? '#e0e0e0' : Identify.theme.button_background }} type="AntDesign" name="minus" color="pink" />
+                                    </View>
+                                </TouchableOpacity>
+                                <TextInput style={{ height: 40 }} value={this.state.quantity} onChangeText={(e) => this.setState({ quantity: e })} keyboardType="numeric" />
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        console.log("(parseInt(this.state.quantity) + 1): ", (parseInt(this.state.quantity) + 1))
+                                        this.setState({ quantity: (parseInt(this.state.quantity) + 1).toString() })
+                                        console.log("this.state.quantity: ", this.state.quantity)
+                                    }}
+                                >
+                                    <View style={{ width: 30, height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 20, color: Identify.theme.button_background }} type="AntDesign" name="plus" color="pink" />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
-                        </TouchableOpacity>
-                        <TextInput style={{ height: 40 }} value={this.state.quantity} onChangeText={(e) => this.setState({ quantity: e })} keyboardType="numeric" />
-                        <TouchableOpacity
-                            onPress={() => {
-                                console.log("(parseInt(this.state.quantity) + 1): ", (parseInt(this.state.quantity) + 1))
-                                this.setState({ quantity: (parseInt(this.state.quantity) + 1).toString() })
-                                console.log("this.state.quantity: ", this.state.quantity)
-                            }}
-                        >
-                            <View style={{ width: 30, height: 40, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 20, color: Identify.theme.button_background }} type="AntDesign" name="plus" color="pink" />
+                            <View style={{ height: 40, width: 40, backgroundColor: Identify.theme.button_background, borderRadius: 12, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image
+                                    source={require('@customize/images/cart.png')}
+                                    style={{ height: 25, width: 25, tintColor: 'white' }}
+                                />
                             </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ height: 40, width: 40, backgroundColor: Identify.theme.button_background, borderRadius: 12, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Image
-                            source={require('@customize/images/cart.png')}
-                            style={{ height: 25, width: 25, tintColor: 'white' }}
-                        />
-                    </View>
-                </View>
+                        </View>
+                    )
+                }
             </View>
         );
     }
