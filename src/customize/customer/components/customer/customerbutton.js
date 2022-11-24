@@ -43,7 +43,7 @@ export default class CustomerButton extends React.Component {
             <Button style={{ width: '100%', marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}
                 full
                 disabled={!this.state.buttonEnabled}
-                onPress={() => {  onClickButton() }}>
+                onPress={() => { this.onClickButton() }}>
                 <Text> {Identify.__(text)} </Text>
             </Button>
         );
