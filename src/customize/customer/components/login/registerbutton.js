@@ -15,10 +15,14 @@ const RegisterButton = (props) => {
     }
 
     return (
-        <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'center' }}>
+        <View style={{ 
+                flexDirection: 'row', 
+                marginTop: 30, 
+                marginBottom:30, 
+                justifyContent: 'center' }}>
             <Text styles={{ fontWeight: 'bold' }}>Need an account? </Text>
             <TouchableOpacity onPress={() => {  onClickRegister() }}>
-                <Text style={{ color: '#696969' }}>Sign Up</Text>
+                <Text style={{ color: Identify.theme.button_background, fontWeight: 'bold' }}>Sign Up</Text>
             </TouchableOpacity>
         </View>
     );
