@@ -9,7 +9,6 @@ import QuoteItemView from './quote';
 import OutStockLabel from '@screens/catalog/components/product/outStockLabel';
 
 const QuoteItem = (props) => {
-    console.log("props.data: ", props.data);
     const animation = new Animated.Value(0);
     const inputRange = [0, 1];
     const outputRange = [1, 0.95];

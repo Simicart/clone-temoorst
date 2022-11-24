@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import Identify from '@helper/Identify';
 
 const Item = (props) => {
-    console.log("active in Item: ", props);
     const padding = useRef(new Animated.Value(5)).current;
     useEffect(() => {
         Animated.timing(padding, {
