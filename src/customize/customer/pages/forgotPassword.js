@@ -84,7 +84,6 @@ export default class ForgotPassWordPage extends SimiPageComponent{
                     borderRadius: 5,
                     paddingStart: 15,
                     paddingEnd: 15,
-                    height: 40,
                     marginTop: 10,
                     marginBottom: 20
                 }}
