@@ -112,7 +112,6 @@ class Products extends SimiPageComponent {
     renderPhoneLayout() {
         return (
             <Container>
-
                 <HeaderProducts cateChilds={this.cateChilds} selectedCate={this.state.selectedCate} onSelectedCategory={this.onSelectedCategory} />
                 <ProductList cateId={this.cateId} selectedCate={this.state.selectedCate} {...this} />
             </Container>
