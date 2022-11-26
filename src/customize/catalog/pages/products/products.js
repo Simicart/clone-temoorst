@@ -10,12 +10,15 @@ import { Text } from 'react-native';
 import Categories from '../../components/categories/index';
 import HeaderProducts from '@customize/catalog/components/products/header';
 import ProductList from '@customize/catalog/components/products/productList';
+import Modal from '@customize/catalog/components/modal';
 class Products extends SimiPageComponent {
     constructor(props) {
         super(props);
         this.state = {
             ...this.state,
-            selectedCate: null
+            selectedCate: null,
+            layers: null,
+            paramsFilter: null,
         }
         this.categoryData = null;
         this.cateId = this.props.navigation.getParam("categoryId") ? this.props.navigation.getParam("categoryId") : -1;
@@ -32,7 +35,8 @@ class Products extends SimiPageComponent {
         };
         this.cateChilds = null;
         this.onSelectedCategory = this.onSelectedCategory.bind(this)
-        this.test = null;
+        this.onSetLayers = this.onSetLayers.bind(this);
+        this.onFilterAction = this.onFilterAction.bind(this);
     }
 
     componentWillMount() {
@@ -103,18 +107,23 @@ class Products extends SimiPageComponent {
         }
         return true;
     }
-
+    onFilterAction(filterParams) {
+        this.setState({ paramsFilter: filterParams });
+    }
     onSelectedCategory(cate) {
         this.setState({ selectedCate: cate })
-        this.test = cate;
+    }
+
+    onSetLayers(layers) {
+        this.setState({ layers: layers });
     }
 
     renderPhoneLayout() {
         return (
             <Container>
-
                 <HeaderProducts cateChilds={this.cateChilds} selectedCate={this.state.selectedCate} onSelectedCategory={this.onSelectedCategory} />
-                <ProductList cateId={this.cateId} selectedCate={this.state.selectedCate} {...this} />
+                <ProductList cateId={this.cateId} selectedCate={this.state.selectedCate} {...this} paramsFilter={this.state.paramsFilter} />
+                <Modal {...this} />
             </Container>
         );
     }

@@ -23,7 +23,6 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import { requestTrackingPermission, getTrackingStatus } from 'react-native-tracking-transparency';
 import compareVersions from 'compare-versions';
-//hsdf
 const store = createStore(reducers);
 
 const NativeMethod = Platform.OS === 'ios' ? NativeModules.NativeMethod : NativeModules.NativeMethodModule;
@@ -216,6 +215,7 @@ export default class App extends React.Component {
                     <Spinner />
                     <NotificationPopup />
                     <VersionUpdate />
+
                 </Root>
             </Provider>
         );

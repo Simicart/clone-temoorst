@@ -23,6 +23,7 @@ class ProductList extends SimiPageComponent {
       showBottom: true
     };
     this.cateId = this.props.cateId;
+    this.paramsFilter = this.props.paramsFilter;
     this.limit = Device.isTablet() ? 16 : 10;
     this.offset = 0;
     this.first = true;
@@ -82,6 +83,7 @@ class ProductList extends SimiPageComponent {
     this.isLoadingMore = false;
 
     this.setState({ data: data, loadMore: canLoadMore });
+    this.props.onSetLayers(data.layers)
     if (this.props.data.showLoading.type !== 'none' && !this.props.isCategory) {
       this.props.storeData('showLoading', { type: 'none' });
     }
@@ -199,12 +201,36 @@ class ProductList extends SimiPageComponent {
       products: this.state.data.products
     };
   }
+  onFilterAction(filterParams) {
+    this.limit = Device.isTablet() ? 16 : 10;
+    this.offset = 0;
+    this.props.storeData('showLoading', { type: 'full' });
+    params = {
+      ...this.createParams(),      
+    };
+    if (this.sortOrder) {
+      params = {
+        ...params,
+        ...this.sortOrder
+      }
+    }
+    this.shouldStoreData = false;
+    this.filterData = filterParams
+    this.setState({ data: null });
+    this.requestData(params);
+  }
   componentDidUpdate() {
     if (this.props.selectedCate && !this.first) {
       if (this.props.selectedCate.entity_id !== this.cateId) {
         this.cateId = this.props.selectedCate.entity_id;
         this.requestData(this.createParams());
       }
+      if (this.props.paramsFilter !== this.paramsFilter) {
+        this.paramsFilter = this.props.paramsFilter;
+        this.setState({ data: null })
+        this.requestData(params);
+      }
+
     }
     this.first = false;
 
