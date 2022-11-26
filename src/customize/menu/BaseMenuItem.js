@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
 import SimiComponent from '@base/components/SimiComponent';
 import { Card, CardItem, Icon, Text, Right, Thumbnail } from 'native-base';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Animated } from 'react-native';
 import Identify from '@helper/Identify';
 
 const BaseMenuItem = (props) => {
+    const [buttonColor, setButtonColor] = useState('white');
     if (props.hasOwnProperty('add_condition') && props.add_condition() == false) {
         return null;
     }
+    
     return (
         <TouchableOpacity 
             style={{ flex: 1 }}
+            onPressIn={() => setButtonColor('orange')}
+            onPressOut={() => setButtonColor('white')}
             onPress={() => {
                 if (!props.parent.onSelectMenuItem(props.keyItem)) {
                     props.onClick();
                 }
-            }}
-            >
-            <View style={{ borderBottomWidth: 0.5, borderBottomColor: '#c3c3c3' }}>
-                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center'}}>
-                    {props.iconName && <Icon name={props.iconName}/>}
+            }}>
+            <Animated.View style={{ borderBottomWidth: 0.5, borderBottomColor: '#c3c3c3' }}>
+                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center', backgroundColor: buttonColor}}>
+                    {props.iconName && <Icon type={props.type} name={props.iconName} style={{color: props.label === 'Sign Out' ? '#FF4040' : '#828282'}}/>}
                     {props.hasOwnProperty('image') && <Thumbnail
                         square
                         source={this.props.image}
@@ -28,9 +31,8 @@ const BaseMenuItem = (props) => {
                     <Right>
                         {props.extendable && <Icon style={{ marginRight: 10 }} name={Identify.isRtl() ? 'ios-arrow-back' : "ios-arrow-forward"} />}
                     </Right>
-
                 </CardItem>
-            </View>
+            </Animated.View>
         </TouchableOpacity>
     );
 }

@@ -86,6 +86,9 @@ class MyAccountPage extends SimiPageComponent {
             case 'myaccount_orders':
                 NavigationManager.openPage(this.props.navigation, 'OrderHistory');
                 break;
+            case 'myaccount_wishlist':
+                NavigationManager.openPage(this.props.navigation, 'Wishlist');
+                break;
             case 'myaccount_profile':
                 NavigationManager.openPage(this.props.navigation, 'Customer', {
                     isEditProfile: true

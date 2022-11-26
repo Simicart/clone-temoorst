@@ -11,7 +11,8 @@ export default {
             content: require('../../../customize/menu/BaseMenuItem').default,
             data: {
                 keyItem: 'myaccount_profile',
-                iconName: 'md-contact',
+                type: 'MaterialCommunityIcons',
+                iconName: 'account-details-outline',
                 label: 'Profile',
                 extendable: true
             }
@@ -22,7 +23,8 @@ export default {
             content: require('../../../customize/menu/BaseMenuItem').default,
             data: {
                 keyItem: 'myaccount_address',
-                iconName: 'md-book',
+                type: 'MaterialCommunityIcons',
+                iconName: 'map-marker-radius-outline',
                 label: 'Address Book',
                 extendable: true
             }
@@ -33,18 +35,32 @@ export default {
             content: require('../../../customize/menu/BaseMenuItem').default,
             data: {
                 keyItem: 'myaccount_orders',
-                iconName: 'md-paper',
+                type: 'AntDesign',
+                iconName: 'profile',
                 label: 'Order History',
+                extendable: true
+            }
+        },
+        default_my_wishlist: {
+            active: true,
+            sort_order: 4000,
+            content: require('../../../customize/menu/BaseMenuItem').default,
+            data: {
+                keyItem: 'myaccount_wishlist',
+                type: 'AntDesign',
+                iconName: 'hearto',
+                label: 'My wishlist',
                 extendable: true
             }
         },
         default_register_button: {
             active: true,
-            sort_order: 4000,
+            sort_order: 5000,
             content: require('../../../customize/menu/BaseMenuItem').default,
             data: {
                 keyItem: 'myaccount_logout',
-                iconName: 'md-log-out',
+                type: 'Octicons',
+                iconName: 'sign-out',
                 label: 'Sign Out',
                 extendable: false
             }
