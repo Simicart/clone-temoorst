@@ -1,296 +1,123 @@
 import React from 'react';
-import SimiPageComponent from '@base/components/SimiPageComponent';
-import Identify from '@helper/Identify';
 import { connect } from 'react-redux';
 import NewConnection from '@base/network/NewConnection';
-import { Container, Content } from 'native-base';
-import { View } from 'react-native';
-import { products, home_spot_products, products_mode } from '@helper/constants';
-import NavigationManager from '@helper/NavigationManager';
+import { category } from '@helper/constants';
+import { Content, Container } from "native-base";
+import Identify from '@helper/Identify';
+import SimiPageComponent from "@base/components/SimiPageComponent";
 import variable from '@theme/variables/material';
-import Device from '@helper/device';
-
-class ProductsPage extends SimiPageComponent {
-
+import { Text } from 'react-native';
+import Categories from '../../components/categories/index';
+import HeaderProducts from '@customize/catalog/components/products/header';
+import ProductList from '@customize/catalog/components/products/productList';
+class Products extends SimiPageComponent {
     constructor(props) {
         super(props);
         this.state = {
             ...this.state,
-            data: null,
-            loadMore: true,
-            showList: (Identify.getMerchantConfig().storeview.catalog.frontend.view_products_default == '0') ? true : false,
-            showBottom: true
-        };
-        this.cateId = -1;
-        this.spotId = -1;
-        this.query = this.props.navigation.getParam("query");
-        if (this.query) {
-            this.showSearch = false;
+            selectedCate: null
         }
-        this.limit = Device.isTablet() ? 16 : 10;
-        this.offset = 0;
-        this.lastY = 0;
-        this.isLoadingMore = false;
-        this.shouldStoreData = true;
-        this.mode = this.props.navigation.getParam('mode');
-        this.layout = 'ProductDetail';
-        this.onFilterAction = this.onFilterAction.bind(this);
-        this.onSortAction = this.onSortAction.bind(this);
+        this.categoryData = null;
+        this.cateId = this.props.navigation.getParam("categoryId") ? this.props.navigation.getParam("categoryId") : -1;
+        this.showViewAll = (Identify.getMerchantConfig().storeview.catalog.frontend.is_show_link_all_product === '1') ? true : false;
+        if (this.props.navigation.getParam("categoryName")) {
+            this.cateName = this.props.navigation.getParam("categoryName");
+        } else {
+            this.cateName = Identify.__('All categories');
+        }
         this.isBack = this.props.navigation.state.params.hasOwnProperty("showBack") ? this.props.navigation.getParam("showBack") : true;
+        this.dataTracking = {
+            cat_name: this.cateName,
+            cat_id: this.cateId
+        };
+        this.cateChilds = null;
+        this.onSelectedCategory = this.onSelectedCategory.bind(this)
+        this.test = null;
     }
 
     componentWillMount() {
-        if (this.props.data.showLoading.type === 'none' && !this.props.isCategory) {
+        if (this.props.data.showLoading.type === 'none' && !this.checkExistData(this.props.data.category_data, this.cateId)) {
             this.props.storeData('showLoading', { type: 'full' });
         }
     }
 
     componentDidMount() {
         super.componentDidMount();
-        if (!this.checkExistData()) {
-            this.requestData(this.createParams());
+        if (!this.categoryData) {
+            let extendUrl = '';
+            if (this.cateId !== -1) {
+                extendUrl = '/' + this.cateId;
+                new NewConnection()
+                    .init(category + extendUrl, 'get_category_data', this)
+                    .addGetData({
+                        limit: 100
+                    })
+                    .connect();
+            } else {
+                this.categoryData = this.props.data.category_data;
+                this.props.storeData('actions', [
+                    { type: 'showLoading', data: { type: 'none' } },
+                ]);
+            }
+
         }
     }
-
-    createParams() {
-        let params = {
-            limit: this.limit,
-            offset: this.offset
-        };
-        if (this.cateId != -1) {
-            params['filter[cat_id]'] = this.cateId;
-        }
-        if (this.query) {
-            this.shouldStoreData = false;
-            params['filter[q]'] = this.query;
-        }
-        return params;
-    }
-
-    requestData(params) {
-        let url = products;
-        if (this.mode === products_mode.spot) {
-            url = home_spot_products + '/' + this.spotId;
-        }
-        new NewConnection()
-            .init(url, 'get_products_data', this)
-            .addGetData(params)
-            .connect();
-    }
-
     setData(data) {
-        switch (this.mode) {
-            case products_mode.spot: {
-                let spotData = data.homeproductlist.product_array;
-                this.updateData('add_home_spot_data', this.spotId, spotData);
-            }
-                break;
-            default: {
-                this.updateData('add_products_data', this.cateId, data);
-            }
-                break;
-        }
+        this.categoryData = data;
+        this.cateChilds = [
+            {
+                name: Identify.__('VIEW ALL'),
+                entity_id: this.cateId,
+            },
+            ...data?.categories.map((item) => {
+                return {
+                    name: item.name,
+                    entity_id: item.entity_id
+                }
+            })
+        ]
+        this.setState({ selectedCate: this.cateChilds[0] })
+        let categoryData = {};
+        categoryData[this.cateId] = data;
+        this.props.storeData('actions', [
+            { type: 'showLoading', data: { type: 'none' } },
+            { type: 'add_category_data', data: categoryData }
+        ]);
     }
 
-    updateData(type, data_key, data) {
-        if (this.state.data) {
-            let combinedProducts = this.state.data.products;
-            combinedProducts.push.apply(combinedProducts, data.products);
-            data.products = combinedProducts;
-
-            let combinedIds = this.state.data.all_ids;
-            combinedIds.push.apply(combinedIds, data.all_ids);
-            data.all_ids = combinedIds;
-        }
-        if (this.props.data.showLoading.type !== 'none' && !this.props.isCategory) {
-            this.props.storeData('showLoading', { type: 'none' });
-        }
-        let canLoadMore = true;
-        if (this.offset + this.limit >= data.total) {
-            canLoadMore = false;
-        }
-        this.isLoadingMore = false;
-        if (this.shouldStoreData) {
-            this.state.data = data;
-            this.state.loadMore = canLoadMore;
-            let productsData = {};
-            productsData[data_key] = data;
-            this.props.storeData(type, productsData);
-        } else {
-            this.setState({ data: data, loadMore: canLoadMore });
-        }
-    }
-
-    loadExistData(item) {
-        if (item.products.length % this.limit == 0) {
-            this.offset = (~~(item.products.length / this.limit) - 1) * this.limit;
-        } else {
-            this.offset = (~~(item.products.length / this.limit)) * this.limit;
-        }
-
-        let canLoadMore = true;
-        if (this.offset + this.limit >= item.total) {
-            canLoadMore = false;
-        }
-        this.state.data = item;
-        this.state.loadMore = canLoadMore;
-        this.props.storeData('showLoading', { type: 'none' });
+    loadExistData(data) {
+        this.categoryData = data;
         return true;
     }
 
-    checkExistData() {
-        this.spotId = this.props.navigation.getParam("spotId") ? this.props.navigation.getParam("spotId") : -1;
-        this.cateId = this.props.navigation.getParam("categoryId") ? this.props.navigation.getParam("categoryId") : -1;
-        if (this.query) {
-            return false;
-        }
-        switch (this.mode) {
-            case products_mode.spot:
-                let spotData = this.props.data.home_spot_data;
-                if (spotData && spotData.hasOwnProperty(this.spotId)) {
-                    let item = spotData[this.spotId];
-                    return this.loadExistData(item);
-                }
-                break;
-            default:
-                let productsData = this.props.data.products_data;
-                if (productsData && productsData.hasOwnProperty(this.cateId)) {
-                    let item = productsData[this.cateId];
-                    return this.loadExistData(item);
-                }
-                break;
-        }
-        return false;
-    }
-
-    changeStyle = () => {
-        if (this.state.showList == true) {
-            this.setState({ showList: false });
-        } else {
-            this.setState({ showList: true });
-        }
-    }
-
-    openFilter = () => {
-        NavigationManager.openPage(this.props.navigation, 'Filter', {
-            filter: this.state.data.layers,
-            onFilterAction: this.onFilterAction
-        });
-    }
-
-    onFilterAction(filterParams) {
-        this.limit = Device.isTablet() ? 16 : 10;
-        this.offset = 0;
-        this.props.storeData('showLoading', { type: 'full' });
-        params = {
-            ...this.createParams(),
-            ...filterParams
-        };
-        if (this.sortOrder) {
-            params = {
-                ...params,
-                ...this.sortOrder
-            }
-        }
-        this.shouldStoreData = false;
-        this.filterData = filterParams
-        this.setState({ data: null });
-        this.requestData(params);
-    }
-
-    openSort = () => {
-        NavigationManager.openPage(this.props.navigation, 'Sort', {
-            sort: this.state.data.orders,
-            onSortAction: this.onSortAction
-        });
-    }
-
-    onSortAction(order, dir) {
-        this.limit = Device.isTablet() ? 16 : 10;
-        this.offset = 0;
-        this.props.storeData('showLoading', { type: 'full' });
-        params = this.createParams();
-        if (this.filterData) {
-            params = {
-                ...params,
-                ...this.filterData
-            }
-        }
-        params['order'] = order;
-        params['dir'] = dir;
-        this.shouldStoreData = false;
-        this.sortOrder = { order, dir }
-        this.setState({ data: null });
-        this.requestData(params);
-    }
-
-    onEndReached = () => {
-        if (this.offset + this.limit < this.state.data.total && !this.isLoadingMore) {
-            this.isLoadingMore = true;
-            this.offset += this.limit;
-            let params = this.createParams()
-            if (this.filterData) {
-                params = {
-                    ...params,
-                    ...this.filterData
-                }
-            }
-            if (this.sortOrder) {
-                params = {
-                    ...params,
-                    ...this.sortOrder
-                }
-            }
-            this.requestData(params);
-        }
-    }
-
-    onListScroll = ({ nativeEvent }) => {
-        if (this.lastY == 0 || this.lastY > nativeEvent.contentOffset.y) {
-            if (this.state.showBottom == false) {
-                this.setState({ showBottom: true });
-            }
-        } else {
-            if (this.state.showBottom == true) {
-                this.setState({ showBottom: false });
-            }
-        }
-        this.lastY = nativeEvent.contentOffset.y;
-
-        if ((Number((nativeEvent.contentSize.height).toFixed(0)) - 1) <= Number((nativeEvent.contentOffset.y).toFixed(1)) + Number((nativeEvent.layoutMeasurement.height).toFixed(1))) {
-            this.onEndReached();
-        }
-    }
-
     shouldRenderLayoutFromConfig() {
-        if (this.state.data) {
+        if (this.categoryData) {
             return true;
         }
         return false;
     }
 
-    addMorePropsToComponent(element) {
-        return {
-            products: this.state.data.products
-        };
+    shouldShowComponent(element) {
+        if (element.id == 'default_catalog_products_list' && !this.showViewAll) {
+            return false;
+        }
+        return true;
+    }
+
+    onSelectedCategory(cate) {
+        this.setState({ selectedCate: cate })
+        this.test = cate;
     }
 
     renderPhoneLayout() {
-        let contentLayout = this.renderLayoutFromConfig('products_layout', 'content');
         return (
-            <Container style={{ backgroundColor: variable.appBackground }}>
-                {contentLayout.length > 0 && <Content>
-                    <View>
-                        {contentLayout}
-                    </View>
-                </Content>}
-                {this.renderLayoutFromConfig('products_layout', 'container')}
+            <Container>
+                <HeaderProducts cateChilds={this.cateChilds} selectedCate={this.state.selectedCate} onSelectedCategory={this.onSelectedCategory} />
+                <ProductList cateId={this.cateId} selectedCate={this.state.selectedCate} {...this} />
             </Container>
         );
     }
-
 }
-
 const mapStateToProps = (state) => {
     return { data: state.redux_data };
 }
@@ -302,5 +129,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     };
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
