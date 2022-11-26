@@ -42,7 +42,8 @@ const initialState = {
         urlApp: ''
     },
     currentURL: '',
-    bottomAction: 'Home'
+    bottomAction: 'Home',
+    modalVisible: false
 }
 
 export function redux_data(state = initialState, action) {
@@ -163,6 +164,8 @@ function processSingleAction(state, action) {
             return { ...state, ...{ 'currentURL': action.data } };
         case 'bottomAction':
             return { ...state, ...{ 'bottomAction': action.data } };
+        case 'setModalVisible':
+            return { ...state, ...{ 'modalVisible': action.data } };
         default:
             let customData = {};
             customData[action.type] = action.data;

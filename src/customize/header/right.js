@@ -8,6 +8,7 @@ import { products_mode } from "@helper/constants";
 import Events from '@helper/config/events';
 import md5 from 'md5';
 import Identify from '@helper/Identify';
+import { connect } from 'react-redux';
 
 const RightHeader = (props) => {
     function renderQty() {
@@ -77,7 +78,7 @@ const RightHeader = (props) => {
             <Icon name='filter'
                 style={{ fontSize: 25, color: variable.toolbarBtnColor, marginRight: Device.isTablet() ? 5 : 0, padding: 7, paddingLeft: 10, paddingRight: 10 }}
                 onPress={() => {
-                    openSearchPage();
+                    props.storeData('setModalVisible', true);
                 }} />
         );
     }
@@ -139,4 +140,14 @@ export const styles = StyleSheet.create({
         position: 'absolute', right: -8, top: 3, height: 20, marginBottom: 2
     }
 });
-export default RightHeader;
+
+//Save to redux.
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(null, mapDispatchToProps)(RightHeader);
