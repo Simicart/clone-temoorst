@@ -13,6 +13,7 @@ class AddWishlist extends React.Component {
         this.addedToWishlist = false;
         this.didRemoveProductFromWishlist = false;
         this.wishlistItemId = '';
+        this.product = null;
     }
 
     wishlistButtonAction() {
@@ -43,13 +44,31 @@ class AddWishlist extends React.Component {
         this.props.storeData('showLoading', { type: 'dialog' });
         new NewConnection()
             .init(wishlist_item, 'remove_product', this, 'POST')
-            .addBodyData({ "product": this.props.product.entity_id, "qty": "1" })
+            .addBodyData({ "product": this.product.entity_id, "qty": "1" })
             .connect();
     }
 
+    updateProduct() {
+        if (this.props.data.product_details_data[this.props.product.entity_id]) {
+            this.product = this.props.data.product_details_data[this.props.product.entity_id]
+        } else {
+            this.product = this.props.product;
+        }
+    }
+
+    componentDidUpdate() {
+        // check xem co thong tin cua product detail nay trong redux hay khong?
+        this.updateProduct();
+    }
+
+    componentDidMount() {
+        this.updateProduct();
+    }
+
     setData(data) {
+        console.log("data in setData Wishlist: ", data);
         this.props.storeData('showLoading', { type: 'none' });
-        let product = this.props.product;
+        let product = this.product;
         if (data.wishlistitem) {
             this.addedToWishlist = true;
             this.wishlistItemId = data.wishlistitem.wishlist_item_id;
@@ -60,8 +79,9 @@ class AddWishlist extends React.Component {
             product.wishlist_item_id = null;
         }
         let productData = {};
-        productData[this.props.product.entity_id] = product;
+        productData[this.product.entity_id] = product;
         this.props.storeData('add_product_details_data', productData);
+        this.product = productData;
         this.setState({});
     }
 
@@ -70,9 +90,9 @@ class AddWishlist extends React.Component {
     }
 
     render() {
-        if (this.props.product && this.didRemoveProductFromWishlist == false) {
-            if (this.props.product.wishlist_item_id) {
-                this.wishlistItemId = this.props.product.wishlist_item_id;
+        if (this.product && this.didRemoveProductFromWishlist == false) {
+            if (this.product.wishlist_item_id) {
+                this.wishlistItemId = this.product.wishlist_item_id;
                 this.addedToWishlist = true;
             }
         }
@@ -93,9 +113,9 @@ class AddWishlist extends React.Component {
         let data = {};
         data['event'] = 'product_action';
         data['action'] = 'added_to_wishlist';
-        data['product_name'] = this.props.product.name;
-        data['product_id'] = this.props.product.entity_id;
-        data['sku'] = this.props.product.sku;
+        data['product_name'] = this.product.name;
+        data['product_id'] = this.product.entity_id;
+        data['sku'] = this.product.sku;
         data['qty'] = '1';
         Events.dispatchEventAction(data, this);
     }
@@ -105,6 +125,7 @@ const mapStateToProps = (state) => {
     return {
         customer_data: state.redux_data.customer_data,
         dashboard_configs: state.redux_data.dashboard_configs,
+        data: state.redux_data
     };
 }
 
