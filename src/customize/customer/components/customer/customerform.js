@@ -7,7 +7,8 @@ import DateInput from '@base/components/form/DateInput';
 import DropDownInput from '@base/components/form/DropDownInput';
 import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
-import { ScrollView } from 'react-native';
+import { ScrollView, TouchableOpacity, View ,Text, Modal } from 'react-native';
+import { Icon, Left } from 'native-base';
 
 export default class CustomerForm extends SimiComponent {
 
@@ -25,6 +26,10 @@ export default class CustomerForm extends SimiComponent {
         if (this.data && this.data.social_login === true) {
             this.social_login = true;
         }
+        this.state = {
+            buttonColor: 'white',
+            modalVisible: false
+        }
     }
 
     componentDidMount() {
@@ -38,13 +43,50 @@ export default class CustomerForm extends SimiComponent {
         }
     }
 
+    setModalVisible(value) {
+        this.setState({
+            modalVisible: value
+        })
+    }
     updateButtonStatus(status) {
         this.props.parent.updateButtonStatus(status);
     }
 
+    // password(fields){
+    //     if (!this.social_login) {
+    //         let labelPassword = Identify.__('Password');
+    //         if (this.isEditProfile) {
+    //             labelPassword = Identify.__('Current Password');
+    //         }
+    //         fields.push(
+    //             this.renderField('password', 'password', labelPassword, this.isEditProfile ? 'opt' : 'req')
+    //         );
+    //         if (this.isEditProfile) {
+    //             fields.push(
+    //                 this.renderField('password', 'new_password', Identify.__('New Password'), this.isEditProfile ? 'opt' : 'req')
+    //             );
+    //         }
+    //         fields.push(
+    //             this.renderField('password', 'com_password', Identify.__('Confirm Password'), this.isEditProfile ? 'opt' : 'req')
+    //         );
+    //     }
+    // }
+
     createFields() {
         let fields = [];
 
+        if (this.isEditProfile) {
+            fields.push(
+                <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
+                    <Icon type='FontAwesome' name='user-circle-o' style={{ color: 'orange', fontSize: 80 }} ></Icon>
+                </View>
+            )
+        }
+        fields.push(
+            <View style={{ paddingTop: 15, paddingBottom: 15, marginBottom: 10 }}>
+                <Text style={{ fontWeight: 'bold', fontSize: 20  }}>{Identify.__('Information')}</Text>
+            </View>
+        )
         fields.push(
             this.renderField('text', 'prefix', Identify.__('Prefix'), this.address_option.prefix_show)
         );
@@ -74,7 +116,61 @@ export default class CustomerForm extends SimiComponent {
         fields.push(
             this.renderField('text', 'taxvat', Identify.__('Tax/VAT number'), this.address_option.taxvat_show)
         );
-
+        if (this.isEditProfile) {
+            fields.push(
+                <View 
+                    style={{ 
+                        // flexDirection: 'row', 
+                        // alignItems: 'center', 
+                        // justifyContent: 'space-between', 
+                        paddingTop: 15, paddingBottom: 15,
+                        marginBottom: 10, 
+                        borderTopWidth: 0.5, 
+                        borderTopColor: '#828282', 
+                        backgroundColor: this.state.buttonColor}}>
+                    {/* onPressIn={() => this.setState({ buttonColor: 'orange' })}
+                    onPressOut={() => this.setState({ buttonColor: 'white' })}
+                    // onPress={() => this.setModalVisible(true)} */}
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{Identify.__('Change Password')}</Text>
+                    {/* <Icon type='Feather' name='chevron-right' stype={{ color: '#828282' }}></Icon> */}
+                </View>
+            )
+        }
+        // if(!this.isEditProfile) {
+        //     this.password(fields);
+        // }
+        // else if (this.isEditProfile) {
+        //     fields.push(
+        //         <Modal 
+        //             visible={this.state.modalVisible} 
+        //             animationType='slide'
+        //             transparent={true}>
+        //             <TouchableOpacity
+        //                 style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+        //                 onPress={() => this.setModalVisible(false)}>
+        //                     <TouchableOpacity 
+        //                         style={{ height: '60%', width: '100%', backgroundColor: 'white', borderRadius: 15 }}
+        //                         activeOpacity={1}>
+        //                         <View 
+        //                             style={{
+        //                                 flexDirection: 'row', 
+        //                                 alignItems: 'center', 
+        //                                 justifyContent: 'space-between', 
+        //                                 paddingTop: 15, 
+        //                                 paddingBottom: 15,
+        //                                 borderBottomWidth: 0.5, 
+        //                                 borderBottomColor: '#828282',  }}>
+        //                             <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{Identify.__('Change Password')}</Text>
+        //                             <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+        //                                 <Text style= {{ color: '#828282', fontSize: 26, marginRight: 15 }}>X</Text>
+        //                             </TouchableOpacity>
+        //                         </View>
+        //                         {this.password(fields)}
+        //                     </TouchableOpacity>                        
+        //             </TouchableOpacity>
+        //         </Modal>
+        //     ) 
+        // }
         if (!this.social_login) {
             let labelPassword = Identify.__('Password');
             if (this.isEditProfile) {
