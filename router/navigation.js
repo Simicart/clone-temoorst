@@ -28,7 +28,7 @@ import Cart from '../src/customize/checkout/pages/cart';
 import Checkout from '../src/core/screens/checkout/pages/checkout';
 import CheckoutWebView from '../src/core/screens/checkout/pages/webview';
 import Thankyou from '../src/core/screens/checkout/pages/thankyou';
-import NewAddress from '../src/core/screens/customer/pages/address';
+import NewAddress from '../src/customize/customer/pages/address';
 import OrderHistory from '../src/core/screens/customer/pages/orders';
 import OrderHistoryDetail from '../src/core/screens/customer/pages/order';
 import MyAccount from '../src/customize/customer/pages/myaccount';
