@@ -187,7 +187,7 @@ class VerticalProductItem extends SimiComponent {
                     onPress={() => { this.openProductDetail() }}>
                     <View style={{
                         backgroundColor: 'white', position: "absolute", top: 5,
-                        right: 5, padding: 5, borderRadius: 8, borderColor: '#e0e0e0', borderWidth: 1, zIndex: 99,
+                        right: 0, padding: 0, borderRadius: 8, borderColor: '#e0e0e0', borderWidth: 1, zIndex: 99,
                         shadowColor: "#000",
                         shadowOffset: {
                             width: 0,

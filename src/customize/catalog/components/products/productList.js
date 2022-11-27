@@ -23,7 +23,6 @@ class ProductList extends SimiPageComponent {
       showBottom: true
     };
     this.cateId = this.props.cateId;
-    this.paramsFilter = this.props.paramsFilter;
     this.limit = Device.isTablet() ? 16 : 10;
     this.offset = 0;
     this.first = true;
@@ -34,6 +33,8 @@ class ProductList extends SimiPageComponent {
     this.onFilterAction = this.onFilterAction.bind(this);
     this.onSortAction = this.onSortAction.bind(this);
     this.list = null;
+    this.paramsFilter = null;
+    this.filterData
   }
 
   componentWillMount() {
@@ -75,59 +76,49 @@ class ProductList extends SimiPageComponent {
   }
 
   updateData(type, data_key, data) {
-
     let canLoadMore = true;
+    if (this.state.data) {
+      let combinedProducts = this.state.data.products;
+      combinedProducts.push.apply(combinedProducts, data.products);
+      data.products = combinedProducts;
+
+      let combinedIds = this.state.data.all_ids;
+      combinedIds.push.apply(combinedIds, data.all_ids);
+      data.all_ids = combinedIds;
+    }
+    if (this.props.data.showLoading.type !== 'none' && !this.props.isCategory) {
+      this.props.storeData('showLoading', { type: 'none' });
+    }
+
     if (this.offset + this.limit >= data.total) {
       canLoadMore = false;
     }
     this.isLoadingMore = false;
-
-    this.setState({ data: data, loadMore: canLoadMore });
-    this.props.onSetLayers(data.layers)
-    if (this.props.data.showLoading.type !== 'none' && !this.props.isCategory) {
-      this.props.storeData('showLoading', { type: 'none' });
+    if (this.shouldStoreData) {
+      this.state.data = data;
+      this.state.loadMore = canLoadMore;
+      let productsData = {};
+      productsData[data_key] = data;
+      this.props.storeData(type, productsData);
+    } else {
+      this.setState({ data: data, loadMore: canLoadMore });
     }
+    this.props.onSetLayers(data.layers)
   }
 
 
   changeStyle = () => {
-    if (this.state.showList == true) {
+    if (this?.state?.showList == true) {
       this.setState({ showList: false });
     } else {
       this.setState({ showList: true });
     }
   }
 
-  openFilter = () => {
-    NavigationManager.openPage(this.props.navigation, 'Filter', {
-      filter: this.state.data.layers,
-      onFilterAction: this.onFilterAction
-    });
-  }
-
-  onFilterAction(filterParams) {
-    this.limit = Device.isTablet() ? 16 : 10;
-    this.offset = 0;
-    this.props.storeData('showLoading', { type: 'full' });
-    params = {
-      ...this.createParams(),
-      ...filterParams
-    };
-    if (this.sortOrder) {
-      params = {
-        ...params,
-        ...this.sortOrder
-      }
-    }
-    this.shouldStoreData = false;
-    this.filterData = filterParams
-    this.setState({ data: null });
-    this.requestData(params);
-  }
 
   openSort = () => {
     NavigationManager.openPage(this.props.navigation, 'Sort', {
-      sort: this.state.data.orders,
+      sort: this?.state?.data.orders,
       onSortAction: this.onSortAction
     });
   }
@@ -152,7 +143,7 @@ class ProductList extends SimiPageComponent {
   }
 
   onEndReached = () => {
-    if (this.offset + this.limit < this.state.data.total && !this.isLoadingMore) {
+    if (this.offset + this.limit < this?.state?.data.total && !this.isLoadingMore) {
       this.isLoadingMore = true;
       this.offset += this.limit;
       let params = this.createParams()
@@ -174,11 +165,11 @@ class ProductList extends SimiPageComponent {
 
   onListScroll = ({ nativeEvent }) => {
     if (this.lastY == 0 || this.lastY > nativeEvent.contentOffset.y) {
-      if (this.state.showBottom == false) {
+      if (this?.state?.showBottom == false) {
         this.setState({ showBottom: true });
       }
     } else {
-      if (this.state.showBottom == true) {
+      if (this?.state?.showBottom == true) {
         this.setState({ showBottom: false });
       }
     }
@@ -190,7 +181,7 @@ class ProductList extends SimiPageComponent {
   }
 
   shouldRenderLayoutFromConfig() {
-    if (this.state.data) {
+    if (this?.state?.data) {
       return true;
     }
     return false;
@@ -198,25 +189,21 @@ class ProductList extends SimiPageComponent {
 
   addMorePropsToComponent(element) {
     return {
-      products: this.state.data.products
+      products: this?.state?.data.products
     };
   }
   onFilterAction(filterParams) {
+    let params;
     this.limit = Device.isTablet() ? 16 : 10;
     this.offset = 0;
     this.props.storeData('showLoading', { type: 'full' });
     params = {
-      ...this.createParams(),      
+      ...this.createParams(),
+      ...filterParams,
     };
-    if (this.sortOrder) {
-      params = {
-        ...params,
-        ...this.sortOrder
-      }
-    }
     this.shouldStoreData = false;
-    this.filterData = filterParams
-    this.setState({ data: null });
+    // this.filterData = filterParams
+    // this.setState({ data: null });
     this.requestData(params);
   }
   componentDidUpdate() {
@@ -225,12 +212,10 @@ class ProductList extends SimiPageComponent {
         this.cateId = this.props.selectedCate.entity_id;
         this.requestData(this.createParams());
       }
-      if (this.props.paramsFilter !== this.paramsFilter) {
-        this.paramsFilter = this.props.paramsFilter;
-        this.setState({ data: null })
-        this.requestData(params);
-      }
-
+    }
+    if (this.props.paramsFilter && this.props.paramsFilter != this.filterData) {
+      this.filterData = this.props.paramsFilter;
+      this.onFilterAction(this.props.paramsFilter);
     }
     this.first = false;
 
@@ -241,7 +226,7 @@ class ProductList extends SimiPageComponent {
       layout={this.layout}
       product={item}
       navigation={this.props.navigation}
-      showList={this.state.showList}
+      showList={this?.state?.showList}
       itemStyle={{ flex: 1 }}
     />);
   }
@@ -250,7 +235,7 @@ class ProductList extends SimiPageComponent {
     let numOfItemOnLastRow = data.length - numOfFullRow * numColumns;
     while (numOfItemOnLastRow !== numColumns && numOfItemOnLastRow !== 0) {
       ///remove this sec if don't have loadMore
-      if (this.props.parent.state.loadMore) {
+      if (this.props.parent?.state?.loadMore) {
         for (let i = 0; i < data.length - 1; i++) {
           if (data[i].empty) {
             data.splice(i, 1);
@@ -268,8 +253,8 @@ class ProductList extends SimiPageComponent {
     let numColumns = (showList && !Device.isTablet()) ? 1 : ((showList && Device.isTablet() || !showList && !Device.isTablet()) ? 2 : 4)
     return {
       style: styles.verticalList,
-      data: this.formatData(this.state.data.products, numColumns),
-      // extraData: this.props.parent.state.data,
+      data: this.formatData(this?.state?.data.products, numColumns),
+      // extraData: this.props.parent?.state?.data,
       showsVerticalScrollIndicator: false,
       keyExtractor: (item) => item.entity_id,
       numColumns: numColumns,
@@ -278,7 +263,7 @@ class ProductList extends SimiPageComponent {
   }
 
   render() {
-    if (this.state.data) {
+    if (this?.state?.data) {
       return (
         <Container style={{ backgroundColor: variable.appBackground }}>
           <ScrollView
@@ -296,7 +281,7 @@ class ProductList extends SimiPageComponent {
                 );
               }
               } />
-            <Spinner color={Identify.theme.loading_color} style={(this.state.loadMore) ? {} : { display: 'none' }} />
+            <Spinner color={Identify.theme.loading_color} style={(this?.state?.loadMore) ? {} : { display: 'none' }} />
             <View style={{ height: 60 }} />
           </ScrollView>
         </Container>

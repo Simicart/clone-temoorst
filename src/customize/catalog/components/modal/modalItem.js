@@ -1,50 +1,90 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { View, Text, TouchableOpacity, Animated, Easing, Image } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
 import { Icon } from 'native-base';
 import Identify from '@helper/Identify';
 const ModalItem = (props) => {
+  const index = props.selectedList.map((item) => item.attribute).indexOf(props.item.attribute);
   const [selected, setSelected] = useState(null);
   const [check, setCheck] = useState(false);
+
+  let rotateValueHolder = useRef(new Animated.Value(0)).current;
+
+  const handlerUp = () => {
+    Animated.timing(rotateValueHolder, {
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const handlerDown = () => {
+    Animated.timing(rotateValueHolder, {
+      toValue: 2,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const rotateData = rotateValueHolder.interpolate({
+    inputRange: [0, 1, 2],
+    outputRange: ['0deg', '180deg', '360deg'],
+  });
+
+  useEffect(() => {
+    if (!selected) {
+      const index = props.selectedList.map((item) => item.attribute).indexOf(props.item.attribute);
+      if (index > -1) {
+        setSelected(props.selectedList[index]);
+      }
+    }
+  }, [props.selectedList])
+
   useEffect(() => {
     if (selected) {
       props.setSelectedList((prevState) => {
-
         let newState;
         const index = prevState.map((item) => item.attribute).indexOf(props.item.attribute);
+        // check TH selected co gia tri => check tiep trong TH trong mang co item khac voi item duoc chon thi replace lai  => neu khong co thi push them vao
         if (index > -1) {
-          newState = prevState.map((item) => {
-            if (item.attribute == props.item.attribute) {
-              return {
+          newState = [];
+          for (let i = 0; i < prevState.length; i++) {
+            if (prevState[i].attribute == props.item.attribute && prevState[i].value !== selected.value) {
+              newState.push({
                 ...selected, attribute: props.item.attribute
-              };
+              });
+            } else if (prevState[i].attribute !== props.item.attribute) {
+              newState.push(prevState[i]);
             }
-            return item;
-          })
+          }
+          // newState = prevState.map((item) => {
+          //   if (item.attribute == props.item.attribute && item.value !== selected.value) {
+          //     return {
+          //       ...selected, attribute: props.item.attribute
+          //     };
+          //   }
+          //   return item;
+          // })
           return newState;
-
         } else {
           newState = [...prevState, { ...selected, attribute: props.item.attribute }];
           return newState;
         }
       })
+    } else {
+      // kiem tra xem TH selected = null ma trong mang co ton tai phan tu thi xoa no di
+      props.setSelectedList((prevState) => {
+        const index = prevState.map((item) => item.attribute).indexOf(props.item.attribute);
+        if (index > 0) {
+          return prevState.splice(index, 1);
+        } else {
+          return prevState;
+        }
+      })
     }
   }, [selected])
 
-  // const onSelectFilter =(selection)  =>{
-  //   let params = {};
-  //   params['filter[layer][' + attribute.attribute + ']'] = selection.value;
-
-  //   if (selected) {
-  //     for (let i = 0; i < selected.length; i++) {
-  //       let item = selected[i];
-  //       if (item.attribute != 'cat') {
-  //         params['filter[layer][' + item.attribute + ']='] = item.value;
-  //       }
-  //     }
-  //   }
-
-  //   // this.onFilterAction(params);
-  // }
   return (
     <View style={{ borderBottomColor: '#e0e0e0', borderBottomWidth: 1, paddingVertical: 10, }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -58,15 +98,33 @@ const ModalItem = (props) => {
         </View>
         <View>
           <TouchableOpacity onPress={() => {
-            setCheck(!check)
-          }}>
-            {
-              check ? (
-                <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 16, color: 'black' }} type="AntDesign" name="up" />
-              ) : (
-                <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 16, color: 'black' }} type="AntDesign" name="down" />
-              )
+            if (check) {
+              handlerDown();
+              setCheck(false);
+            } else {
+              handlerUp();
+              setCheck(true);
             }
+          }}>
+            {/* <Animated.Image
+              // source={require('@customize/images/down-arrow.png')}
+              source={require('../../../images/down-arrow.png')}
+              style={{
+                height: 20, width: 20, transform: [{ rotate: rotateData }],
+              }}
+            /> */}
+            {/* <Image
+              // source={require('@customize/images/down-arrow.png')}
+              source={require('../../../images/down-arrow.png')}
+              style={{
+                height: 20, width: 20, transform: [{ rotate: rotateData }],
+              }}
+            /> */}
+            <Animated.Image source={require('../../../images/account.png')}
+              style={{
+                height: 20, width: 20, transform: [{ rotate: rotateData }],
+              }}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -78,7 +136,14 @@ const ModalItem = (props) => {
                 props.item.filter.map((item, index) => (
                   <TouchableOpacity
                     onPress={() => {
-                      setSelected(item);
+                      setSelected((prevState) => {
+                        if (!prevState || prevState.value !== item.value) {
+                          return item;
+                        }
+                        else {
+                          return null;
+                        }
+                      });
                     }}
                     key={index}
                   >
@@ -88,7 +153,7 @@ const ModalItem = (props) => {
                           {item.label}
                         </Text>
                       </View>
-                      <View style={{ borderWidth: 1, borderRadius: 99, height: 25, width: 25, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                      <View style={{ borderWidth: 1, borderRadius: 99, height: 25, width: 25, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderColor: selected && selected.value == item.value ? Identify.theme.button_background : 'black' }}>
                         {selected && selected.value == item.value ? <View style={{ width: 15, height: 15, backgroundColor: Identify.theme.button_background, borderRadius: 99 }} /> : null}
                       </View>
                     </View>
