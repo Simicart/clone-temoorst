@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import NewConnection from '@base/network/NewConnection';
-import { category } from '@helper/constants';
+import { category, products } from '@helper/constants';
 import { Content, Container } from "native-base";
 import Identify from '@helper/Identify';
 import SimiPageComponent from "@base/components/SimiPageComponent";
@@ -11,6 +11,7 @@ import Categories from '../../components/categories/index';
 import HeaderProducts from '@customize/catalog/components/products/header';
 import ProductList from '@customize/catalog/components/products/productList';
 import Modal from '@customize/catalog/components/modal';
+import FilterTag from '@customize/catalog/components/products/FilterTag';
 class Products extends SimiPageComponent {
     constructor(props) {
         super(props);
@@ -19,6 +20,7 @@ class Products extends SimiPageComponent {
             selectedCate: null,
             layers: null,
             paramsFilter: null,
+            filterTag: null
         }
         this.categoryData = null;
         this.cateId = this.props.navigation.getParam("categoryId") ? this.props.navigation.getParam("categoryId") : -1;
@@ -37,6 +39,10 @@ class Products extends SimiPageComponent {
         this.onSelectedCategory = this.onSelectedCategory.bind(this)
         this.onSetLayers = this.onSetLayers.bind(this);
         this.onFilterAction = this.onFilterAction.bind(this);
+        this.onFilterTags = this.onFilterTags.bind(this);
+        this.paramsFilter = null;
+        this.filterTag = null;
+        this.layers = null;
     }
 
     componentWillMount() {
@@ -107,21 +113,37 @@ class Products extends SimiPageComponent {
         }
         return true;
     }
+
+
     onFilterAction(filterParams) {
         this.setState({ paramsFilter: filterParams });
+        this.paramsFilter = filterParams;
+    }
+
+    onFilterTags(filterTag) {
+        this.setState({ filterTag });
+        this.filterTag = filterTag;
     }
     onSelectedCategory(cate) {
         this.setState({ selectedCate: cate })
+
+        // remove filterTag
+        this.setState({ paramsFilter: null });
+        this.paramsFilter = null;
+        this.setState({ filterTag: null });
+        this.filterTag = null;
     }
 
     onSetLayers(layers) {
         this.setState({ layers: layers });
+        this.layers = layers;
     }
 
     renderPhoneLayout() {
         return (
             <Container>
                 <HeaderProducts cateChilds={this.cateChilds} selectedCate={this.state.selectedCate} onSelectedCategory={this.onSelectedCategory} />
+                <FilterTag {...this} />
                 <ProductList cateId={this.cateId} selectedCate={this.state.selectedCate} {...this} paramsFilter={this.state.paramsFilter} />
                 <Modal {...this} />
             </Container>

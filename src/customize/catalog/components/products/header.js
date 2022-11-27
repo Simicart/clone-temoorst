@@ -5,7 +5,7 @@ import Identify from '@helper/Identify';
 const HeaderProducts = (props) => {
     if (props.cateChilds) {
         return (
-            <View style={{ height: 60 }}>
+            <View style={{ height: 40, marginBottom: 15 }}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: 15 }}>
                     {
                         props.cateChilds.map((item, index) => (

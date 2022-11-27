@@ -8,25 +8,31 @@ import Identify from '@helper/Identify';
 import { TouchableOpacity } from 'react-native';
 import ModalItem from './modalItem';
 const ModalComponent = (props) => {
-    console.log("props in modal: ", props);
-    const [selectedList, setSelectedList] = useState([]);
-    useEffect(() => {
-        console.log("selectedList: ", selectedList);
-    }, [selectedList]);
+    const [layers, setLayers] = useState(props.layers);
+    const [selectedList, setSelectedList] = useState(props?.filterTag ? props?.filterTag : []);
     const handlerFilter = () => {
-        let params = '';
+        let params = [];
         for (let i = 0; i < selectedList.length; i++) {
             let item = selectedList[i];
-            if (params.length > 0) {
-                params += '&';
-            }
+            // if (params.length > 0) {
+            //     params += '&';
+            // }
             if (item.attribute != 'cat') {
-                params += 'filter[layer][' + item.attribute + ']=' + item.value;
+                params['filter[layer][' + item.attribute + ']'] = item.value;
             }
         }
         props.onFilterAction(params);
+        props.onFilterTags(selectedList);
+        props.storeData('setModalVisible', false);
     }
-    if (props.state?.layers) {
+    useEffect(() => {
+        setLayers(props.layers)
+    }, [props.layers])
+    useEffect(() => {
+        setSelectedList(props.filterTag ? props.filterTag : []);
+
+    }, [props.filterTag])
+    if (layers) {
         return (
             <Modal visible={props.modalVisible} style={{}} animationType="slide"
             >
@@ -42,8 +48,8 @@ const ModalComponent = (props) => {
                     </View>
                     <ScrollView style={{ paddingHorizontal: 20, height: height - 300 }}>
                         {
-                            props?.state?.layers?.layer_filter.map((item, index) => (
-                                <ModalItem item={item} {...props} key={index} setSelectedList={setSelectedList} />
+                            layers?.layer_filter.map((item, index) => (
+                                <ModalItem item={item} {...props} key={index} setSelectedList={setSelectedList} selectedList={selectedList} />
                             ))
                         }
                     </ScrollView>
