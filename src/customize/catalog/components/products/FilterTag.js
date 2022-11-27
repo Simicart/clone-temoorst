@@ -34,7 +34,7 @@ const FilterTag = (props) => {
                     {
                         filterTags.map((item, index) => (
                             <TouchableOpacity key={index} onPress={() => handlerRemoveFilterTag(item)}>
-                                <View style={{ padding: 5, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center', backgroundColor: 'red', borderRadius: 12, marginRight: 10 }}>
+                                <View style={{ padding: 5, paddingHorizontal: 10, flexDirection: 'row', alignItems: 'center', backgroundColor: Identify.theme.button_background, borderRadius: 12, marginRight: 10 }}>
                                     <Text style={{ color: Identify.theme.button_text_color, marginRight: 3 }}>
                                         {item.attribute}: {item.label}
                                     </Text>

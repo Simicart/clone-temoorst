@@ -12,18 +12,18 @@ const ModalItem = (props) => {
   const handlerUp = () => {
     Animated.timing(rotateValueHolder, {
       toValue: 1,
-      duration: 1000,
+      duration: 200,
       easing: Easing.linear,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
   const handlerDown = () => {
     Animated.timing(rotateValueHolder, {
       toValue: 2,
-      duration: 500,
+      duration: 200,
       easing: Easing.linear,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -58,14 +58,6 @@ const ModalItem = (props) => {
               newState.push(prevState[i]);
             }
           }
-          // newState = prevState.map((item) => {
-          //   if (item.attribute == props.item.attribute && item.value !== selected.value) {
-          //     return {
-          //       ...selected, attribute: props.item.attribute
-          //     };
-          //   }
-          //   return item;
-          // })
           return newState;
         } else {
           newState = [...prevState, { ...selected, attribute: props.item.attribute }];
@@ -106,21 +98,7 @@ const ModalItem = (props) => {
               setCheck(true);
             }
           }}>
-            {/* <Animated.Image
-              // source={require('@customize/images/down-arrow.png')}
-              source={require('../../../images/down-arrow.png')}
-              style={{
-                height: 20, width: 20, transform: [{ rotate: rotateData }],
-              }}
-            /> */}
-            {/* <Image
-              // source={require('@customize/images/down-arrow.png')}
-              source={require('../../../images/down-arrow.png')}
-              style={{
-                height: 20, width: 20, transform: [{ rotate: rotateData }],
-              }}
-            /> */}
-            <Animated.Image source={require('../../../images/account.png')}
+            <Animated.Image source={require('../../../images/down.png')}
               style={{
                 height: 20, width: 20, transform: [{ rotate: rotateData }],
               }}

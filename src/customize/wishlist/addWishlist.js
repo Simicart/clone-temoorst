@@ -66,7 +66,6 @@ class AddWishlist extends React.Component {
     }
 
     setData(data) {
-        console.log("data in setData Wishlist: ", data);
         this.props.storeData('showLoading', { type: 'none' });
         let product = this.product;
         if (data.wishlistitem) {
