@@ -211,7 +211,7 @@ class VerticalProductItem extends SimiComponent {
                         </View>
                     ) : (
                         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', zIndex: 99, marginTop: 10, zIndex: 100 }}>
-                            <View style={{ width: (width / 2) - 90, height: 40, borderRadius: 12, borderColor: '#e0e0e0', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
+                            <View style={{ width: (width / 2) - 100, height: 40, borderRadius: 12, borderColor: '#e0e0e0', borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', }}>
                                 <TouchableOpacity
                                     disabled={this.state.quantity == '1'} onPress={() => {
                                         if (this.state.quantity !== '1') {
@@ -252,7 +252,7 @@ class VerticalProductItem extends SimiComponent {
     }
 
     openProductDetail() {
-        NavigationManager.openPage(this.props.navigation, this.props.layout, {
+        NavigationManager.openPage(this.props.navigation, 'ProductDetail', {
             productId: this.props.product.entity_id,
             objData: this.props.product,
         });

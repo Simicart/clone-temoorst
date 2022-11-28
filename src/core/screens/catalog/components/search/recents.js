@@ -5,7 +5,7 @@ import Identify from '@helper/Identify';
 import variable from '@theme/variables/material';
 import SimiComponent from "@base/components/SimiComponent";
 import AppStorage from '@helper/storage';
-
+import NavigationManager from '@helper/NavigationManager';
 export default class RecentSearch extends SimiComponent {
 
     constructor(props) {
@@ -96,6 +96,13 @@ export default class RecentSearch extends SimiComponent {
                         );
                     }}
                 />
+                <TouchableOpacity
+                    onPress={() => {
+                        NavigationManager.openPage(this.props.navigation, 'Wishlist', {})
+                    }}
+                >
+                    <Text>Wishlist</Text>
+                </TouchableOpacity>
             </View>
         );
     }
