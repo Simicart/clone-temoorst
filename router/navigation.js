@@ -50,7 +50,8 @@ import PayPalExpressShipping from '../src/plugins/paypalexpress/pages/shipping';
 import BraintreePayment from '../src/plugins/braintree';
 import CCAvenuePayment from '../src/plugins/ccavenue';
 
-import ContactUs from '../src/plugins/contactus';
+// import ContactUs from '../src/plugins/contactus';
+import ContactUs from "../src/customize/customer/pages/contactUs";
 import StoreLocator from '../src/plugins/storelocator';
 import StoreLocatorDetail from '../src/plugins/storelocator/detail';
 import StoreLocatorSearch from '../src/plugins/storelocator/search';
