@@ -14,9 +14,20 @@ export default class SuggestionSearch extends SimiComponent {
         this.state = {
             suggestion: [],
             products: null,
+            sortBy: null
         }
         this.newRecents = [];
         this.products = null;
+        this.orders = null;
+        this.orderTag = null;
+        this.sortBy = null;
+        this.handlerSortBy = this.handlerSortBy.bind(this);
+    }
+
+    handlerSortBy(sortBy) {
+        console.log("sortBy in handler: ", sortBy);
+        this.sortBy = sortBy;
+        this.setState({ sortBy })
     }
 
     componentWillUnmount() {
@@ -64,9 +75,11 @@ export default class SuggestionSearch extends SimiComponent {
         });
     }
     componentDidUpdate() {
+        this.search = this.props.parent.search;
         if (this.products !== this.props.parent.state.products) {
             console.log("11111");
             this.products = this.props.parent.state.products;
+            this.orders = this.props.parent.orders;
             this.setState({ products: this.props.parent.state.products });
         }
     }

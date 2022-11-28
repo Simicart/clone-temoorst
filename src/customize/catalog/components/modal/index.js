@@ -40,7 +40,7 @@ const ModalComponent = (props) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20, borderBottomColor: '#e0e0e0', borderBottomWidth: 1, height: 70, alignItems: 'center' }}>
                         <View />
                         <View>
-                            <Text style={{ fontWeight: 'bold' }}>Filter</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 19 }}>{Identify.__("Filter")}</Text>
                         </View>
                         <TouchableOpacity onPress={() => props.storeData('setModalVisible', false)}>
                             <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 25, color: 'black' }} type="AntDesign" name="close" />

@@ -19,8 +19,12 @@ class SearchProducts extends SimiPageComponent {
             products: null,
             loadMore: true,
         }
+        this.search = null;
         this.onRecentVisiable = this.onRecentVisiable.bind(this);
         this.openSearchResults = this.openSearchResults.bind(this);
+        this.handlerQueryAndSortBy = this.handlerQueryAndSortBy.bind(this);
+        this.canVisiableModal = false;
+        this.orders = null;
     }
 
     onRecentVisiable(boolean) {
@@ -28,9 +32,14 @@ class SearchProducts extends SimiPageComponent {
             recentVisiable: boolean,
         })
     }
-    request(query) {
+    request(query, order, dir) {
+        this.props.storeData('setModalVisible', false);
         let params = [];
         params['filter[q]'] = query;
+        if (order && dir) {
+            params['order'] = order;
+            params['dir'] = dir;
+        }
         new NewConnection()
             .init(products, 'get_products_data', this)
             .addGetData(params)
@@ -40,18 +49,23 @@ class SearchProducts extends SimiPageComponent {
     setData(data) {
         console.log("data: ", data);
         this.setState({ products: data.products });
-        // this.props.storeData('setModalVisible', false);
+        this.orders = data.orders;
         this.props.storeData('showLoading', { type: 'none' });
     }
 
     openSearchResults(query) {
-        console.log("vao trong open")
+        this.search = query;
         this.props.storeData('showLoading', { type: 'full' });
         this.tracking(query);
         if (this.recents) {
             this.recents.saveQuery(query);
         }
         this.request(query);
+    }
+
+    handlerQueryAndSortBy(query, order, dir) {
+        this.props.storeData('showLoading', { type: 'full' });
+        this.request(query, order, dir);
     }
 
     createRef(id) {
