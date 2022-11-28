@@ -19,7 +19,7 @@ import Setting from '@etc/layout/core/setting';
 import NotificationHistory from '@etc/layout/core/notificationhistory';
 import Search from '@etc/layout/core/search';
 import HeaderLayout from '@etc/layout/core/header';
-
+import contactUs from '@etc/layout/customize/contactus';
 export default class Layout {
     static layout = {};
     static plugins = [];
@@ -45,6 +45,7 @@ export default class Layout {
         this.createPageLayout('notification_history_layout','notification_history', NotificationHistory);
         this.createPageLayout('header_layout','header', HeaderLayout);
         this.createPageLayout('search_layout','search', Search);
+        this.createPageLayout('contactus_layout','contactus', contactUs);
     }
 
     static createPageLayout(keyForSave, keyConfig, coreLayout) {
