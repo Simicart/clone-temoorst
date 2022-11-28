@@ -4,6 +4,12 @@ import { Icon } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ContactUsItem extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            buttonColor: 'white'
+        }
+    }
     render() {
         switch(this.props.type){
             case 'web':
@@ -44,7 +50,17 @@ export default class ContactUsItem extends React.Component {
         }
         return (
             <TouchableOpacity 
-            style={{ flexDirection: 'row', paddingTop: 20, paddingBottom: 20, marginLeft: 20, borderBottomColor: '#828282', borderBottomWidth: 0.5, alignItems: 'center' }}
+            style={{ 
+                flexDirection: 'row', 
+                paddingTop: 20, 
+                paddingBottom: 20, 
+                marginLeft: 20, 
+                borderBottomColor: '#828282', 
+                borderBottomWidth: 0.5, 
+                alignItems: 'center', 
+                backgroundColor: this.state.buttonColor }}
+            onPressIn={() => this.setState({ buttonColor: 'orange' })}
+            onPressOut={() => this.setState({ buttonColor: 'white' })}
             onPress={() => this.action() }>
                 <Icon type={this.props.icon_type} name={this.props.icon_name} stype={{ color: '#828282' }}></Icon>
                 <Text style={{ marginLeft: 20 }}>{this.props.data}</Text>
