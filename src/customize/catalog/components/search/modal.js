@@ -7,7 +7,6 @@ import ModalItem from './modalItem';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 const ModalSearch = (props) => {
-    console.log("props in ModalSearch: ", props);
     const [sortBy, setSortBy] = useState(props.props.parent.orders ? props.props.parent.orders[0] : [])
     const [listOrders, setListOrders] = useState(props.props.parent.orders ? props.props.parent.orders : []);
     const [selectedList, setSelectedList] = useState(props?.orderTag ? props?.orderTag : []);

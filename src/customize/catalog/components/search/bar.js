@@ -20,10 +20,8 @@ export default class SearchBar extends React.Component {
         }
     }
     debounceSearch = debounce(text => this.props.parent.openSearchResults(text), 1000);
-    componentDidMount() {
-        console.log("this in bar: ", this);
-    }
     onChangeText(txt) {
+        this.props.parent.onChangeSearch(txt)
         this.state.text = txt;
         this.textInput.setNativeProps({ text: txt })
         if (this.state.showClear && this.state.text.length == 0) {
@@ -32,14 +30,23 @@ export default class SearchBar extends React.Component {
             this.setState({ showClear: true });
         }
         if (this.state.text.length > 2) {
-            console.log("vao trong if")
             this.debounceSearch(this.state.text);
             this.props.parent.onRecentVisiable(false);
         } else {
             this.props.parent.onRecentVisiable(true);
         }
     }
-
+    componentDidUpdate() {
+        console.log("this: ", this);
+        if (this.props.parent.state.search && this.props.parent.state.search !== this.state.text) {
+            this.textInput.setNativeProps({ text: this.props.parent.state.search })
+            this.setState({ text: this.props.parent.state.search });
+            if (this.props.parent.state.search.length > 2) {
+                this.debounceSearch(this.props.parent.state.search);
+                this.props.parent.onRecentVisiable(false);
+            }
+        }
+    }
     onEndEditing() {
         this.props.parent.openSearchResults(this.state.text);
     }

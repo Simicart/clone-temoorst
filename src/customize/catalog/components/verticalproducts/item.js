@@ -252,7 +252,7 @@ class VerticalProductItem extends SimiComponent {
     }
 
     openProductDetail() {
-        NavigationManager.openPage(this.props.navigation, this.props.layout, {
+        NavigationManager.openPage(this.props.navigation, 'ProductDetail', {
             productId: this.props.product.entity_id,
             objData: this.props.product,
         });

@@ -25,7 +25,6 @@ export default class SuggestionSearch extends SimiComponent {
     }
 
     handlerSortBy(sortBy) {
-        console.log("sortBy in handler: ", sortBy);
         this.sortBy = sortBy;
         this.setState({ sortBy })
     }
@@ -77,7 +76,6 @@ export default class SuggestionSearch extends SimiComponent {
     componentDidUpdate() {
         this.search = this.props.parent.search;
         if (this.products !== this.props.parent.state.products) {
-            console.log("11111");
             this.products = this.props.parent.state.products;
             this.orders = this.props.parent.orders;
             this.setState({ products: this.props.parent.state.products });
@@ -115,7 +113,9 @@ export default class SuggestionSearch extends SimiComponent {
                             return (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        this.props.parent.openSearchResults(item.label);
+                                        console.log("this onPress: ", this);
+                                        this.props.parent.onChangeSearch(item.label)
+                                        // this.props.parent.openSearchResults(item.label);
                                     }}
                                     style={{ borderBottomColor: '#EDEDED', borderBottomWidth: 0.5, flexDirection: 'row', alignItems: 'center', padding: 15 }}>
                                     <Text style={{ flex: 1, marginRight: 30, paddingBottom: 0 }}>{item.label}</Text>

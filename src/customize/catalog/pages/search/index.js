@@ -18,11 +18,13 @@ class SearchProducts extends SimiPageComponent {
             recentVisiable: true,
             products: null,
             loadMore: true,
+            search: null
         }
         this.search = null;
         this.onRecentVisiable = this.onRecentVisiable.bind(this);
         this.openSearchResults = this.openSearchResults.bind(this);
         this.handlerQueryAndSortBy = this.handlerQueryAndSortBy.bind(this);
+        this.onChangeSearch = this.onChangeSearch.bind(this);
         this.canVisiableModal = false;
         this.orders = null;
     }
@@ -46,8 +48,12 @@ class SearchProducts extends SimiPageComponent {
             .connect();
     }
 
+    onChangeSearch(keyword) {
+        this.search = keyword;
+        this.setState({ search: keyword })
+    }
+
     setData(data) {
-        console.log("data: ", data);
         this.setState({ products: data.products });
         this.orders = data.orders;
         this.props.storeData('showLoading', { type: 'none' });
