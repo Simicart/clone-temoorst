@@ -71,18 +71,23 @@ class ProductList extends SimiPageComponent {
       .connect();
   }
 
-  setData(data) {
+  setData(data, requestId) {
+    // if (requestId == 'reached_products') {
+    //   this.updateData('reached_products', this.cateId, data);  
+    // }
     this.updateData('add_products_data', this.cateId, data);
   }
 
   updateData(type, data_key, data) {
-
+    console.log("data: ", data);
     let canLoadMore = true;
     if (this.offset + this.limit >= data.total) {
       canLoadMore = false;
     }
     this.isLoadingMore = false;
-
+    // if (type == 'reached_products') {
+    //   this.setState({ data: {...data, products}, loadMore: canLoadMore });
+    // }
     if (this.shouldStoreData) {
       this.state.data = data;
       this.state.loadMore = canLoadMore;
@@ -135,6 +140,7 @@ class ProductList extends SimiPageComponent {
   }
 
   onEndReached = () => {
+    console.log("this?.state?.data.total: ", this?.state?.data.total);
     if (this.offset + this.limit < this?.state?.data.total && !this.isLoadingMore) {
       this.isLoadingMore = true;
       this.offset += this.limit;
@@ -151,6 +157,7 @@ class ProductList extends SimiPageComponent {
           ...this.sortOrder
         }
       }
+      console.log("params in reached: ", params);
       this.requestData(params);
     }
   }
@@ -194,7 +201,7 @@ class ProductList extends SimiPageComponent {
       ...filterParams,
     };
     this.shouldStoreData = false;
-    // this.filterData = filterParams
+    this.filterData = filterParams
     // this.setState({ data: null });
     this.requestData(params);
   }

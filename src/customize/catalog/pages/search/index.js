@@ -6,6 +6,7 @@ import Events from '@helper/config/events';
 import NewConnection from '@base/network/NewConnection';
 import { products } from '@helper/constants';
 import { connect } from 'react-redux';
+import AppStorage from '@helper/storage';
 class SearchProducts extends SimiPageComponent {
 
     constructor(props) {
@@ -48,6 +49,7 @@ class SearchProducts extends SimiPageComponent {
             .connect();
     }
 
+    // ham nay dung de change text trong recent. Khi chon 1 keyword trong recent + set lai state => change text trong bar => search
     onChangeSearch(keyword) {
         this.search = keyword;
         this.setState({ search: keyword })
@@ -60,9 +62,17 @@ class SearchProducts extends SimiPageComponent {
     }
 
     openSearchResults(query) {
+        let id = query.replace(' ', '_').toLowerCase();
         this.search = query;
         this.props.storeData('showLoading', { type: 'full' });
         this.tracking(query);
+        AppStorage.getData('recent_search').then((recents) => {
+            let newRecents = JSON.parse(recents);
+            if (newRecents.map((item) => item.label).indexOf(query) > -1) {
+                AppStorage.saveData('recent_search', JSON.stringify(newRecents.unshift({ id, label: query })));
+            }
+        })
+
         if (this.recents) {
             this.recents.saveQuery(query);
         }

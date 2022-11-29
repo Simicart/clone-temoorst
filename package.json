@@ -24,7 +24,7 @@
     "create-react-class": "^15.6.3",
     "lodash": "^4.17.21",
     "lottie-ios": "^3.1.8",
-    "lottie-react-native": "^4.0.3",
+    "lottie-react-native": "^4.0.2",
     "metro-react-native-babel-preset": "^0.66.2",
     "native-base": "^2.13.8",
     "react": "16.8.6",

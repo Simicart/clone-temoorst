@@ -8,14 +8,14 @@ import material from '../../../../../../native-base-theme/variables/material';
 const AddNewAddress = (props) => {
 
     function onClickAddNew() {
-         props.parent.addNewAddress()
+        props.parent.addNewAddress()
     }
 
     function renderMessage() {
         let message = 'Or choose address(es) to edit';
-        if ( props.parent.mode === 'checkout_select_address') {
+        if (props.parent.mode === 'checkout_select_address') {
             message = 'Or choose an address to continue';
-        } else if ( props.parent.mode.includes('edit')) {
+        } else if (props.parent.mode.includes('edit')) {
             message = 'Or choose an address to edit';
         }
         return (
@@ -27,7 +27,7 @@ const AddNewAddress = (props) => {
 
     return (
         <View>
-            <TouchableOpacity onPress={() => {  onClickAddNew() }}>
+            <TouchableOpacity onPress={() => { onClickAddNew() }}>
                 <Card style={{ marginLeft: 12, marginRight: 12, marginTop: 12, height: 50 }}>
                     <CardItem style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon name={'add-circle'} />
@@ -38,7 +38,7 @@ const AddNewAddress = (props) => {
                     </CardItem>
                 </Card>
             </TouchableOpacity>
-            { renderMessage()}
+            {renderMessage()}
         </View>
     );
 }

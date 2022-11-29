@@ -27,7 +27,16 @@ class VerticalProductItem extends SimiComponent {
 
     renderOutStock() {
         if (this.props.product.is_salable == '0') {
-            return <OutStockLabel />
+            return (
+                <View style={{ height: 40, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 12, backgroundColor: Identify.theme.button_background }}>
+                    <View>
+                        <Text style={{ fontWeight: "bold", color: "white" }}>
+                            {Identify.__("Out of stock")}
+                        </Text>
+                    </View>
+                </View>
+            )
+            // <OutStockLabel />
         }
     }
     renderSpecialPriceLabel() {

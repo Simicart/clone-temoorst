@@ -37,7 +37,6 @@ export default class SearchBar extends React.Component {
         }
     }
     componentDidUpdate() {
-        console.log("this: ", this);
         if (this.props.parent.state.search && this.props.parent.state.search !== this.state.text) {
             this.textInput.setNativeProps({ text: this.props.parent.state.search })
             this.setState({ text: this.props.parent.state.search });
@@ -71,6 +70,7 @@ export default class SearchBar extends React.Component {
                         {this.state.showClear && <Icon style={styles.clearIcon} name='md-close' onPress={() => {
                             this.textInput.setNativeProps({ text: '' })
                             this.setState({ text: '', showClear: false });
+                            this.props.parent.onChangeSearch('')
                             this.props.parent.onRecentVisiable(true);
                         }} />}
                         {voiceSearch}

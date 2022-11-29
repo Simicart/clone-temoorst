@@ -3,7 +3,7 @@ import React from 'react'
 import Identify from '@helper/Identify';
 
 const HeaderProducts = (props) => {
-    if (props.cateChilds) {
+    if (props.cateChilds && props.cateChilds.length > 1) {
         return (
             <View style={{ height: 40, marginBottom: 15 }}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ paddingHorizontal: 15 }}>

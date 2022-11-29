@@ -39,6 +39,7 @@ class AddressBookPage extends SimiPageComponent {
     }
 
     getListAddresses() {
+        this.props.storeData('showLoading', { type: 'dialog' });
         new NewConnection()
             .init(addresses, 'get_address_data', this)
             .addGetData({
@@ -163,7 +164,7 @@ class AddressBookPage extends SimiPageComponent {
             return (null);
         }
         return (
-            <Container style={{ backgroundColor: variable.appBackground }}>
+            <Container style={{ backgroundColor: variable.appBackground, flex: 1 }}>
                 {this.renderLayoutFromConfig('addressbook_layout', 'container')}
             </Container>
         );
