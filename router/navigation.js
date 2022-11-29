@@ -12,7 +12,7 @@ import Category from '../src/customize/catalog/pages/categories/catagories';
 import Home from '../src/customize/home/pages';
 // import Products from '../src/core/screens/catalog/pages/products/products';
 import Products from '../src/customize/catalog/pages/products/products';
-import Settings from '../src/core/screens/settings/pages/settings';
+import Settings from '../src/customize/settings/pages/settings';
 import Sort from '../src/core/screens/catalog/pages/products/sort';
 import Filter from '../src/core/screens/catalog/pages/products/filter';
 import FilterSelection from '../src/core/screens/catalog/pages/products/selection';
