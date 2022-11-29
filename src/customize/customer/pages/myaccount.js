@@ -120,7 +120,6 @@ class MyAccountPage extends SimiPageComponent {
     }
 
     renderPhoneLayout() {
-        console.log(Identify.theme);
         return (
             <Container style={{ paddingLeft: 15, paddingRight: 15, backgroundColor: variable.appBackground }}>
                 <Content style={{ flex: 1, paddingTop: 15 }}>
