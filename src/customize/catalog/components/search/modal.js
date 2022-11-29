@@ -1,38 +1,27 @@
-import { View, Text, Modal, Dimensions, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { Icon } from 'native-base';
+import { View, Text, Modal, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
 import Identify from '@helper/Identify';
-import { TouchableOpacity } from 'react-native';
+import { Icon } from 'native-base';
 import ModalItem from './modalItem';
-const ModalComponent = (props) => {
-    const [layers, setLayers] = useState(props.layers);
-    const [selectedList, setSelectedList] = useState(props?.filterTag ? props?.filterTag : []);
-    const handlerFilter = () => {
-        let params = [];
-        for (let i = 0; i < selectedList.length; i++) {
-            let item = selectedList[i];
-            // if (params.length > 0) {
-            //     params += '&';
-            // }
-            if (item.attribute != 'cat') {
-                params['filter[layer][' + item.attribute + ']'] = item.value;
-            }
+const height = Dimensions.get("window").height;
+const width = Dimensions.get("window").width;
+const ModalSearch = (props) => {
+    const [sortBy, setSortBy] = useState(props.props.parent.orders ? props.props.parent.orders[0] : [])
+    const [listOrders, setListOrders] = useState(props.props.parent.orders ? props.props.parent.orders : []);
+    const [selectedList, setSelectedList] = useState(props?.orderTag ? props?.orderTag : []);
+    useEffect(() => {
+        setListOrders(props.props.parent.orders ? props.props.parent.orders : []);
+    }, [props.props.parent.orders]);
+    useEffect(() => {
+        if (props.state.sortBy) {
+            setSortBy(props.state.sortBy)
         }
-        props.onFilterAction(params);
-        props.onFilterTags(selectedList);
-        props.storeData('setModalVisible', false);
+    }, [props.state.sortBy])
+    const handlerQueryAndSortBy = () => {
+        props.props.parent.handlerQueryAndSortBy(props.search, sortBy?.key, sortBy?.direction)
     }
-    useEffect(() => {
-        setLayers(props.layers)
-    }, [props.layers])
-    useEffect(() => {
-        setSelectedList(props.filterTag ? props.filterTag : []);
-
-    }, [props.filterTag])
-    if (layers) {
+    if (listOrders && listOrders.length > 0) {
         return (
             <Modal visible={props.modalVisible} style={{}} animationType="slide"
             >
@@ -40,24 +29,20 @@ const ModalComponent = (props) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20, borderBottomColor: '#e0e0e0', borderBottomWidth: 1, height: 70, alignItems: 'center' }}>
                         <View />
                         <View>
-                            <Text style={{ fontWeight: 'bold', fontSize: 19 }}>{Identify.__("Filter")}</Text>
+                            <Text style={{ fontWeight: 'bold' }}>Filter</Text>
                         </View>
                         <TouchableOpacity onPress={() => props.storeData('setModalVisible', false)}>
                             <Icon style={{ textAlign: 'right', marginLeft: 0, marginRight: 0, fontSize: 25, color: 'black' }} type="AntDesign" name="close" />
                         </TouchableOpacity>
                     </View>
                     <ScrollView style={{ paddingHorizontal: 20, height: height - 300 }}>
-                        {
-                            layers?.layer_filter.map((item, index) => (
-                                <ModalItem item={item} {...props} key={index} setSelectedList={setSelectedList} selectedList={selectedList} />
-                            ))
-                        }
+                        <ModalItem sortBy={sortBy} item={listOrders} {...props} setSelectedList={setSelectedList} selectedList={selectedList} />
                     </ScrollView>
                     <View style={{
                         height: 100, width: '100%', borderColor: '#E0E0E0', borderWidth: 1, borderTopLeftRadius: 12, borderTopRightRadius: 12, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 10,
                         // position: 'absolute', bottom: 0, right: 0, left: 0
                     }}>
-                        <TouchableOpacity onPress={() => handlerFilter()}>
+                        <TouchableOpacity onPress={() => handlerQueryAndSortBy()}>
                             <View style={{ borderRadius: 12, backgroundColor: 'red', height: 55, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ textAlign: 'center', fontWeight: "bold", color: "white", width: width - 50 }}>
                                     {Identify.__("APPLY")}
@@ -72,6 +57,7 @@ const ModalComponent = (props) => {
     } else {
         return null
     }
+
 }
 
 const mapStateToProps = (state) => {
@@ -86,4 +72,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalSearch);

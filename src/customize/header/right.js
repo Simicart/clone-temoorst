@@ -123,6 +123,13 @@ const RightHeader = (props) => {
                 {renderQty()}
             </View>
         )
+    }
+    else if (props.navigation.state.routeName === "SearchProducts") {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {renderFilter()}
+            </View>
+        )
     } else {
         return (
             <View />
