@@ -1,6 +1,6 @@
 import React from 'react';
 import SimiComponent from '@base/components/SimiComponent';
-import { Button, Text, View } from 'native-base';
+import { Button, Text, View, Card } from 'native-base';
 import Identify from '@helper/Identify';
 
     const ReorderButton = (props) => {
@@ -11,12 +11,10 @@ import Identify from '@helper/Identify';
 
         if (Identify.getMerchantConfig().storeview.sales.sales_reorder_allow == '1') {
             return (
-                <View style={{ 
+                <Card style={{ 
                     justifyContent: 'center', 
                     alignContent: 'center', 
                     height: 90,
-                    borderWidth: 0.3, 
-                    borderColor: 'gray',
                     borderRadius: 10, 
                     shadowColor: "#000",
                     shadowOffset: {
@@ -31,7 +29,7 @@ import Identify from '@helper/Identify';
                         onPress={() => {  onClickReOrder() }}>
                         <Text> {Identify.__('Reorder')} </Text>
                     </Button>
-                </View>
+                </Card>
             );
         } else {
             return (null);
