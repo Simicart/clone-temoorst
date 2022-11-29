@@ -10,10 +10,6 @@ export default StyleSheet.create({
         flex: 1,
         aspectRatio: 1
     },
-    title: {
-        fontFamily: material.fontBold,
-        marginRight: 15
-    },
     bottom: {
         backgroundColor: '#E6f2f2f2',
         position: 'absolute',

@@ -1,9 +1,8 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Card, CardItem, Text } from 'native-base';
+import { Card, CardItem, Text, View } from 'native-base';
 import NavigationManager from '@helper/NavigationManager';
 import Identify from '@helper/Identify';
-import styles from './listStyles';
 import material from '@theme/variables/material';
 
 const OrderBilling = (props) => {
@@ -37,52 +36,52 @@ const OrderBilling = (props) => {
 
     function renderOrderNumber() {
         return (
-            <CardItem listItemPadding={0}>
-                <Text style={[styles.title, { fontFamily: material.fontBold }]}>{Identify.__('Order #')}</Text>
-                <Text>{props.order.increment_id}</Text>
+            <CardItem style = {{ paddingTop: 5, paddingBottom: 5, marginBottom: 10 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, fontSize: 16 }}>{Identify.__('Order ID: ')}</Text>
+                <Text style={{ fontFamily: material.fontBold, fontSize: 16 }}>{props.order.increment_id}</Text>
             </CardItem>
         );
     }
 
     function renderDate() {
         return (
-            <CardItem listItemPadding={0}>
-                <Text style={[styles.title, { fontFamily: material.fontBold }]}>{Identify.__('Date')}</Text>
-                <Text>{props.order.updated_at}</Text>
+            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Date: ')}</Text>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{props.order.updated_at}</Text>
             </CardItem>
         );
     }
 
     function renderShipping() {
         return (
-            <CardItem listItemPadding={0}>
-                <Text style={[styles.title, { fontFamily: material.fontBold }]}>{Identify.__('Ship To')}</Text>
-                <Text>{renderShipTo(props.order.shipping_address)}</Text>
+            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Ship To: ')}</Text>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{renderShipTo(props.order.shipping_address)}</Text>
             </CardItem>
         );
     }
 
     function renderOrderTotal() {
         return (
-            <CardItem listItemPadding={0}>
-                <Text style={[styles.title, { fontFamily: material.fontBold }]}>{Identify.__('Order Total')}</Text>
-                <Text>{Identify.formatPriceWithCurrency(props.order.total.grand_total_incl_tax, props.order.total.currency_symbol)}</Text>
+            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Order Total: ')}</Text>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.formatPriceWithCurrency(props.order.total.grand_total_incl_tax, props.order.total.currency_symbol)}</Text>
             </CardItem>
         );
     }
 
     function renderStatus() {
         return (
-            <CardItem listItemPadding={0}>
-                <Text style={[styles.title, { fontFamily: material.fontBold }]}>{Identify.__('Status')}</Text>
-                <Text>{Identify.__(props.order.status)}</Text>
+            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Status: ')}</Text>
+                <Text style={{ fontFamily: material.fontBold, color:props.order.status === 'canceled' ? 'red' : '#595656' }}>{Identify.__(props.order.status)}</Text>
             </CardItem>
         );
     }
 
     function renderItem() {
         return (
-            <Card style={{ flex: 1 }} key={props.order.entity_id}>
+            <Card style={{ borderRadius: 10, padding: 5 }} key={props.order.entity_id}>
                 {renderOrderNumber()}
                 {renderDate()}
                 {renderShipping()}
@@ -93,12 +92,27 @@ const OrderBilling = (props) => {
     }
 
     return (
-        <TouchableOpacity style={{ flex: 1 }}
-            onPress={() => {
-                openOrderHistoryDetail();
-            }}>
-            {renderItem()}
-        </TouchableOpacity>
+        <View 
+            style ={{
+                marginLeft: 10,
+                marginRight: 10,
+                marginBottom: 10, 
+                flex: 1, 
+                borderRadius: 10, 
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 7,
+                },
+                shadowOpacity: 0.02,
+                shadowRadius: 30 }}>
+            <TouchableOpacity style={{ flex: 1, borderRadius: 10, }}
+                onPress={() => {
+                    openOrderHistoryDetail();
+                }}>
+                {renderItem()}
+            </TouchableOpacity>
+        </View>
     );
 }
 

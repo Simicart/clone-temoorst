@@ -40,5 +40,6 @@ export default {
         myaccount: require('./customize/myaccount').default,
         contactus: require('./customize/contactus').default,
         orders: require('./customize/orders').default,
+        order: require('./customize/order').default,
     }
 }
