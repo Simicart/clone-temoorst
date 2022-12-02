@@ -42,5 +42,7 @@ export default {
         contactus: require('./customize/contactus').default,
         orders: require('./customize/orders').default,
         order: require('./customize/order').default,
+        address: require('./customize/address').default,
+        addressbook: require('./customize/addressbook').default,
     }
 }
