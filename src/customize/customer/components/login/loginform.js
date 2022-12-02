@@ -73,7 +73,7 @@ export default class LoginForm extends SimiComponent {
     renderPhoneLayout() {
         return (
             <View>
-                <Text style = {{ fontWeight: 'bold' }}>Please login to continue!</Text>
+                <Text style = {{ fontWeight: 'bold' }}>{Identify.__('Please login to continue!')}</Text>
                 <SimiForm fields={this.createFields()} initData={this.state} parent={this} onRef={ref => (this.form = ref)} />
             </View>
         );

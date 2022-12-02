@@ -9,6 +9,8 @@ import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
 import { ScrollView, TouchableOpacity, View ,Text, Modal } from 'react-native';
 import { Icon, Left } from 'native-base';
+import CustomerButton from './customerbutton'
+import NavigationManager from '@helper/NavigationManager';
 
 export default class CustomerForm extends SimiComponent {
 
@@ -27,7 +29,7 @@ export default class CustomerForm extends SimiComponent {
             this.social_login = true;
         }
         this.state = {
-            buttonColor: 'white',
+            buttonColor: Identify.theme.app_background,
             modalVisible: false
         }
     }
@@ -52,25 +54,33 @@ export default class CustomerForm extends SimiComponent {
         this.props.parent.updateButtonStatus(status);
     }
 
-    // password(fields){
-    //     if (!this.social_login) {
-    //         let labelPassword = Identify.__('Password');
-    //         if (this.isEditProfile) {
-    //             labelPassword = Identify.__('Current Password');
-    //         }
-    //         fields.push(
-    //             this.renderField('password', 'password', labelPassword, this.isEditProfile ? 'opt' : 'req')
-    //         );
-    //         if (this.isEditProfile) {
-    //             fields.push(
-    //                 this.renderField('password', 'new_password', Identify.__('New Password'), this.isEditProfile ? 'opt' : 'req')
-    //             );
-    //         }
-    //         fields.push(
-    //             this.renderField('password', 'com_password', Identify.__('Confirm Password'), this.isEditProfile ? 'opt' : 'req')
-    //         );
-    //     }
-    // }
+    signUpPassword(fields){
+        if (!this.social_login) {
+            fields.push(
+                this.renderField('password', 'password', Identify.__('Password'), 'req')
+            );
+            fields.push(
+                this.renderField('password', 'com_password', Identify.__('Confirm Password'),'req')
+            );
+        }
+    }
+
+    changePasswordFields(){
+        let changePassField = [];
+        if (!this.social_login) {
+            let labelPassword = Identify.__('Password');
+            changePassField.push(
+                this.renderField('password', 'password', Identify.__('Current Password'), 'opt')
+            );
+            changePassField.push(
+                    this.renderField('password', 'new_password', Identify.__('New Password'), 'opt')
+                );
+            changePassField.push(
+                this.renderField('password', 'com_password', Identify.__('Confirm Password'), 'opt')
+            );
+        }
+        return changePassField;
+    }
 
     createFields() {
         let fields = [];
@@ -78,7 +88,7 @@ export default class CustomerForm extends SimiComponent {
         if (this.isEditProfile) {
             fields.push(
                 <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
-                    <Icon type='FontAwesome' name='user-circle-o' style={{ color: 'orange', fontSize: 80 }} ></Icon>
+                    <Icon type='FontAwesome' name='user-circle-o' style={{ color: Identify.theme.top_menu_icon_color, fontSize: 80 }} ></Icon>
                 </View>
             )
         }
@@ -117,77 +127,89 @@ export default class CustomerForm extends SimiComponent {
             this.renderField('text', 'taxvat', Identify.__('Tax/VAT number'), this.address_option.taxvat_show)
         );
         if (this.isEditProfile) {
+            
             fields.push(
-                <View 
+                <TouchableOpacity 
                     style={{ 
-                        // flexDirection: 'row', 
-                        // alignItems: 'center', 
-                        // justifyContent: 'space-between', 
+                        flexDirection: 'row', 
+                        alignItems: 'center', 
+                        justifyContent: 'space-between', 
                         paddingTop: 15, paddingBottom: 15,
                         marginBottom: 10, 
                         borderTopWidth: 0.5, 
-                        borderTopColor: '#828282', 
-                        backgroundColor: this.state.buttonColor}}>
-                    {/* onPressIn={() => this.setState({ buttonColor: 'orange' })}
-                    onPressOut={() => this.setState({ buttonColor: 'white' })}
-                    // onPress={() => this.setModalVisible(true)} */}
+                        borderTopColor: Identify.theme.line_color, 
+                        backgroundColor: this.state.buttonColor}}
+                        onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
+                        onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
+                        onPress={() => this.setModalVisible(true)}>
                     <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{Identify.__('Change Password')}</Text>
-                    {/* <Icon type='Feather' name='chevron-right' stype={{ color: '#828282' }}></Icon> */}
-                </View>
+                    <Icon type='Feather' name='chevron-right' stype={{ color: Identify.theme.icon_color }}></Icon>
+                </TouchableOpacity>
             )
         }
-        // if(!this.isEditProfile) {
-        //     this.password(fields);
-        // }
-        // else if (this.isEditProfile) {
-        //     fields.push(
-        //         <Modal 
-        //             visible={this.state.modalVisible} 
-        //             animationType='slide'
-        //             transparent={true}>
-        //             <TouchableOpacity
-        //                 style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
-        //                 onPress={() => this.setModalVisible(false)}>
-        //                     <TouchableOpacity 
-        //                         style={{ height: '60%', width: '100%', backgroundColor: 'white', borderRadius: 15 }}
-        //                         activeOpacity={1}>
-        //                         <View 
-        //                             style={{
-        //                                 flexDirection: 'row', 
-        //                                 alignItems: 'center', 
-        //                                 justifyContent: 'space-between', 
-        //                                 paddingTop: 15, 
-        //                                 paddingBottom: 15,
-        //                                 borderBottomWidth: 0.5, 
-        //                                 borderBottomColor: '#828282',  }}>
-        //                             <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{Identify.__('Change Password')}</Text>
-        //                             <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-        //                                 <Text style= {{ color: '#828282', fontSize: 26, marginRight: 15 }}>X</Text>
-        //                             </TouchableOpacity>
-        //                         </View>
-        //                         {this.password(fields)}
-        //                     </TouchableOpacity>                        
-        //             </TouchableOpacity>
-        //         </Modal>
-        //     ) 
-        // }
-        if (!this.social_login) {
-            let labelPassword = Identify.__('Password');
-            if (this.isEditProfile) {
-                labelPassword = Identify.__('Current Password');
-            }
-            fields.push(
-                this.renderField('password', 'password', labelPassword, this.isEditProfile ? 'opt' : 'req')
-            );
-            if (this.isEditProfile) {
-                fields.push(
-                    this.renderField('password', 'new_password', Identify.__('New Password'), this.isEditProfile ? 'opt' : 'req')
-                );
-            }
-            fields.push(
-                this.renderField('password', 'com_password', Identify.__('Confirm Password'), this.isEditProfile ? 'opt' : 'req')
-            );
+        if(!this.isEditProfile) {
+            this.signUpPassword(fields);
         }
+        
+        else if (this.isEditProfile) {
+            fields.push(
+                <Modal 
+                    visible={this.state.modalVisible} 
+                    animationType='slide'
+                    transparent={true}>
+                    <TouchableOpacity
+                        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                        onPress={() => [this.setModalVisible(false), NavigationManager.openPage(this.props.navigation, 'Customer', {
+                            isEditProfile: true
+                        })]}>
+                            <TouchableOpacity 
+                                style={{ height: '60%', width: '100%', backgroundColor: 'white', borderRadius: 15 }}
+                                activeOpacity={1}>
+                                <View 
+                                    style={{
+                                        flexDirection: 'row', 
+                                        alignItems: 'center', 
+                                        justifyContent: 'space-between', 
+                                        paddingTop: 15, 
+                                        paddingBottom: 15,
+                                        borderBottomWidth: 0.5, 
+                                        borderBottomColor: Identify.theme.line_color,  }}>
+                                    <Text style={{ fontSize: 26, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__('Change Password')}</Text>
+                                    <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                                        <Text style= {{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ marginLeft: 15, marginRight: 15, flex: 1, marginTop: 15 }} >    
+                                    <SimiForm 
+                                        fields={this.changePasswordFields()}
+                                        parent={this}
+                                        onRef={ref => (this.formNew = ref)}
+                                        initData={this.initData}
+                                        style={{ marginBottom: 20 }}/>
+                                        <CustomerButton {...this.props} {...this.formNew} />
+                                </View>
+                            </TouchableOpacity>                        
+                    </TouchableOpacity>
+                </Modal>
+            ) 
+        }
+        // if (!this.social_login) {
+        //     let labelPassword = Identify.__('Password');
+        //     if (this.isEditProfile) {
+        //         labelPassword = Identify.__('Current Password');
+        //     }
+        //     fields.push(
+        //         this.renderField('password', 'password', labelPassword, this.isEditProfile ? 'opt' : 'req')
+        //     );
+        //     if (this.isEditProfile) {
+        //         fields.push(
+        //             this.renderField('password', 'new_password', Identify.__('New Password'), this.isEditProfile ? 'opt' : 'req')
+        //         );
+        //     }
+        //     fields.push(
+        //         this.renderField('password', 'com_password', Identify.__('Confirm Password'), this.isEditProfile ? 'opt' : 'req')
+        //     );
+        // }
 
         if (this.account_option.show_newsletter === '1') {
             if (!this.isEditProfile) {

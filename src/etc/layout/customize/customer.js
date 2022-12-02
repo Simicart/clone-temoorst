@@ -15,7 +15,7 @@ export default {
         default_customer_button: {
             active: true,
             sort_order: 2000,
-            content: require('../../../customize/customer/components/customer/customerbutton').default
+            content: require('../../../customize/customer/components/customer/customerbutton').default,
         },
     }
 }
