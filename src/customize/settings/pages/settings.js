@@ -211,7 +211,6 @@ class Viewsettings extends SimiPageComponent {
     }
 
     renderPhoneLayout() {
-        console.log(this.props.tmp);
         return (
             <Container style={{ paddingLeft: 15, paddingRight: 15, backgroundColor: variable.appBackground }}>
                 {this.renderModal()}
@@ -226,7 +225,7 @@ class Viewsettings extends SimiPageComponent {
 
 //export default Settings;
 const mapStateToProps = (state) => {
-    return { data: state.redux_data.merchant_configs, tmp: state.redux_data };
+    return { data: state.redux_data.merchant_configs};
 }
 const mapDispatchToProps = (dispatch) => {
     return {

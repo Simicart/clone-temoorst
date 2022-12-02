@@ -73,7 +73,7 @@ export default class ForgotPassWordPage extends SimiPageComponent{
         return <Form style={{ marginLeft: Identify.isRtl() ? 20 : 0 }}>
             <Label style={{ width: '100%', fontWeight: 'bold' }}>{Identify.__('Forgot password')}</Label>
             <View style={{ flexDirection: 'row',  marginTop: 20 }}>
-                <Text>Email</Text>
+                <Text>{Identify.__('Email')}</Text>
                 <Text style={{ color: 'red' }}> *</Text>
             </View>
             <Input
@@ -123,9 +123,9 @@ export default class ForgotPassWordPage extends SimiPageComponent{
                 <Content style={{ padding: 12 }}>
                     {this.renderFormForgot()}
                     <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'center' }}>
-                        <Text styles={{ fontWeight: 'bold' }}>Have your password? </Text>
+                        <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Have your password? ')} </Text>
                         <TouchableOpacity onPress={() => { this.onClickLogin() }}>
-                            <Text style={{ color: '#696969' }}>Sign In</Text>
+                            <Text style={{ color: Identify.theme.button_background }}>{Identify.__('Sign In')}</Text>
                         </TouchableOpacity>
                     </View> 
                 </Content>
