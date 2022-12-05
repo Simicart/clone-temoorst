@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Button, View, Input, Item, ActionSheet, Toast, Icon } from 'native-base';
+import { Text, Button, View, Input, Item, ActionSheet, Toast, Icon, TouchableOpacity } from 'native-base';
 import Identify from '@helper/Identify';
 import NavigationManager from '@helper/NavigationManager';
 import { address_book_mode, address_detail_mode, checkout_mode } from '@helper/constants';
@@ -159,7 +159,7 @@ const Checkoutbutton = (props) => {
                 }}>
                     {items.length > 0 && items}
                     {items.length > 0 && <View style={{ width: 5 }} />}
-                    <View onPress={() => {
+                    <TouchableOpacity onPress={() => {
                         if (checkout.checkout_webview && checkout.checkout_webview.enable == '1') {
                             NavigationManager.clearStackAndOpenPage(props.parent.props.navigation, 'CheckoutWebView', {
                                 quote_id: data.quote_id
@@ -185,7 +185,7 @@ const Checkoutbutton = (props) => {
                         >
                             <Text style={{ color: Identify.theme.button_text_color, fontFamily: material.fontBold, marginLeft: 7, marginRight: 7, fontSize: 16 }}>{Identify.__("Checkout")} ({props.parent.props.data.cart_total})</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
