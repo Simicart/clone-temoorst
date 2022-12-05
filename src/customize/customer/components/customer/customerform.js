@@ -8,7 +8,7 @@ import DropDownInput from '@base/components/form/DropDownInput';
 import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
 import { ScrollView, TouchableOpacity, View ,Text, Modal } from 'react-native';
-import { Icon, Left } from 'native-base';
+import { Icon, Left, Button } from 'native-base';
 import CustomerButton from './customerbutton'
 import NavigationManager from '@helper/NavigationManager';
 
@@ -159,9 +159,7 @@ export default class CustomerForm extends SimiComponent {
                     transparent={true}>
                     <TouchableOpacity
                         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
-                        onPress={() => [this.setModalVisible(false), NavigationManager.openPage(this.props.navigation, 'Customer', {
-                            isEditProfile: true
-                        })]}>
+                        onPress={() => this.setModalVisible(false)}>
                             <TouchableOpacity 
                                 style={{ height: '60%', width: '100%', backgroundColor: 'white', borderRadius: 15 }}
                                 activeOpacity={1}>
@@ -186,7 +184,12 @@ export default class CustomerForm extends SimiComponent {
                                         onRef={ref => (this.formNew = ref)}
                                         initData={this.initData}
                                         style={{ marginBottom: 20 }}/>
-                                        <CustomerButton {...this.props} {...this.formNew} />
+                                        {/* <CustomerButton {...this.props} {...this.formNew} /> */}
+                                        <Button style={{ width: '100%', marginTop: 16, borderRadius: 10, padding: 8 }}
+                                            full
+                                            onPress={() => { this.onClickButton() }}>
+                                            <Text style={{ fontSize: 15,lineHeight: 24, color: '#FFF' }}>{Identify.__('Save')}</Text>
+                                        </Button>
                                 </View>
                             </TouchableOpacity>                        
                     </TouchableOpacity>
@@ -307,6 +310,10 @@ export default class CustomerForm extends SimiComponent {
             }
         }
     };
+
+    onClickButton() {
+        this.props.parent.editProfileWithData(this.formNew.getFormData());
+    }
 
     renderPhoneLayout() {
         return (
