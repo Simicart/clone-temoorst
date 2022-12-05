@@ -6,6 +6,7 @@ import Events from '@helper/config/events';
 import NewConnection from '@base/network/NewConnection';
 import { products } from '@helper/constants';
 import { connect } from 'react-redux';
+import AppStorage from '@helper/storage';
 class SearchProducts extends SimiPageComponent {
 
     constructor(props) {
@@ -27,6 +28,7 @@ class SearchProducts extends SimiPageComponent {
         this.onChangeSearch = this.onChangeSearch.bind(this);
         this.canVisiableModal = false;
         this.orders = null;
+        this.newRecents = [];
     }
 
     onRecentVisiable(boolean) {
@@ -37,6 +39,7 @@ class SearchProducts extends SimiPageComponent {
     request(query, order, dir) {
         this.props.storeData('setModalVisible', false);
         let params = [];
+        this.search = query;
         params['filter[q]'] = query;
         if (order && dir) {
             params['order'] = order;
@@ -54,6 +57,28 @@ class SearchProducts extends SimiPageComponent {
     }
 
     setData(data) {
+        let id = this.search.replace(' ', '_').toLowerCase();
+        let position = -1;
+        AppStorage.getData('recent_search').then((recents) => {
+            if (recents) {
+                this.newRecents = JSON.parse(recents);
+            }
+        });
+        let item = null;
+        if (position == -1) {
+            item = {
+                id: id,
+                label: this.search
+            };
+            if (this.newRecents && this.newRecents?.length == 5) {
+                this.newRecents.splice(4, 1);
+            }
+        } else {
+            item = this.newRecents[position];
+            this.newRecents.splice(position, 1);
+        }
+        this.newRecents.unshift(item);
+        AppStorage.saveData('recent_search', JSON.stringify(this.newRecents));
         this.setState({ products: data.products });
         this.orders = data.orders;
         this.props.storeData('showLoading', { type: 'none' });
