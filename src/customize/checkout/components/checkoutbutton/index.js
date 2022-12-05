@@ -159,7 +159,7 @@ const Checkoutbutton = (props) => {
                 }}>
                     {items.length > 0 && items}
                     {items.length > 0 && <View style={{ width: 5 }} />}
-                    <View onPress={() => {
+                    <Button onPress={() => {
                         if (checkout.checkout_webview && checkout.checkout_webview.enable == '1') {
                             NavigationManager.clearStackAndOpenPage(props.parent.props.navigation, 'CheckoutWebView', {
                                 quote_id: data.quote_id
@@ -185,7 +185,7 @@ const Checkoutbutton = (props) => {
                         >
                             <Text style={{ color: Identify.theme.button_text_color, fontFamily: material.fontBold, marginLeft: 7, marginRight: 7, fontSize: 16 }}>{Identify.__("Checkout")} ({props.parent.props.data.cart_total})</Text>
                         </View>
-                    </View>
+                    </Button>
                 </View>
             </View>
         );

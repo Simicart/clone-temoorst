@@ -1460,6 +1460,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Y4427S3SDN;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y4427S3SDN;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
@@ -1476,10 +1477,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.Max;
+				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.halaldokan;
 				PRODUCT_NAME = SimiCart;
 				PROVISIONING_PROFILE = "9ac6a725-345d-44d6-9aa1-39fba1503c6d";
 				PROVISIONING_PROFILE_SPECIFIER = ProvisionRunCode;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Halaldokan;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1495,6 +1497,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y4427S3SDN;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y4427S3SDN;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
@@ -1511,10 +1514,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.Max;
+				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.halaldokan;
 				PRODUCT_NAME = SimiCart;
 				PROVISIONING_PROFILE = "42f71cc7-a7f0-4ab4-9c78-5aa5570f92b7";
 				PROVISIONING_PROFILE_SPECIFIER = ProvisionRunCode;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Halaldokan;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
