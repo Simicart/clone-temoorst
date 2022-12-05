@@ -10,7 +10,7 @@ export default class FloatingInput extends BaseInput {
     constructor(props) {
         super(props);
     }
-
+   
     addWarningIcon = () => {
         if (this.state.success === true) {
             return (<Icon style={{ fontSize: 22 }} name={'ios-checkmark-circle'} />)
@@ -50,7 +50,7 @@ export default class FloatingInput extends BaseInput {
         return (
             <View style={{ flexDirection: 'column', marginBottom: 20 }}>
                 <Text style={{ alignSelf: 'flex-start' }}>
-                    {this.inputTitle}
+                    {Identify.__(this.inputTitle)}
                     <Text style={{ color: 'red'}}> *</Text>
                 </Text>
                 <View style={[styles.border, { marginTop: 8 }]}>

@@ -46,7 +46,7 @@ export default class BorderedInput extends BaseInput {
         return (
             <View>
                 <View style={{ flexDirection: 'row',  marginTop: 30 }}>
-                    <Text>{this.props.header}</Text>
+                    <Text>{Identify.__(this.props.header)}</Text>
                     <Text style={{ color: 'red' }}> *</Text>
                 </View>
                 <Item regular error={this.state.error} success={this.state.success} disabled={this.disabled} style={{ marginTop: 8, borderRadius: 5 }}>

@@ -29,7 +29,7 @@ export default class CustomerButton extends React.Component {
     }
 
     updateButtonStatus(status) {
-        if (status != this.state.buttonEnabled) {
+        if (status !== this.state.buttonEnabled) {
             this.setState({ buttonEnabled: status });
         }
     }
@@ -47,5 +47,10 @@ export default class CustomerButton extends React.Component {
                 <Text> {Identify.__(text)} </Text>
             </Button>
         );
+    }
+    getCustomerData() {
+        if (this.props.props !== undefined) {
+            return this.props?.props?.parent?.getCustomerData();
+        }
     }
 }

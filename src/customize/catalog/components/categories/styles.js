@@ -1,11 +1,13 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import material from '@theme/variables/material';
 
+const width = Dimensions.get('window').width;
+
 export default StyleSheet.create({
     setShadowImage: {
-        width: 150, 
-        height: 150, 
+        width: width*0.4, 
+        height: width*0.4, 
         shadowColor: "#000",
         shadowOffset: {
 	        width: 0,
@@ -23,9 +25,8 @@ export default StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         flex: 1,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: width*0.04,
         marginTop: 10,
-        justifyContent: 'space-around'
+        justifyContent: 'flex-start'
     }
 })

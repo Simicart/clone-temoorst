@@ -2,15 +2,17 @@ import React from 'react';
 import { View, Text, Linking, Platform} from 'react-native';
 import { Icon } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Identify from '@helper/Identify';
 
 export default class ContactUsItem extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            buttonColor: 'white'
+            buttonColor: Identify.theme.app_background
         }
     }
     render() {
+        console.log(Identify.theme)
         switch(this.props.type){
             case 'web':
                 this.action = () =>{
@@ -55,14 +57,14 @@ export default class ContactUsItem extends React.Component {
                 paddingTop: 20, 
                 paddingBottom: 20, 
                 marginLeft: 20, 
-                borderBottomColor: '#828282', 
+                borderBottomColor: Identify.theme.line_color, 
                 borderBottomWidth: 0.5, 
                 alignItems: 'center', 
                 backgroundColor: this.state.buttonColor }}
-            onPressIn={() => this.setState({ buttonColor: 'orange' })}
-            onPressOut={() => this.setState({ buttonColor: 'white' })}
-            onPress={() => this.action() }>
-                <Icon type={this.props.icon_type} name={this.props.icon_name} stype={{ color: '#828282' }}></Icon>
+                onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
+                onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
+                onPress={() => this.action() }>
+                <Icon type={this.props.icon_type} name={this.props.icon_name} style={{ color: Identify.theme.icon_color }}></Icon>
                 <Text style={{ marginLeft: 20 }}>{this.props.data}</Text>
             </TouchableOpacity>
         )

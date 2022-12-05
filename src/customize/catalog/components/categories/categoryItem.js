@@ -6,6 +6,8 @@ import NavigationManager from '@helper/NavigationManager';
 import SimiCart from '@helper/simicart';
 import SimiComponent from '../../../../core/base/components/SimiComponent';
 
+const width = Dimensions.get('window').width;
+
 export default class CategoryItem extends SimiComponent {
     constructor(props) {
         super(props),
@@ -55,7 +57,7 @@ export default class CategoryItem extends SimiComponent {
                 onPressOut={() => this.animatePressOut()}
                 onPress={() => this.onPressItem(this.props.element)}
             >
-                <Animated.View style={{ marginTop: 10, marginBottom: 10, transform: [{ scale: this.state.animatePress }] }}>
+                <Animated.View style={{ marginTop: 10, marginBottom: 10, marginLeft: width*0.03, marginRight: width*0.03, transform: [{ scale: this.state.animatePress }] }}>
                     <View style={styles.setShadowImage}>
                         <Image
                             source={{ uri: image }}
