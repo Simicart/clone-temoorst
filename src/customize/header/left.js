@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Icon } from 'native-base';
 import { View, Alert } from 'react-native'
 import variable from "@theme/variables/material";
