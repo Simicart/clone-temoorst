@@ -26,7 +26,7 @@ const Item = (props) => {
                 {
                     props?.bottomAction === props?.data?.route_name ? (
                         <View style={{}}>
-                            <Animated.View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#ff9800', padding: 5, paddingHorizontal: props?.padding, borderRadius: 8 }}>
+                            <Animated.View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#ff9800', padding: 5, paddingHorizontal: padding, borderRadius: 8 }}>
                                 <View style={{ marginRight: 10 }}>
                                     <Image
                                         source={props?.data?.icon}
