@@ -161,7 +161,7 @@ export default class CustomerForm extends SimiComponent {
                         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
                         onPress={() => this.setModalVisible(false)}>
                             <TouchableOpacity 
-                                style={{ height: '60%', width: '100%', backgroundColor: 'white', borderRadius: 15 }}
+                                style={{ height: '60%', width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                                 activeOpacity={1}>
                                 <View 
                                     style={{
@@ -184,7 +184,6 @@ export default class CustomerForm extends SimiComponent {
                                         onRef={ref => (this.formNew = ref)}
                                         initData={this.initData}
                                         style={{ marginBottom: 20 }}/>
-                                        {/* <CustomerButton {...this.props} {...this.formNew} /> */}
                                         <Button style={{ width: '100%', marginTop: 16, borderRadius: 10, padding: 8 }}
                                             full
                                             onPress={() => { this.onClickButton() }}>

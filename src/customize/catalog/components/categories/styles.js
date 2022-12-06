@@ -27,6 +27,5 @@ export default StyleSheet.create({
         flex: 1,
         marginLeft: width*0.04,
         marginTop: 10,
-        justifyContent: 'flex-start'
     }
 })
