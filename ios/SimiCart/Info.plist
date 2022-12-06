@@ -87,16 +87,16 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Your message to user when the camera is accessed for the first time</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Permission for get current device location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Permission for get current device location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Description of why you require the use of the microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Your message to user when the photo library is accessed for the first time</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Description of why you require the use of the speech recognition</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Permission for get current device location</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Permission for get current device location</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>This will help us to customize better shopping experience for you</string>
 	<key>UIAppFonts</key>

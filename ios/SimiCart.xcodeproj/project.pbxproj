@@ -839,7 +839,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = Y4427S3SDN;
+						DevelopmentTeam = 5L748QCS32;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1456,10 +1456,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SimiCart/SimiCart.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = Y4427S3SDN;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5L748QCS32;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
@@ -1476,10 +1478,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.Max;
+				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.enterprise;
 				PRODUCT_NAME = SimiCart;
 				PROVISIONING_PROFILE = "9ac6a725-345d-44d6-9aa1-39fba1503c6d";
 				PROVISIONING_PROFILE_SPECIFIER = ProvisionRunCode;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = wildcard_adhoc;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1492,9 +1495,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SimiCart/SimiCart.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y4427S3SDN;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5L748QCS32;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
@@ -1511,10 +1516,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.Max;
+				PRODUCT_BUNDLE_IDENTIFIER = com.simicart.enterprise;
 				PRODUCT_NAME = SimiCart;
 				PROVISIONING_PROFILE = "42f71cc7-a7f0-4ab4-9c78-5aa5570f92b7";
 				PROVISIONING_PROFILE_SPECIFIER = ProvisionRunCode;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = wildcard_adhoc;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

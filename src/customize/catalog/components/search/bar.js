@@ -72,6 +72,7 @@ export default class SearchBar extends React.Component {
                             this.textInput.setNativeProps({ text: '' })
                             this.setState({ text: '', showClear: false });
                             this.props.parent.onRecentVisiable(true);
+                            this.props.parent.onChangeSearch('');
                         }} />}
                         {voiceSearch}
                     </View>
