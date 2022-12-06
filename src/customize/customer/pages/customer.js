@@ -60,10 +60,11 @@ class CustomerPage extends SimiPageComponent {
     }
 
     editProfile() {
+        console.log(this.form)
         let currentPassword = '';
         let newPassword = '';
         let confirmPassword = '';
-        this.customerData = this.form.getCustomerData();
+        this.customerData = this.form.form == undefined ? this.form.getCustomerData(): this.form.form.getFormData();
         if (this.customerData.password) {
             currentPassword = this.customerData.password;
         }
@@ -104,6 +105,7 @@ class CustomerPage extends SimiPageComponent {
     }
 
     editProfileWithData(data) {
+        console.log(this.form)
         let currentPassword = '';
         let newPassword = '';
         let confirmPassword = '';

@@ -30,7 +30,7 @@ const OrderSummary = (props) => {
                 <Text>{item.name}</Text>
                 <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <Text style = {{ fontWeight: 'bold' }}>{Identify.formatPriceWithCurrency(item.price, props.order.total.currency_symbol)}</Text>
-                    <Text style = {{ fontWeight: 'bold' }}>{Identify.__('Quantity: ')} {item.product_options.info_buyRequest.qty}</Text>
+                    <Text style = {{ fontWeight: 'bold' }}>{Identify.__('Quantity: ')} {ParseInt(item.product_options.info_buyRequest.qty)}</Text>
                 </View>
             </View>
         </Card>
@@ -40,7 +40,7 @@ const OrderSummary = (props) => {
     return (
         <View>
             <Text style={{ paddingTop: 10, paddingBottom: 10, marginTop: 10, fontWeight: 'bold' }}>{ Identify.__('Purchased Items') }</Text>
-            <Card style={{ flex: 1, paddingBottom: 25, borderColor: 'white', shadowColor: '#fff', borderBottomWidth: 2, borderBottomColor: Identify.theme.line_color }} key={'items'}>
+            <Card style={{ flex: 1, paddingBottom: 25, borderColor: Identify.theme.app_background, shadowColor: '#fff', borderBottomWidth: 2, borderBottomColor: Identify.theme.line_color }} key={'items'}>
                 <FlatList
                     data={items}
                     renderItem={({item}) => renderItem(item)}/>
