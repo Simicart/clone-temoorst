@@ -65,13 +65,13 @@ class PaypalExpressShippingModule extends SimiComponent {
         this.bodyData = bodyData;
         let newShippingData = JSON.parse(JSON.stringify(this.state.shippings));
         newShippingData.forEach(element => {
-            if(bodyData.s_method.method == element.s_method_code) {
+            if (bodyData.s_method.method == element.s_method_code) {
                 element.s_method_selected = true;
             } else {
                 element.s_method_selected = false;
             }
         });
-        this.setState({shippings: newShippingData});
+        this.setState({ shippings: newShippingData });
     }
 
     requestPlaceOrder() {
@@ -97,7 +97,7 @@ class PaypalExpressShippingModule extends SimiComponent {
                             navigation={this.props.navigation}
                             isPpexpress={true} />
                     </Content>
-                    <Button full style={{ position: 'absolute', bottom: 0, width: '100%', height: 50 }} onPress={() => {
+                    <Button full style={{ position: 'absolute', bottom: 0, width: '100%', height: 50, backgroundColor: '#eb2027' }} onPress={() => {
                         if (this.state.shippings.length > 0 && this.bodyData != null) {
                             this.props.storeData('showLoading', { type: 'dialog' });
                             this.requestPlaceOrder();
