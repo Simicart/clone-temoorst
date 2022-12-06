@@ -42,7 +42,7 @@ export default class CustomerButton extends React.Component {
         return (
             <Button style={{ width: '100%', marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}
                 full
-                disabled={this.state.buttonEnabled}
+                disabled={text==='Save' ? this.state.buttonEnabled : !this.state.buttonEnabled}
                 onPress={() => { this.onClickButton() }}>
                 <Text> {Identify.__(text)} </Text>
             </Button>
