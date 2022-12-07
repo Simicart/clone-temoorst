@@ -13,6 +13,7 @@ import CustomerButton from './customerbutton'
 import NavigationManager from '@helper/NavigationManager';
 
 const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 export default class CustomerForm extends SimiComponent {
 
@@ -37,14 +38,14 @@ export default class CustomerForm extends SimiComponent {
             indexField: 0
         }
     }
-    changeKeyboardStatus() {
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-    }
-    componentWillMount() {
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-    }
+    // changeKeyboardStatus() {
+    //     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+	// 	this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    // }
+    // componentWillMount() {
+    //     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+	// 	this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    // }
 
     componentDidMount() {
         if (this.props.onRef) {
@@ -55,17 +56,17 @@ export default class CustomerForm extends SimiComponent {
         if (this.props.onRef) {
             this.props.onRef(undefined)
         }
-        this.keyboardDidShowListener.remove();
-		this.keyboardDidHideListener.remove();     
+        // this.keyboardDidShowListener.remove();
+		// this.keyboardDidHideListener.remove();     
     }
 
-    _keyboardDidShow = e => {
-		this.setState({ keyboardHeight: this.state.indexField*80 });
-	}
+    // _keyboardDidShow = e => {
+	// 	this.setState({ keyboardHeight: this.state.indexField*80 });
+	// }
 
-	_keyboardDidHide = () => {
-		this.setState({ keyboardHeight: 0 });
-	}
+	// _keyboardDidHide = () => {
+	// 	this.setState({ keyboardHeight: 0 });
+	// }
 
     setModalVisible(value) {
         this.setState({
@@ -77,20 +78,17 @@ export default class CustomerForm extends SimiComponent {
     }
 
     signUpPassword(fields){
-        if (!this.social_login) {
-            fields.push(
-                this.renderField('password', 'password', Identify.__('Password'), 'req')
-            );
-            fields.push(
-                this.renderField('password', 'com_password', Identify.__('Confirm Password'),'req')
-            );
-        }
+        fields.push(
+            this.renderField('password', 'password', Identify.__('Password'), 'req')
+        );
+        fields.push(
+            this.renderField('password', 'com_password', Identify.__('Confirm Password'),'req')
+        );
     }
 
     changePasswordFields(){
         let changePassField = [];
         if (!this.social_login) {
-            let labelPassword = Identify.__('Password');
             changePassField.push(
                 this.renderField('password', 'password', Identify.__('Current Password'), 'opt')
             );
@@ -104,77 +102,48 @@ export default class CustomerForm extends SimiComponent {
         return changePassField;
     }
 
-    createFields() {
-        let fields = [];
-
-        if (this.isEditProfile) {
-            fields.push(
+    renderIcon = () =>{
+        if (this.isEditProfile) 
+            return(
                 <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
                     <Icon type='FontAwesome' name='user-circle-o' style={{ color: Identify.theme.top_menu_icon_color, fontSize: 80 }} ></Icon>
                 </View>
             )
-        }
-        fields.push(
+        else return null
+    }
+
+    renderInfoText = () =>{
+        return(
             <View style={{ paddingTop: 15, paddingBottom: 15, marginBottom: 10 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 20  }}>{Identify.__('Information')}</Text>
             </View>
         )
-        fields.push(
-            this.renderField('text', 'prefix', Identify.__('Prefix'), this.address_option.prefix_show)
-        );
-        fields.push(
-            this.renderField('text', 'firstname', Identify.__('First Name'), 'req')
-        );
-        fields.push(
-            this.renderField('text', 'lastname', Identify.__('Last Name'), 'req')
-        );
-        fields.push(
-            this.renderField('text', 'suffix', Identify.__('Suffix'), this.address_option.suffix_show)
-        );
-        fields.push(
-            this.renderField('email', 'email', Identify.__('Email'), 'req')
-        );
-        fields.push(
-            this.renderField('datetime', 'dob', Identify.__('Date of Birth'), this.address_option.dob_show)
-        );
-        let genderValues = this.address_option.gender_value;
-        for (let index in genderValues) {
-            let values = genderValues[index];
-            values.strString = values.label;
-        }
-        fields.push(
-            this.renderField('dropdown', 'gender', Identify.__('Gender'), this.address_option.gender_show, genderValues, 'label', 'value')
-        );
-        fields.push(
-            this.renderField('text', 'taxvat', Identify.__('Tax/VAT number'), this.address_option.taxvat_show)
-        );
+    }
+
+    renderChangePass =() => {
+        return(
+            <TouchableOpacity 
+                style={{ 
+                    flexDirection: 'row', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    paddingTop: 15, paddingBottom: 15,
+                    marginBottom: 10, 
+                    borderTopWidth: 0.5, 
+                    borderTopColor: Identify.theme.line_color, 
+                    backgroundColor: this.state.buttonColor}}
+                    onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
+                    onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
+                    onPress={() => this.setModalVisible(true)}>
+                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{Identify.__('Change Password')}</Text>
+                <Icon type='Feather' name='chevron-right' stype={{ color: Identify.theme.icon_color }}></Icon>
+            </TouchableOpacity>
+        )
+    }
+
+    showChangePassModal() {
         if (this.isEditProfile) {
-            fields.push(
-                <TouchableOpacity 
-                    style={{ 
-                        flexDirection: 'row', 
-                        alignItems: 'center', 
-                        justifyContent: 'space-between', 
-                        paddingTop: 15, paddingBottom: 15,
-                        marginBottom: 10, 
-                        borderTopWidth: 0.5, 
-                        borderTopColor: Identify.theme.line_color, 
-                        backgroundColor: this.state.buttonColor}}
-                        onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
-                        onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
-                        onPress={() => this.setModalVisible(true)}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{Identify.__('Change Password')}</Text>
-                    <Icon type='Feather' name='chevron-right' stype={{ color: Identify.theme.icon_color }}></Icon>
-                </TouchableOpacity>
-            )
-        }
-        if(!this.isEditProfile) {
-            this.signUpPassword(fields);
-        }
-        
-        else if (this.isEditProfile) {
-            console.log(this.state.keyboardHeight)
-            fields.push(
+            return (
                 <Modal 
                     visible={this.state.modalVisible} 
                     animationType='slide'
@@ -215,16 +184,98 @@ export default class CustomerForm extends SimiComponent {
                             </TouchableOpacity>                        
                     </TouchableOpacity>
                 </Modal>
-            ) 
+            )
         }
+        else return null;
+    }
 
-        if (this.account_option.show_newsletter === '1') {
-            if (!this.isEditProfile) {
-                fields.push(
-                    this.renderField('checkbox', 'news_letter', Identify.__('Sign Up for Newsletter'), 'opt')
-                );
-            }
+    createFields() {
+        let fields = [];
+        fields.push(
+            this.renderField('text', 'prefix', Identify.__('Prefix'), this.address_option.prefix_show)
+        );
+        fields.push(
+            this.renderField('text', 'firstname', Identify.__('First Name'), 'req')
+        );
+        fields.push(
+            this.renderField('text', 'lastname', Identify.__('Last Name'), 'req')
+        );
+        fields.push(
+            this.renderField('text', 'suffix', Identify.__('Suffix'), this.address_option.suffix_show)
+        );
+        fields.push(
+            this.renderField('email', 'email', Identify.__('Email'), 'req')
+        );
+        fields.push(
+            this.renderField('datetime', 'dob', Identify.__('Date of Birth'), this.address_option.dob_show)
+        );
+        let genderValues = this.address_option.gender_value;
+        for (let index in genderValues) {
+            let values = genderValues[index];
+            values.strString = values.label;
         }
+        fields.push(
+            this.renderField('dropdown', 'gender', Identify.__('Gender'), this.address_option.gender_show, genderValues, 'label', 'value')
+        );
+        fields.push(
+            this.renderField('text', 'taxvat', Identify.__('Tax/VAT number'), this.address_option.taxvat_show)
+        );
+        if(!this.isEditProfile && !this.social_login) {
+            this.signUpPassword(fields);
+        }
+        
+        // else if (this.isEditProfile) {
+        //     fields.push(
+        //         <Modal 
+        //             visible={this.state.modalVisible} 
+        //             animationType='slide'
+        //             transparent={true}>
+        //             <TouchableOpacity
+        //                 style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+        //                 onPress={() => this.setModalVisible(false)}>
+        //                     <TouchableOpacity 
+        //                         style={{ height: 0.6*height + this.state.keyboardHeight, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+        //                         activeOpacity={1}>
+        //                         <View 
+        //                             style={{
+        //                                 flexDirection: 'row', 
+        //                                 alignItems: 'center', 
+        //                                 justifyContent: 'space-between', 
+        //                                 paddingTop: 15, 
+        //                                 paddingBottom: 15,
+        //                                 borderBottomWidth: 0.5, 
+        //                                 borderBottomColor: Identify.theme.line_color,  }}>
+        //                             <Text style={{ fontSize: 26, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__('Change Password')}</Text>
+        //                             <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+        //                                 <Text style= {{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
+        //                             </TouchableOpacity>
+        //                         </View>
+        //                         <View style={{ marginLeft: 15, marginRight: 15, flex: 1, marginTop: 15 }} >
+        //                             <SimiForm 
+        //                                 fields={this.changePasswordFields()}
+        //                                 parent={this}
+        //                                 onRef={ref => (this.formNew = ref)}
+        //                                 initData={this.initData}
+        //                                 style={{ marginBottom: 20 }}/>
+        //                             <Button style={{ width: '100%', marginTop: 16, borderRadius: 10, padding: 8 }}
+        //                                 full
+        //                                 onPress={() => { this.onClickButton() }}>
+        //                                 <Text style={{ fontSize: 15,lineHeight: 24, color: '#FFF' }}>{Identify.__('Save')}</Text>
+        //                             </Button>
+        //                         </View>
+        //                     </TouchableOpacity>                        
+        //             </TouchableOpacity>
+        //         </Modal>
+        //     ) 
+        // }
+
+        // if (this.account_option.show_newsletter === '1') {
+        //     if (!this.isEditProfile) {
+        //         fields.push(
+        //             this.renderField('checkbox', 'news_letter', Identify.__('Sign Up for Newsletter'), 'opt')
+        //         );
+        //     }
+        // }
 
         fields = fields.filter(function (element) {
             return element !== undefined;
@@ -321,10 +372,17 @@ export default class CustomerForm extends SimiComponent {
 
     renderPhoneLayout() {
         return (
-            <SimiForm fields={this.createFields()}
-                parent={this}
-                onRef={ref => (this.form = ref)}
-                initData={this.initData} />
+            <View>
+                {this.renderIcon()}
+                {this.renderInfoText()}
+                <SimiForm fields={this.createFields()}
+                    parent={this}
+                    onRef={ref => (this.form = ref)}
+                    initData={this.initData} />
+                {this.renderChangePass()}
+                {this.showChangePassModal()}
+            </View>
+
         );
     }
 

@@ -15,6 +15,15 @@ const OrderBilling = (props) => {
         )
     }
 
+    function renderShippingMethod() {
+        return (
+            <CardItem>
+                <Text style={[styles.title, {color: '#595656', flex: 3}]}>{Identify.__('Shipping method')}</Text>
+                <Text style={{ flex: 7 }}>{Identify.__(props.order.shipping_method)}</Text>
+            </CardItem>
+        )
+    }
+
     function renderCouponCode() {
         let couponCode = Identify.__('None');
         if ( props.order.coupon_code !== undefined &&  props.order.coupon_code !== null &&  props.order.coupon_code !== '') {
@@ -30,6 +39,7 @@ const OrderBilling = (props) => {
 
     return (
         <Card style={{ flex: 1, borderColor: 'white', shadowColor: '#fff', borderBottomWidth: 2, borderBottomColor:Identify.theme.line_color }} key={'payment'}>
+            { renderShippingMethod()}
             { renderPaymentType()}
             { renderCouponCode()}
         </Card>

@@ -20,7 +20,6 @@ const OrderSummary = (props) => {
     }
     
     function renderItem(item) {
-        console.log(item)
         return(
         <Card style={{ flex: 1, borderRadius: 10, flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
             <View style = {{ flex: 4 }}>
@@ -30,7 +29,7 @@ const OrderSummary = (props) => {
                 <Text>{item.name}</Text>
                 <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <Text style = {{ fontWeight: 'bold' }}>{Identify.formatPriceWithCurrency(item.price, props.order.total.currency_symbol)}</Text>
-                    <Text style = {{ fontWeight: 'bold' }}>{Identify.__('Quantity: ')} {ParseInt(item.product_options.info_buyRequest.qty)}</Text>
+                    <Text style = {{ fontWeight: 'bold' }}>{Identify.__('Quantity: ')} {parseInt(item.qty)}</Text>
                 </View>
             </View>
         </Card>

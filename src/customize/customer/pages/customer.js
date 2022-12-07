@@ -60,52 +60,12 @@ class CustomerPage extends SimiPageComponent {
     }
 
     editProfile() {
-        console.log(this.form)
-        let currentPassword = '';
-        let newPassword = '';
-        let confirmPassword = '';
         this.customerData = this.form.form == undefined ? this.form.getCustomerData(): this.form.form.getFormData();
-        if (this.customerData.password) {
-            currentPassword = this.customerData.password;
-        }
-        if (this.customerData.new_password) {
-            newPassword = this.customerData.new_password;
-        }
-        if (this.customerData.com_password) {
-            confirmPassword = this.customerData.com_password;
-        }
-        if (currentPassword.length > 0 || newPassword.length > 0 || confirmPassword.length > 0) {
-            if (newPassword !== confirmPassword) {
-                Alert.alert(
-                    Identify.__('Error'),
-                    Identify.__('Password and Confirm password don\'t match'),
-                );
-                return;
-            } else if (newPassword.length < 6 || confirmPassword.length < 6) {
-                Alert.alert(
-                    Identify.__('Error'),
-                    Identify.__('Please enter 6 or more characters'),
-                );
-                return;
-            } else if (currentPassword != this.password) {
-                Alert.alert(
-                    Identify.__('Error'),
-                    Identify.__('Current password don\'t correct'),
-                );
-                return;
-            } else {
-                this.customerData.change_password = '1';
-            }
-            this.customerData['old_password'] = currentPassword;
-            this.customerData['password'] = undefined;
-        } else {
-            this.customerData.change_password = '0';
-        }
+        this.customerData.change_password = '0';
         this.requestCustomerAction();
     }
 
     editProfileWithData(data) {
-        console.log(this.form)
         let currentPassword = '';
         let newPassword = '';
         let confirmPassword = '';
