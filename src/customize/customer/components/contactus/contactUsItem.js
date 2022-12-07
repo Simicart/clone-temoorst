@@ -7,9 +7,6 @@ import Identify from '@helper/Identify';
 export default class ContactUsItem extends React.Component {
     constructor(props){
         super(props);
-        this.state = {
-            buttonColor: Identify.theme.app_background
-        }
     }
     render() {
         console.log(Identify.theme)
@@ -59,10 +56,7 @@ export default class ContactUsItem extends React.Component {
                 marginLeft: 20, 
                 borderBottomColor: Identify.theme.line_color, 
                 borderBottomWidth: 0.5, 
-                alignItems: 'center', 
-                backgroundColor: this.state.buttonColor }}
-                onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
-                onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
+                alignItems: 'center'}}
                 onPress={() => this.action() }>
                 <Icon type={this.props.icon_type} name={this.props.icon_name} style={{ color: Identify.theme.icon_color }}></Icon>
                 <Text style={{ marginLeft: 20 }}>{this.props.data}</Text>
