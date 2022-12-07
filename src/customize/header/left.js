@@ -6,6 +6,7 @@ import Identify from '@helper/Identify';
 import Events from '@helper/config/events';
 import NavigationManager from '@helper/NavigationManager';
 import { connect } from 'react-redux';
+import { listBottomButtons } from '../bottomMenu/index';
 const LeftHeader = (props) => {
     useEffect(() => {
         console.log("props in left header: ", props);
@@ -46,8 +47,18 @@ const LeftHeader = (props) => {
             NavigationManager.openPage(props.navigation, 'Home', {});
         }
         else {
-            props.storeData('bottomAction', props.navigation.state.params.previousRoute);
+            console.log("props in else: ", props);
+            if (listBottomButtons.map((item => item.route_name)).includes(props.navigation.state.params.previousRoute)) {
+                props.storeData('bottomAction', props.navigation.state.params.previousRoute);
+            }
             props.parent.goBack();
+
+            // if (!props.navigation.state.params.previousRoute) {
+            //     NavigationManager.openPage(props.navigation, props.bottomAction, {});
+            // } else {
+
+
+
         }
     }
 
