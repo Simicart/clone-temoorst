@@ -22,7 +22,7 @@ class ResultsSearch extends SimiComponent {
     }
     componentDidUpdate() {
         console.log("2222222")
-        console.log("this in results: ", this)
+
         if (this.products !== this.props.state.products) {
             this.products = this.props.state.products;
         }

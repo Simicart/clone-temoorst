@@ -7,6 +7,7 @@ import Events from '@helper/config/events';
 import { Dimensions, Platform } from 'react-native';
 import md5 from 'md5';
 import material from '@theme/variables/material';
+import { connect } from 'react-redux';
 
 const Checkoutbutton = (props) => {
 
@@ -183,7 +184,7 @@ const Checkoutbutton = (props) => {
                                 alignItems: 'center'
                             }}
                         >
-                            <Text style={{ color: Identify.theme.button_text_color, fontFamily: material.fontBold, marginLeft: 7, marginRight: 7, fontSize: 16 }}>{Identify.__("Checkout")} ({props.parent.props.data.cart_total})</Text>
+                            <Text style={{ color: Identify.theme.button_text_color, fontFamily: material.fontBold, marginLeft: 7, marginRight: 7, fontSize: 16 }}>{Identify.__("Checkout")} ({props.quoteitems.cart_total})</Text>
                         </View>
                     </Button>
                 </View>
@@ -193,4 +194,18 @@ const Checkoutbutton = (props) => {
     return null;
 }
 
-export default Checkoutbutton;
+const mapStateToProps = (state) => {
+    return {
+        quoteitems: state.redux_data.quoteitems,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkoutbutton);

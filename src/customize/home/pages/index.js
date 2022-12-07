@@ -38,7 +38,6 @@ class Home extends SimiPageComponent {
                         Identify.saveInitNotiOpened(true);
                         const notification = notificationOpen.notification;
                         console.log('App opened from notification');
-                        console.log(notification);
 
                         let data = notification._data;
                         if (data.show_popup == '1') {
@@ -65,7 +64,6 @@ class Home extends SimiPageComponent {
 
     setData(data, requestID) {
         //store data and disable loading.
-        console.log("data in setData home page: ", data);
         this.showLoading('none', false);
         this.props.storeData('home_data', data);
     }
