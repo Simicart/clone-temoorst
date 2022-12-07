@@ -10,7 +10,6 @@ import { FlatList } from 'react-native-gesture-handler';
 export default class AdvanceList extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.data)
     }
 
 
@@ -97,7 +96,7 @@ export default class AdvanceList extends Component {
                 <FlatList
                     data={this.props.data}
                     keyExtractor={(item) => item.key}
-                    renderItem={({item}) => this.renderRow(item)}/>
+                    renderItem={({ item }) => this.renderRow(item)} />
             </View>
         );
     }

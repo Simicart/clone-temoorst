@@ -144,28 +144,29 @@ class Viewsettings extends SimiPageComponent {
                 visible={this.state.modalVisible}
                 onRequestClose={() => { }}>
                 <TouchableOpacity
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }}
                     onPress={() => this.setModalVisible(false)}>
-                        <TouchableOpacity 
-                            style={{ height: this.dataLength>1 ? 85+this.dataLength*40 : 165, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
-                            activeOpacity={1}>
-                            <View 
-                                style={{
-                                    flexDirection: 'row', 
-                                    alignItems: 'center', 
-                                    justifyContent: 'space-between', 
-                                    paddingTop: 15, 
-                                    paddingBottom: 15,
-                                    borderBottomWidth: 0.5, 
-                                    borderBottomColor: Identify.theme.line_color  }}>        
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__(this.state.title)}</Text>
-                                <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                    <Text style= {{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />
-                        </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{ height: this.dataLength > 1 ? 85 + this.dataLength * 40 : 165, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+                        activeOpacity={1}>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                paddingTop: 15,
+                                paddingBottom: 15,
+                                borderBottomWidth: 0.5,
+                                borderBottomColor: Identify.theme.line_color
+                            }}>
+                            <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__(this.state.title)}</Text>
+                            <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                                <Text style={{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />
                     </TouchableOpacity>
+                </TouchableOpacity>
             </Modal>
         );
     }
@@ -197,7 +198,6 @@ class Viewsettings extends SimiPageComponent {
                 return null;
                 break;
             case 'language':
-                console.log(this.props.data)
                 let storeView = null;
                 if (!Identify.isEmpty(this.props.data.storeview.stores) && parseInt(this.props.data.storeview.stores.total) >= 1) {
                     this.stores = this.props.data.storeview.stores.stores;
@@ -258,7 +258,7 @@ class Viewsettings extends SimiPageComponent {
 
 //export default Settings;
 const mapStateToProps = (state) => {
-    return { data: state.redux_data.merchant_configs};
+    return { data: state.redux_data.merchant_configs };
 }
 const mapDispatchToProps = (dispatch) => {
     return {

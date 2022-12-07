@@ -5,7 +5,7 @@ import SimiContext from '@base/components/SimiContext'
 
 export default class BaseInput extends React.Component {
 
-    constructor(props) {        
+    constructor(props) {
         super(props);
         this.keyboardType = 'default';
         this.state = {
@@ -20,11 +20,9 @@ export default class BaseInput extends React.Component {
     }
 
     submitEditing() {
-        console.log(this.props.parent)
         let indexRef = Object.keys(this.props.parent.listRefs).indexOf(this.inputKey);
-        console.log('indexref: ', indexRef)
         // this.props.parent.props.parent.changeKeyboardStatus();
-        this.props.parent.props.parent.setState({indexField: indexRef+1})
+        this.props.parent.props.parent.setState({ indexField: indexRef + 1 })
         let nextRefContent = Object.values(this.props.parent.listRefs)[indexRef + 1];
 
         if (indexRef + 1 === Object.keys(this.props.parent.listRefs).length) {

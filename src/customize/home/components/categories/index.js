@@ -85,7 +85,7 @@ class Categories extends React.Component {
                                 <Text style={{ ...styles.title, fontSize: 14, marginRight: 3 }}>
                                     {Identify.__('See All')}
                                 </Text>
-                                <Icon type="MaterialCommunityIcons" style={{ fontSize: 16, color: 'red' }} name="greater-than" size={14} color="red" />
+                                <Icon type="MaterialCommunityIcons" style={{ fontSize: 12, color: 'red' }} name="greater-than" size={14} color="red" />
                             </View>
                         </TouchableOpacity>
                     </View>
