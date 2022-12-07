@@ -79,6 +79,11 @@ export default class SuggestionSearch extends SimiComponent {
             this.products = this.props.parent.state.products;
             this.orders = this.props.parent.orders;
             this.setState({ products: this.props.parent.state.products });
+            AppStorage.getData('recent_search').then((recents) => {
+                if (recents) {
+                    this.setState({ suggestion: JSON.parse(recents) });
+                }
+            });
         }
     }
     renderPhoneLayout() {
@@ -113,7 +118,6 @@ export default class SuggestionSearch extends SimiComponent {
                             return (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        console.log("this onPress: ", this);
                                         this.props.parent.onChangeSearch(item.label)
                                         // this.props.parent.openSearchResults(item.label);
                                     }}

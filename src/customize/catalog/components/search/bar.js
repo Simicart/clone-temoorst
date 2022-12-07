@@ -37,7 +37,6 @@ export default class SearchBar extends React.Component {
         }
     }
     componentDidUpdate() {
-        console.log("this: ", this);
         if (this.props.parent.state.search && this.props.parent.state.search !== this.state.text) {
             this.textInput.setNativeProps({ text: this.props.parent.state.search })
             this.setState({ text: this.props.parent.state.search });
@@ -72,6 +71,7 @@ export default class SearchBar extends React.Component {
                             this.textInput.setNativeProps({ text: '' })
                             this.setState({ text: '', showClear: false });
                             this.props.parent.onRecentVisiable(true);
+                            this.props.parent.onChangeSearch('');
                         }} />}
                         {voiceSearch}
                     </View>

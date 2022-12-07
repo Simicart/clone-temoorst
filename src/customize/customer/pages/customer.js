@@ -19,6 +19,9 @@ class CustomerPage extends SimiPageComponent {
         this.isEditProfile = this.props.navigation.getParam('isEditProfile');
         this.password = '';
         this.dispatchSplashCompleted();
+        this.state = {
+            ...this.state,
+        }
     }
 
     dispatchSplashCompleted() {
@@ -60,47 +63,94 @@ class CustomerPage extends SimiPageComponent {
         let currentPassword = '';
         let newPassword = '';
         let confirmPassword = '';
-        console.log('customerpage', this)
-        if (this.form !== undefined) {
-            this.customerData = this.form.getCustomerData();
-            if (this.customerData.password) {
-                currentPassword = this.customerData.password;
-            }
-            if (this.customerData.new_password) {
-                newPassword = this.customerData.new_password;
-            }
-            if (this.customerData.com_password) {
-                confirmPassword = this.customerData.com_password;
-            }
-            if (currentPassword.length > 0 || newPassword.length > 0 || confirmPassword.length > 0) {
-                if (newPassword !== confirmPassword) {
-                    Alert.alert(
-                        Identify.__('Error'),
-                        Identify.__('Password and Confirm password don\'t match'),
-                    );
-                    return;
-                } else if (newPassword.length < 6 || confirmPassword.length < 6) {
-                    Alert.alert(
-                        Identify.__('Error'),
-                        Identify.__('Please enter 6 or more characters'),
-                    );
-                    return;
-                } else if (currentPassword != this.password) {
-                    Alert.alert(
-                        Identify.__('Error'),
-                        Identify.__('Current password don\'t correct'),
-                    );
-                    return;
-                } else {
-                    this.customerData.change_password = '1';
-                }
-                this.customerData['old_password'] = currentPassword;
-                this.customerData['password'] = undefined;
+        this.customerData = this.form.form == undefined ? this.form.getCustomerData() : this.form.form.getFormData();
+        if (this.customerData.password) {
+            currentPassword = this.customerData.password;
+        }
+        if (this.customerData.new_password) {
+            newPassword = this.customerData.new_password;
+        }
+        if (this.customerData.com_password) {
+            confirmPassword = this.customerData.com_password;
+        }
+        if (currentPassword.length > 0 || newPassword.length > 0 || confirmPassword.length > 0) {
+            if (newPassword !== confirmPassword) {
+                Alert.alert(
+                    Identify.__('Error'),
+                    Identify.__('Password and Confirm password don\'t match'),
+                );
+                return;
+            } else if (newPassword.length < 6 || confirmPassword.length < 6) {
+                Alert.alert(
+                    Identify.__('Error'),
+                    Identify.__('Please enter 6 or more characters'),
+                );
+                return;
+            } else if (currentPassword != this.password) {
+                Alert.alert(
+                    Identify.__('Error'),
+                    Identify.__('Current password don\'t correct'),
+                );
+                return;
             } else {
-                this.customerData.change_password = '0';
+                this.customerData.change_password = '1';
             }
+            this.customerData['old_password'] = currentPassword;
+            this.customerData['password'] = undefined;
+        } else {
+            this.customerData.change_password = '0';
         }
         this.requestCustomerAction();
+    }
+
+    editProfileWithData(data) {
+        let currentPassword = '';
+        let newPassword = '';
+        let confirmPassword = '';
+        this.customerData = this.form.getCustomerData();
+        this.customerData = { ... this.customerData, ...data }
+        if (this.customerData.password) {
+            currentPassword = this.customerData.password;
+        }
+        if (this.customerData.new_password) {
+            newPassword = this.customerData.new_password;
+        }
+        if (this.customerData.com_password) {
+            confirmPassword = this.customerData.com_password;
+        }
+        if (currentPassword.length > 0 || newPassword.length > 0 || confirmPassword.length > 0) {
+            if (newPassword !== confirmPassword) {
+                Alert.alert(
+                    Identify.__('Error'),
+                    Identify.__('Password and Confirm password don\'t match'),
+                );
+                return;
+            } else if (newPassword.length < 6 || confirmPassword.length < 6) {
+                Alert.alert(
+                    Identify.__('Error'),
+                    Identify.__('Please enter 6 or more characters'),
+                );
+                return;
+            } else if (currentPassword != this.password) {
+                Alert.alert(
+                    Identify.__('Error'),
+                    Identify.__('Current password don\'t correct'),
+                );
+                return;
+            } else {
+                this.customerData.change_password = '1';
+            }
+            this.customerData['old_password'] = currentPassword;
+            this.customerData['password'] = undefined;
+            this.requestCustomerAction();
+        } else {
+            Alert.alert(
+                Identify.__('Error'),
+                Identify.__('Please enter require fields'),
+            );
+            return;
+        }
+
     }
 
     requestCustomerAction() {
@@ -147,6 +197,7 @@ class CustomerPage extends SimiPageComponent {
                             {
                                 text: Identify.__('OK'), onPress: () => {
                                     if (this.isEditProfile) {
+                                        this.form.setState({ modalVisible: false });
                                         this.props.navigation.goBack(null);
                                     } else {
                                         NavigationManager.clearStackAndOpenPage(this.props.navigation, 'Login', {
@@ -179,7 +230,7 @@ class CustomerPage extends SimiPageComponent {
     }
 
     updateButtonStatus(status) {
-        if(this.button) {
+        if (this.button) {
             this.button.updateButtonStatus(status);
         }
     }

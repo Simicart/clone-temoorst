@@ -10,18 +10,18 @@ const Place = (props) => {
     <View style={[{
       position: 'absolute',
       bottom: 0,
-      flex: 1, flexDirection: 'row'
+      flex: 1, flexDirection: 'row', backgroundColor: '#eb2027'
     },
     material.isIphoneX ? { marginLeft: 15, marginRight: 15, bottom: 15 } : {}
     ]}>
-      <Button full style={{ flex: 1 }} onPress={() => {
+      <Button full style={{ flex: 1, backgroundColor: '#eb2027' }} onPress={() => {
         let data = {};
         data['event'] = 'checkout_action';
         data['action'] = 'clicked_place_order_button';
         Events.dispatchEventAction(data, this);
         props.parent.onPlaceOrder();
       }}>
-        <Text>{Identify.__('PLACE ORDER')}</Text>
+        <Text>{Identify.__('PLACE ORDER TEST')}</Text>
       </Button>
     </View>
   );

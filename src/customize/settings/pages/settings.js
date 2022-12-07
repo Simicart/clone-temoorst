@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Linking, Modal, NativeModules, Platform } from 'react-native';
+import { Linking, Modal, NativeModules, Platform, Dimensions, Text, View, TouchableOpacity } from 'react-native';
 import Identify from '@helper/Identify';
-import AdvanceList from '@base/components/advancelist';
+import AdvanceList from '../../advancelist';
 import { Container, Content } from "native-base";
 import Connection from '@base/network/Connection';
 import NewConnection from '@base/network/NewConnection';
@@ -12,6 +12,8 @@ import RNRestart from 'react-native-restart';
 import { I18nManager } from 'react-native';
 import SimiPageComponent from "@base/components/SimiPageComponent";
 import variable from '@theme/variables/material';
+
+const h = Dimensions.get('window').height;
 
 const NativeMethod = Platform.OS === 'ios' ? NativeModules.NativeMethod : NativeModules.NativeMethodModule;
 
@@ -36,6 +38,13 @@ class Viewsettings extends SimiPageComponent {
             }
         })
     }
+
+    setModalVisible(value) {
+        this.setState({
+            modalVisible: value
+        })
+    }
+
     getDataToShow(key, hasDataInParent) {
         if (key) {
             return this.baseStore[key]
@@ -131,11 +140,33 @@ class Viewsettings extends SimiPageComponent {
         return (
             <Modal
                 animationType="slide"
-                transparent={false}
-                presentationStyle="fullScreen"
+                transparent={true}
                 visible={this.state.modalVisible}
                 onRequestClose={() => { }}>
-                <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />
+                <TouchableOpacity
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }}
+                    onPress={() => this.setModalVisible(false)}>
+                    <TouchableOpacity
+                        style={{ height: this.dataLength > 1 ? 85 + this.dataLength * 40 : 165, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+                        activeOpacity={1}>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                paddingTop: 15,
+                                paddingBottom: 15,
+                                borderBottomWidth: 0.5,
+                                borderBottomColor: Identify.theme.line_color
+                            }}>
+                            <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__(this.state.title)}</Text>
+                            <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                                <Text style={{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />
+                    </TouchableOpacity>
+                </TouchableOpacity>
             </Modal>
         );
     }
@@ -174,7 +205,7 @@ class Viewsettings extends SimiPageComponent {
                     for (let i in this.stores) {
                         let store = this.stores[i];
                         if (store.group_id == groupId) {
-                            storeView = parseInt(store.storeviews.total) > 1 ? store.storeviews.storeviews : null;
+                            storeView = parseInt(store.storeviews.total) >= 1 ? store.storeviews.storeviews : null;
                         }
                     }
                 }
@@ -187,8 +218,9 @@ class Viewsettings extends SimiPageComponent {
                             storeViewActives.push(store);
                         }
                     }
-                    if (storeViewActives.length > 1) {
-                        this.generateActionForModal(storeViewActives, title, 'store_id', 1)
+                    if (storeViewActives.length >= 1) {
+                        this.dataLength = storeViewActives.length;
+                        this.generateActionForModal(storeViewActives, title, 'store_id', 1, null, null)
                     }
                 }
                 return null;
@@ -199,6 +231,7 @@ class Viewsettings extends SimiPageComponent {
                     currenies = this.baseStore.currencies;
                 }
                 if (currenies && currenies.length >= 1) {
+                    this.dataLength = currenies.length;
                     this.generateActionForModal(currenies, title, 'value', 2, true, { searchStr: 'title', baseData: 'currency_code' })
                 }
                 return null;
@@ -225,7 +258,7 @@ class Viewsettings extends SimiPageComponent {
 
 //export default Settings;
 const mapStateToProps = (state) => {
-    return { data: state.redux_data.merchant_configs};
+    return { data: state.redux_data.merchant_configs };
 }
 const mapDispatchToProps = (dispatch) => {
     return {

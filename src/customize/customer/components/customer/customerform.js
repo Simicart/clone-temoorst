@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import SimiComponent from '@base/components/SimiComponent';
 import SimiForm from '@base/components/form/SimiForm';
 import FloatingInput from '../../../form/FloatingInput';
@@ -7,10 +7,12 @@ import DateInput from '@base/components/form/DateInput';
 import DropDownInput from '@base/components/form/DropDownInput';
 import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
-import { ScrollView, TouchableOpacity, View ,Text, Modal } from 'react-native';
-import { Icon, Left } from 'native-base';
+import { ScrollView, TouchableOpacity, View ,Text, Modal, Keyboard, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { Icon, Left, Button } from 'native-base';
 import CustomerButton from './customerbutton'
 import NavigationManager from '@helper/NavigationManager';
+
+const height = Dimensions.get('window').height;
 
 export default class CustomerForm extends SimiComponent {
 
@@ -30,8 +32,18 @@ export default class CustomerForm extends SimiComponent {
         }
         this.state = {
             buttonColor: Identify.theme.app_background,
-            modalVisible: false
+            modalVisible: false,
+            keyboardHeight: 0,
+            indexField: 0
         }
+    }
+    changeKeyboardStatus() {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    }
+    componentWillMount() {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
 
     componentDidMount() {
@@ -43,7 +55,17 @@ export default class CustomerForm extends SimiComponent {
         if (this.props.onRef) {
             this.props.onRef(undefined)
         }
+        this.keyboardDidShowListener.remove();
+		this.keyboardDidHideListener.remove();     
     }
+
+    _keyboardDidShow = e => {
+		this.setState({ keyboardHeight: this.state.indexField*80 });
+	}
+
+	_keyboardDidHide = () => {
+		this.setState({ keyboardHeight: 0 });
+	}
 
     setModalVisible(value) {
         this.setState({
@@ -127,7 +149,6 @@ export default class CustomerForm extends SimiComponent {
             this.renderField('text', 'taxvat', Identify.__('Tax/VAT number'), this.address_option.taxvat_show)
         );
         if (this.isEditProfile) {
-            
             fields.push(
                 <TouchableOpacity 
                     style={{ 
@@ -152,6 +173,7 @@ export default class CustomerForm extends SimiComponent {
         }
         
         else if (this.isEditProfile) {
+            console.log(this.state.keyboardHeight)
             fields.push(
                 <Modal 
                     visible={this.state.modalVisible} 
@@ -159,11 +181,9 @@ export default class CustomerForm extends SimiComponent {
                     transparent={true}>
                     <TouchableOpacity
                         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
-                        onPress={() => [this.setModalVisible(false), NavigationManager.openPage(this.props.navigation, 'Customer', {
-                            isEditProfile: true
-                        })]}>
+                        onPress={() => this.setModalVisible(false)}>
                             <TouchableOpacity 
-                                style={{ height: '60%', width: '100%', backgroundColor: 'white', borderRadius: 15 }}
+                                style={{ height: 0.6*height + this.state.keyboardHeight, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                                 activeOpacity={1}>
                                 <View 
                                     style={{
@@ -179,37 +199,24 @@ export default class CustomerForm extends SimiComponent {
                                         <Text style= {{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{ marginLeft: 15, marginRight: 15, flex: 1, marginTop: 15 }} >    
+                                <View style={{ marginLeft: 15, marginRight: 15, flex: 1, marginTop: 15 }} >
                                     <SimiForm 
                                         fields={this.changePasswordFields()}
                                         parent={this}
                                         onRef={ref => (this.formNew = ref)}
                                         initData={this.initData}
                                         style={{ marginBottom: 20 }}/>
-                                        <CustomerButton {...this.props} {...this.formNew} />
+                                    <Button style={{ width: '100%', marginTop: 16, borderRadius: 10, padding: 8 }}
+                                        full
+                                        onPress={() => { this.onClickButton() }}>
+                                        <Text style={{ fontSize: 15,lineHeight: 24, color: '#FFF' }}>{Identify.__('Save')}</Text>
+                                    </Button>
                                 </View>
                             </TouchableOpacity>                        
                     </TouchableOpacity>
                 </Modal>
             ) 
         }
-        // if (!this.social_login) {
-        //     let labelPassword = Identify.__('Password');
-        //     if (this.isEditProfile) {
-        //         labelPassword = Identify.__('Current Password');
-        //     }
-        //     fields.push(
-        //         this.renderField('password', 'password', labelPassword, this.isEditProfile ? 'opt' : 'req')
-        //     );
-        //     if (this.isEditProfile) {
-        //         fields.push(
-        //             this.renderField('password', 'new_password', Identify.__('New Password'), this.isEditProfile ? 'opt' : 'req')
-        //         );
-        //     }
-        //     fields.push(
-        //         this.renderField('password', 'com_password', Identify.__('Confirm Password'), this.isEditProfile ? 'opt' : 'req')
-        //     );
-        // }
 
         if (this.account_option.show_newsletter === '1') {
             if (!this.isEditProfile) {
@@ -308,14 +315,16 @@ export default class CustomerForm extends SimiComponent {
         }
     };
 
+    onClickButton() {
+        this.props.parent.editProfileWithData(this.formNew.getFormData());
+    }
+
     renderPhoneLayout() {
         return (
-            <ScrollView scrollEnabled={true} style={{flex: 1}}>
-                <SimiForm fields={this.createFields()}
-                    parent={this}
-                    onRef={ref => (this.form = ref)}
-                    initData={this.initData} />
-            </ScrollView>
+            <SimiForm fields={this.createFields()}
+                parent={this}
+                onRef={ref => (this.form = ref)}
+                initData={this.initData} />
         );
     }
 
