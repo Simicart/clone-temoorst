@@ -25,7 +25,7 @@ class DrawerItemCustomize extends React.Component {
     onSelectItem() {
         let code = Identify.isRtl() ? 'rtl' : 'ltr';
         let cmsData = {};
-        this.props.data.params ? 
+        this.props.data.params ?
             cmsData = {
                 html: "<html dri='" + code + "' lang=''><head><meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0'></head><body>" + this.props.data.params.html + "</body></head></html>",
                 lable: this.props.data.params.label
@@ -40,7 +40,6 @@ class DrawerItemCustomize extends React.Component {
                 this.props.navigation.closeDrawer();
                 this.props.parent.props.storeData('showModal', { show: true, key: this.props.data.key })
             } else {
-<<<<<<< HEAD
                 let navigation;
                 navigation = {
                     ...this.props.navigation,
@@ -50,9 +49,6 @@ class DrawerItemCustomize extends React.Component {
                     }
                 }
                 NavigationManager.openPage(navigation, this.props.data.route_name, this.props.data.params ? this.props.data.params : {});
-=======
-                NavigationManager.openPage(this.props.navigation, this.props.data.route_name, this.props.data.params ? cmsData : {});
->>>>>>> dev
             }
         }
     }
