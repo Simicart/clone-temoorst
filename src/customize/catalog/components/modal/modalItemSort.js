@@ -1,14 +1,13 @@
-import { View, Text, TouchableOpacity, Animated, Easing, Image } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
-import { Icon } from 'native-base';
+import { View, Text, TouchableOpacity, Animated, Easing } from 'react-native'
+import React, { useState, useRef, useEffect } from 'react'
 import Identify from '@helper/Identify';
+
 const ModalItemSort = (props) => {
-    const index = props.selectedList.map((item) => item.attribute).indexOf(props.item.attribute);
-    const [selected, setSelected] = useState(null);
-    const [check, setCheck] = useState(false);
-
+    const [totalItem, setTotalItem] = useState(1);
+    const [selected, setSelected] = useState(props.sortTags ? props.sortTags : props.item[0]);
     let rotateValueHolder = useRef(new Animated.Value(0)).current;
-
+    let heightAnimated = useRef(new Animated.Value(0)).current;
+    const [check, setCheck] = useState(false);
     const handlerUp = () => {
         Animated.timing(rotateValueHolder, {
             toValue: 1,
@@ -27,118 +26,98 @@ const ModalItemSort = (props) => {
         }).start();
     };
 
+    const handlerHeightAnimation = (value) => {
+        Animated.timing(heightAnimated, {
+            toValue: value,
+            duration: 200,
+            easing: Easing.linear,
+            useNativeDriver: false,
+        }).start();
+    }
+
+    useEffect(() => {
+        setTotalItem(props.item.length);
+    }, [props.item])
+    const heightDownData = heightAnimated.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, totalItem * 55]
+    })
+    const heightUpData = heightAnimated.interpolate({
+        inputRange: [1, 2],
+        outputRange: [totalItem * 55, 0]
+    })
     const rotateData = rotateValueHolder.interpolate({
         inputRange: [0, 1, 2],
         outputRange: ['0deg', '180deg', '360deg'],
     });
 
     useEffect(() => {
-        if (!selected) {
-            const index = props.selectedList.map((item) => item.attribute).indexOf(props.item.attribute);
-            if (index > -1) {
-                setSelected(props.selectedList[index]);
-            }
-        }
-    }, [props.selectedList])
-
-    useEffect(() => {
         if (selected) {
-            props.setSelectedList((prevState) => {
-                let newState;
-                const index = prevState.map((item) => item.attribute).indexOf(props.item.attribute);
-                // check TH selected co gia tri => check tiep trong TH trong mang co item khac voi item duoc chon thi replace lai  => neu khong co thi push them vao
-                if (index > -1) {
-                    newState = [];
-                    for (let i = 0; i < prevState.length; i++) {
-                        if (prevState[i].attribute == props.item.attribute && prevState[i].value !== selected.value) {
-                            newState.push({
-                                ...selected, attribute: props.item.attribute
-                            });
-                        } else if (prevState[i].attribute !== props.item.attribute) {
-                            newState.push(prevState[i]);
-                        }
-                    }
-                    return newState;
-                } else {
-                    newState = [...prevState, { ...selected, attribute: props.item.attribute }];
-                    return newState;
-                }
-            })
-        } else {
-            // kiem tra xem TH selected = null ma trong mang co ton tai phan tu thi xoa no di
-            props.setSelectedList((prevState) => {
-                const index = prevState.map((item) => item.attribute).indexOf(props.item.attribute);
-                if (index > 0) {
-                    return prevState.splice(index, 1);
-                } else {
-                    return prevState;
-                }
-            })
+            props.setSelectedSortList({ ...selected, attribute: props.item.key })
         }
     }, [selected])
 
     return (
         <View style={{ borderBottomColor: '#e0e0e0', borderBottomWidth: 1, paddingVertical: 10, }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <View>
-                    <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-                        {props.item.title}
-                    </Text>
-                    <Text style={{ color: "#ffa100" }}>
-                        {selected && selected ? selected.label : "Any "} {props.item.title}
-                    </Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={() => {
-                        if (check) {
-                            handlerDown();
-                            setCheck(false);
-                        } else {
-                            handlerUp();
-                            setCheck(true);
-                        }
-                    }}>
-                        <Animated.Image source={require('../../../images/down.png')}
+
+            <TouchableOpacity onPress={() => {
+                if (check) {
+                    handlerDown();
+                    setCheck(false);
+                    handlerHeightAnimation(2);
+                    heightAnimated.setValue(0);
+                } else {
+                    handlerUp();
+                    setCheck(true);
+                    handlerHeightAnimation(1);
+                }
+            }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <View>
+                        <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 5 }}>
+                            {Identify.__("Sort by")}
+                        </Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ color: Identify.theme.button_background, marginRight: 3 }}>
+                                {selected.value} {selected.direction}
+                            </Text>
+                        </View>
+                    </View>
+                    <View>
+                        <Animated.Image source={require('@customize/images/down.png')}
                             style={{
                                 height: 20, width: 20, transform: [{ rotate: rotateData }],
                             }}
                         />
-                    </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
             <View>
                 {
-                    check && props.item?.filter.length > 0 ? (
-                        <View>
+                    check && props.item.length > 0 ? (
+                        <Animated.View style={{ height: check ? heightDownData : heightUpData }}>
                             {
-                                props.item.filter.map((item, index) => (
+                                props.item.map((item, index) => (
                                     <TouchableOpacity
                                         onPress={() => {
-                                            setSelected((prevState) => {
-                                                if (!prevState || prevState.value !== item.value) {
-                                                    return item;
-                                                }
-                                                else {
-                                                    return null;
-                                                }
-                                            });
+                                            setSelected(item);
                                         }}
                                         key={index}
                                     >
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 10, height: 30 }}>
                                             <View>
                                                 <Text>
-                                                    {item.label}
+                                                    {item?.value} {item.direction}
                                                 </Text>
                                             </View>
-                                            <View style={{ borderWidth: 1, borderRadius: 99, height: 25, width: 25, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderColor: selected && selected.value == item.value ? Identify.theme.button_background : 'black' }}>
-                                                {selected && selected.value == item.value ? <View style={{ width: 15, height: 15, backgroundColor: Identify.theme.button_background, borderRadius: 99 }} /> : null}
+                                            <View style={{ borderWidth: 1, borderRadius: 99, height: 25, width: 25, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderColor: selected && selected.direction == item.direction && selected.value == item.value ? Identify.theme.button_background : 'black' }}>
+                                                {selected && selected.direction == item.direction && selected.value == item.value ? <View style={{ width: 15, height: 15, backgroundColor: Identify.theme.button_background, borderRadius: 99 }} /> : null}
                                             </View>
                                         </View>
                                     </TouchableOpacity>
                                 ))
                             }
-                        </View>
+                        </Animated.View>
                     ) : null
                 }
             </View>

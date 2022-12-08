@@ -23,9 +23,9 @@ class HeaderApp extends React.Component {
     }
 
 
-    componentDidUpdate() {
-        console.log("this header: ", this);
-    }
+    // componentDidUpdate() {
+    //     console.log("this header: ", this);
+    // }
 
     dispatchEventHeaderBefore() {
         let events = Events.events.app_header_before;

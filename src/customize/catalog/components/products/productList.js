@@ -103,7 +103,6 @@ class ProductList extends SimiPageComponent {
     } else {
       this.setState({ data: data, loadMore: canLoadMore, isFetching: false });
     }
-    console.log("data get: ", data);
 
     this.props.onSetSorts(data.orders);
     this.props.onSetLayers(data.layers);
@@ -138,8 +137,8 @@ class ProductList extends SimiPageComponent {
   }
 
   onSortAction(order, dir) {
-    this.limit = Device.isTablet() ? 16 : 10;
-    this.offset = 0;
+    // this.limit = Device.isTablet() ? 16 : 10;
+    // this.offset = 0;
     this.props.storeData('showLoading', { type: 'full' });
     params = this.createParams();
     if (this.filterData) {
@@ -216,8 +215,7 @@ class ProductList extends SimiPageComponent {
       ...filterParams,
     };
     this.shouldStoreData = false;
-    // this.filterData = filterParams
-    // this.setState({ data: null });
+    console.log("params truoc khi request: ", params);
     this.requestData(params);
   }
   componentDidUpdate() {

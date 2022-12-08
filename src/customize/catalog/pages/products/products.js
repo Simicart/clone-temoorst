@@ -21,6 +21,7 @@ class Products extends SimiPageComponent {
             layers: null,
             paramsFilter: null,
             filterTag: null,
+            sortTags: null,
             sorts: null
         }
         this.categoryData = null;
@@ -41,8 +42,10 @@ class Products extends SimiPageComponent {
         this.onSetLayers = this.onSetLayers.bind(this);
         this.onFilterAction = this.onFilterAction.bind(this);
         this.onFilterTags = this.onFilterTags.bind(this);
+        this.onSortTags = this.onFilterTags.bind(this);
         this.paramsFilter = null;
         this.filterTag = null;
+        this.sortTags = null;
         this.layers = null;
         this.sorts = null;
         this.onSetSorts = this.onSetSorts.bind(this);
@@ -105,9 +108,9 @@ class Products extends SimiPageComponent {
         this.categoryData = data;
         return true;
     }
-    componentDidUpdate() {
-        console.log("this: ", this);
-    }
+    // componentDidUpdate() {
+    //     console.log("this: ", this);
+    // }
     shouldRenderLayoutFromConfig() {
         if (this.categoryData) {
             return true;
@@ -131,6 +134,10 @@ class Products extends SimiPageComponent {
     onFilterTags(filterTag) {
         this.setState({ filterTag });
         this.filterTag = filterTag;
+    }
+    onSortTags(sortTags) {
+        this.setState({ sortTags });
+        this.sortTags = sortTags;
     }
     onSelectedCategory(cate) {
         this.setState({ selectedCate: cate })

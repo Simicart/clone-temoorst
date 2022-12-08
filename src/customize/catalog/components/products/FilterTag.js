@@ -27,7 +27,7 @@ const FilterTag = (props) => {
         props.onFilterAction(params);
         props.onFilterTags(filterTags.length > 0 ? filterTags : null);
     }
-    if (filterTags) {
+    if (filterTags && filterTags.filter((item) => item.title).length > 0) {
         return (
             <View style={{ marginHorizontal: 15, marginBottom: 5, height: 50 }}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
