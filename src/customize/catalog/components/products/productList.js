@@ -4,7 +4,7 @@ import Identify from '@helper/Identify';
 import { connect } from 'react-redux';
 import NewConnection from '@base/network/NewConnection';
 import { Container, Spinner } from 'native-base';
-import { View, ScrollView, FlatList } from 'react-native';
+import { View, ScrollView, FlatList, RefreshControl } from 'react-native';
 import { products, home_spot_products, products_mode } from '@helper/constants';
 import NavigationManager from '@helper/NavigationManager';
 import variable from '@theme/variables/material';
@@ -17,13 +17,14 @@ class ProductList extends SimiPageComponent {
     super(props);
     this.state = {
       ...this.state,
-      data: null,
+      data: [],
       loadMore: true,
       showList: (Identify.getMerchantConfig().storeview.catalog.frontend.view_products_default == '0') ? true : false,
-      showBottom: true
+      showBottom: true,
+      isFetching: false
     };
     this.cateId = this.props.cateId;
-    this.limit = Device.isTablet() ? 16 : 10;
+    this.limit = Device.isTablet() ? 16 : 12;
     this.offset = 0;
     this.first = true;
     this.lastY = 0;
@@ -34,6 +35,7 @@ class ProductList extends SimiPageComponent {
     this.onSortAction = this.onSortAction.bind(this);
     this.list = null;
     this.paramsFilter = null;
+    this.onRefresh = this.onRefresh.bind(this);
     this.filterData
   }
 
@@ -63,7 +65,9 @@ class ProductList extends SimiPageComponent {
   }
 
   requestData(params) {
-    this.props.storeData('showLoading', { type: 'full' });
+    if (!this?.state?.loadMore && !this.state.isFetching) {
+      this.props.storeData('showLoading', { type: 'full' });
+    }
     let url = products;
     new NewConnection()
       .init(url, 'get_products_data', this)
@@ -76,28 +80,45 @@ class ProductList extends SimiPageComponent {
   }
 
   updateData(type, data_key, data) {
-
+    console.log("vao trong update");
+    // if (data.products && data.products.length > 0) {
+    //   this.offset = this.offset + data.product.length;
+    // }
     let canLoadMore = true;
-    if (this.offset + this.limit >= data.total) {
+    if (this.offset + this.limit >= data.total || this.state.isFetching) {
       canLoadMore = false;
     }
     this.isLoadingMore = false;
 
-    if (this.shouldStoreData) {
-      this.state.data = data;
-      this.state.loadMore = canLoadMore;
+    if (this.shouldStoreData && !this.state.isFetching) {
+      // this.state.data = data;
+      // this.state.loadMore = canLoadMore;
+      console.log("this.state.isFetching trong if: ", this.state.isFetching)
       let productsData = {};
       productsData[data_key] = data;
       this.props.storeData(type, productsData);
+      let newData = [];
+      if (this.state.data.products) {
+        newData = this.state.data.products;
+      }
+      this.setState({ data: { ...data, products: [...newData, ...data.products] }, loadMore: canLoadMore, isFetching: false });
     } else {
-      this.setState({ data: data, loadMore: canLoadMore });
+      this.setState({ data: data, loadMore: canLoadMore, isFetching: false });
     }
-    this.props.onSetLayers(data.layers)
+    // this.props.onSetLayers(data.layers)
     if (this.props.data.showLoading.type !== 'none' && !this.props.isCategory) {
       this.props.storeData('showLoading', { type: 'none' });
     }
   }
 
+  onRefresh() {
+    if (!this.state.isFetching) {
+      console.log("vao trong if");
+      this.setState({ isFetching: true, loadMore: false });
+      this.offset = 0;
+      this.requestData(this.createParams());
+    }
+  }
 
   changeStyle = () => {
     if (this?.state?.showList == true) {
@@ -170,6 +191,9 @@ class ProductList extends SimiPageComponent {
     if ((Number((nativeEvent.contentSize.height).toFixed(0)) - 1) <= Number((nativeEvent.contentOffset.y).toFixed(1)) + Number((nativeEvent.layoutMeasurement.height).toFixed(1))) {
       this.onEndReached();
     }
+    // if (Number((nativeEvent.contentOffset.y).toFixed(1)) < 0) {
+    //   console.log("ok refreshing!!!")
+    // }
   }
 
   shouldRenderLayoutFromConfig() {
@@ -245,7 +269,7 @@ class ProductList extends SimiPageComponent {
     let numColumns = (showList && !Device.isTablet()) ? 1 : ((showList && Device.isTablet() || !showList && !Device.isTablet()) ? 2 : 4)
     return {
       style: styles.verticalList,
-      data: this.formatData(this?.state?.data.products, numColumns),
+      data: this?.state?.data.products && this?.state?.data.products.length > 0 ? this.formatData(this?.state?.data.products, numColumns) : [],
       // extraData: this.props.parent?.state?.data,
       showsVerticalScrollIndicator: false,
       keyExtractor: (item) => item.entity_id,
@@ -261,7 +285,11 @@ class ProductList extends SimiPageComponent {
           <ScrollView
             onScroll={this.onListScroll}
             scrollEventThrottle={400}
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={this.state.isFetching} onRefresh={this.onRefresh} />
+            }
+          >
             <FlatList
               {...this.createListProps()}
               renderItem={({ item }) => {
@@ -271,8 +299,10 @@ class ProductList extends SimiPageComponent {
                 return (
                   this.renderItem(item)
                 );
-              }
-              } />
+              }}
+              onRefresh={() => this.onRefresh()}
+              refreshing={this.state.isFetching}
+            />
             <Spinner color={Identify.theme.loading_color} style={(this?.state?.loadMore) ? {} : { display: 'none' }} />
             <View style={{ height: 60 }} />
           </ScrollView>

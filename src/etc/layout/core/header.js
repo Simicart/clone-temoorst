@@ -1,8 +1,8 @@
 export default {
-    container : {
+    container: {
     },
-    content : {
-        left : {
+    content: {
+        left: {
             active: true,
             sort_order: 1000,
             content: require('@base/components/layout/header/left').default,
@@ -12,10 +12,10 @@ export default {
             sort_order: 2000,
             content: require('@base/components/layout/header/body').default,
         },
-        right:{
-          active: true,
-          sort_order: 3000,
-          content: require('@base/components/layout/header/right').default,
+        right: {
+            active: true,
+            sort_order: 3000,
+            content: require('@base/components/layout/header/right').default,
         }
     }
 }
