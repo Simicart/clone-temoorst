@@ -20,7 +20,9 @@ class Products extends SimiPageComponent {
             selectedCate: null,
             layers: null,
             paramsFilter: null,
-            filterTag: null
+            filterTag: null,
+            sortTags: null,
+            sorts: null
         }
         this.categoryData = null;
         this.cateId = this.props.navigation.getParam("categoryId") ? this.props.navigation.getParam("categoryId") : -1;
@@ -40,16 +42,20 @@ class Products extends SimiPageComponent {
         this.onSetLayers = this.onSetLayers.bind(this);
         this.onFilterAction = this.onFilterAction.bind(this);
         this.onFilterTags = this.onFilterTags.bind(this);
+        this.onSortTags = this.onFilterTags.bind(this);
         this.paramsFilter = null;
         this.filterTag = null;
+        this.sortTags = null;
         this.layers = null;
+        this.sorts = null;
+        this.onSetSorts = this.onSetSorts.bind(this);
     }
 
-    componentWillMount() {
-        if (this.props.data.showLoading.type === 'none' && !this.checkExistData(this.props.data.category_data, this.cateId)) {
-            this.props.storeData('showLoading', { type: 'full' });
-        }
-    }
+    // componentWillMount() {
+    //     if (this.props.data.showLoading.type === 'none' && !this.checkExistData(this.props.data.category_data, this.cateId)) {
+    //         this.props.storeData('showLoading', { type: 'full' });
+    //     }
+    // }
 
     componentDidMount() {
         super.componentDidMount();
@@ -89,17 +95,22 @@ class Products extends SimiPageComponent {
         this.setState({ selectedCate: this.cateChilds[0] })
         let categoryData = {};
         categoryData[this.cateId] = data;
-        this.props.storeData('actions', [
-            { type: 'showLoading', data: { type: 'none' } },
-            { type: 'add_category_data', data: categoryData }
-        ]);
+        setTimeout(() => {
+            this.props.storeData('actions', [
+                { type: 'showLoading', data: { type: 'none' } },
+                { type: 'add_category_data', data: categoryData }
+            ]);
+        }, 1000)
+
     }
 
     loadExistData(data) {
         this.categoryData = data;
         return true;
     }
-
+    // componentDidUpdate() {
+    //     console.log("this: ", this);
+    // }
     shouldRenderLayoutFromConfig() {
         if (this.categoryData) {
             return true;
@@ -124,6 +135,10 @@ class Products extends SimiPageComponent {
         this.setState({ filterTag });
         this.filterTag = filterTag;
     }
+    onSortTags(sortTags) {
+        this.setState({ sortTags });
+        this.sortTags = sortTags;
+    }
     onSelectedCategory(cate) {
         this.setState({ selectedCate: cate })
 
@@ -137,6 +152,11 @@ class Products extends SimiPageComponent {
     onSetLayers(layers) {
         this.setState({ layers: layers });
         this.layers = layers;
+    }
+
+    onSetSorts(sorts) {
+        this.setState({ sorts: sorts });
+        this.sorts = sorts;
     }
 
     renderPhoneLayout() {

@@ -9,10 +9,10 @@ export default class NavigationManager {
             index: 0,
             actions: [NavigationActions.navigate({
                 routeName: routeName,
-                params: {...params,previousRoute : (navigation && navigation !== null) ? navigation.state.routeName : null}
+                params: { ...params, previousRoute: (navigation && navigation !== null) ? navigation.state.routeName : null }
             })],
         });
-        if(navigation == null) {
+        if (navigation == null) {
             navigation = this.savedNavigation
         }
         navigation.dispatch(resetAction);
@@ -21,11 +21,12 @@ export default class NavigationManager {
     static openPage(navigation, routeName, params = {}) {
         const pushAction = StackActions.push({
             routeName: routeName,
-            params: {...params,previousRoute : (navigation && navigation !== null) ? navigation.state.routeName : null}
+            params: { ...params, previousRoute: (navigation && navigation !== null) ? navigation.state.routeName : null }
         });
-        if(navigation == null) {
+        if (navigation == null) {
             navigation = this.savedNavigation
         }
+        console.log("pushAction: ", pushAction);
         navigation.dispatch(pushAction);
     }
 
@@ -33,7 +34,7 @@ export default class NavigationManager {
         const popAction = StackActions.pop({
             n: 1,
         });
-        if(navigation == null) {
+        if (navigation == null) {
             navigation = this.savedNavigation
         }
         navigation.dispatch(popAction);
@@ -43,14 +44,14 @@ export default class NavigationManager {
         const popAction = StackActions.pop({
             n: step,
         });
-        if(navigation == null) {
+        if (navigation == null) {
             navigation = this.savedNavigation
         }
         navigation.dispatch(popAction);
     }
 
     static backToRootPage(navigation) {
-        if(navigation == null) {
+        if (navigation == null) {
             navigation = this.savedNavigation
         }
         const resetAction = StackActions.reset({
@@ -63,7 +64,7 @@ export default class NavigationManager {
     }
 
     static clearStackAndOpenPage(navigation, routeName, params = {}) {
-        if(navigation == null) {
+        if (navigation == null) {
             navigation = this.savedNavigation
         }
         this.backToRootPage(navigation);

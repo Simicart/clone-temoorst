@@ -7,8 +7,8 @@ import Identify from '@helper/Identify';
 import NavigationManager from "../../core/helper/NavigationManager";
 import Events from '@helper/config/events';
 import material from '../../../native-base-theme/variables/material';
-
-export default class DrawerItemCustomize extends React.Component {
+import { connect } from 'react-redux';
+class DrawerItemCustomize extends React.Component {
 
     getConfigData(keyBase) {
         let config = Identify.getMerchantConfig().storeview.base;
@@ -25,7 +25,7 @@ export default class DrawerItemCustomize extends React.Component {
     onSelectItem() {
         let code = Identify.isRtl() ? 'rtl' : 'ltr';
         let cmsData = {};
-        this.props.data.params ? 
+        this.props.data.params ?
             cmsData = {
                 html: "<html dri='" + code + "' lang=''><head><meta name='viewport' content='initial-scale=1.0, maximum-scale=1.0'></head><body>" + this.props.data.params.html + "</body></head></html>",
                 lable: this.props.data.params.label
@@ -40,7 +40,15 @@ export default class DrawerItemCustomize extends React.Component {
                 this.props.navigation.closeDrawer();
                 this.props.parent.props.storeData('showModal', { show: true, key: this.props.data.key })
             } else {
-                NavigationManager.openPage(this.props.navigation, this.props.data.route_name, this.props.data.params ? cmsData : {});
+                let navigation;
+                navigation = {
+                    ...this.props.navigation,
+                    state: {
+                        ...this.props.navigation.state,
+                        routeName: this.props.bottomAction,
+                    }
+                }
+                NavigationManager.openPage(navigation, this.props.data.route_name, this.props.data.params ? this.props.data.params : {});
             }
         }
     }
@@ -95,3 +103,19 @@ export default class DrawerItemCustomize extends React.Component {
 
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        bottomAction: state.redux_data.bottomAction,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerItemCustomize);
