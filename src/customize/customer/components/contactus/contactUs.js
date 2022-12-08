@@ -59,7 +59,7 @@ class ContactUs extends React.Component {
     render(){
         if(this.listContactUs.length > 0){
             return(
-                <View style={{ width: width, height: height, marginTop: 20}}>
+                <View style={{ width: width, height: height}}>
                     <ScrollView style={{ flex: 1 }}>
                         {
                             this.listContactUs.map((item, index)=> (

@@ -5,6 +5,7 @@ import styles from './styles';
 import material from '@theme/variables/material';
 import CategoryItem from './categoryItem';
 import { FlatList } from 'react-native-gesture-handler';
+import { Spinner } from 'native-base';
 
 const width = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -16,11 +17,12 @@ class Categories extends React.Component {
         this.data = Object.values(this.props.parent.categoryData.categories);
         console.log(this.data);
         this.dataLength = this.data.length;
-        this.qty = 12;
+        this.qty = 8;
         this.stopLoadmore= true;
         this.count = 0;
         this.state = {
             data: this.data.slice(0, this.qty),
+            loadingMore: false
         }
     }
 
@@ -29,10 +31,15 @@ class Categories extends React.Component {
     }
 
     handleOnEndReached() {
+        console.log(this.state.data)
         if( this.count*this.qty < this.dataLength) {
             this.count ++;
-            console.log(this.count);
+            this.setState({loadingMore: true})
+            setTimeout(()=>{
+                this.setState({loadingMore: false})
+            },1000)
             this.setState({data: [...this.state.data, ...this.data.slice(this.count*this.qty, (this.count+1)*this.qty)]})
+
         }
     }
 
@@ -46,7 +53,16 @@ class Categories extends React.Component {
                     onEndReached={() => this.handleOnEndReached()}
                     onEndReachedThreshold={0.5}
                     data={this.state.data}
-                    renderItem={({item}) => this.renderCategoryItem(item)} />
+                    renderItem={({item}) => this.renderCategoryItem(item)} 
+                    ListFooterComponent={()=>{
+                        if(this.state.loadingMore){
+                            return <Spinner />
+                        }else{
+                            return null;
+                        }
+                    }}
+                    />
+
             </View>
         );
     }

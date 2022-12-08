@@ -7,11 +7,13 @@ import Identify from '@helper/Identify';
 export default class ContactUsItem extends React.Component {
     constructor(props){
         super(props);
+        this.data = this.props.data;
     }
     render() {
         console.log(Identify.theme)
         switch(this.props.type){
             case 'web':
+                this.data = "Visit our website";
                 this.action = () =>{
                     Linking.openURL(this.props.data)
                 }
@@ -25,12 +27,14 @@ export default class ContactUsItem extends React.Component {
                 let phoneNumber;
                 if(Platform.OS === 'android') phoneNumber = `tel:${number}`;
                 else phoneNumber = `telprompt:${number}`
+                this.data = "Call us " + this.props.data;
                 this.action = () =>{
                     Linking.openURL(phoneNumber)
                 }
                 break;
             case 'email':
                 let email=`mailto:${this.props.data}`;
+                this.data = "Email us";
                 this.action = () =>{
                     Linking.openURL(email)
                 }
@@ -42,6 +46,7 @@ export default class ContactUsItem extends React.Component {
                     if(dataSms.charAt(i) !== ' ') smsNumber += dataSms.charAt(i);
                 }
                 let SmsNumber = `sms:${smsNumber}`;
+                this.data = "Message us"
                 this.action = () =>{
                     Linking.openURL(SmsNumber)
                 }
@@ -59,7 +64,7 @@ export default class ContactUsItem extends React.Component {
                 alignItems: 'center'}}
                 onPress={() => this.action() }>
                 <Icon type={this.props.icon_type} name={this.props.icon_name} style={{ color: Identify.theme.icon_color }}></Icon>
-                <Text style={{ marginLeft: 20 }}>{this.props.data}</Text>
+                <Text style={{ marginLeft: 20 }}>{Identify.__(this.data)}</Text>
             </TouchableOpacity>
         )
     }

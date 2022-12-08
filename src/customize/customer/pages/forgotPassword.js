@@ -2,7 +2,7 @@ import React from 'react'
 import SimiPageComponent from "@base/components/SimiPageComponent";
 import Identify from "@helper/Identify";
 import { Container, Content, Form, Item, Input, Label, H3, Text, Button, Toast, View} from 'native-base';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Platform } from 'react-native'
 import { forgotpassword } from '@helper/constants';
 import NewConnection from '@base/network/NewConnection';
 import NavigationManager from "@helper/NavigationManager";
@@ -70,25 +70,28 @@ export default class ForgotPassWordPage extends SimiPageComponent{
     }
 
     renderFormForgot = () => {
-        return <Form style={{ marginLeft: Identify.isRtl() ? 20 : 0 }}>
-            <Label style={{ width: '100%', fontWeight: 'bold' }}>{Identify.__('Forgot password')}</Label>
-            <View style={{ flexDirection: 'row',  marginTop: 20 }}>
-                <Text>{Identify.__('Email')}</Text>
-                <Text style={{ color: 'red' }}> *</Text>
+        return <Form style={{ marginLeft: 10 , marginRight: 10, width: '100%'}}>
+            <Label style={{ width: '100%', fontWeight: 'bold', textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.__('Forget Password')}</Label>
+            <View style={{ flexDirection: 'row',  marginTop: 20, justifyContent: Identify.isRtl() ? 'flex-end' : 'flex-start' }}>
+                {Identify.isRtl() ? <Text style={{ color: 'red' }}>* </Text> : null}
+                <Text>{Identify.__('Email')}
+                </Text>
+                {Identify.isRtl() ? null: <Text style={{ color: 'red' }}> *</Text>}
             </View>
             <Input
                 style={{
                     flex: 1,
                     borderWidth: 0.5,
                     borderColor: '#c3c3c3',
-                    borderRadius: 5,
+                    borderRadius: 7,
                     paddingStart: 15,
                     paddingEnd: 15,
-                    height: 40,
+                    height: 50,
                     marginTop: 10,
-                    marginBottom: 20
+                    marginBottom: 10,
+                    textAlign: Identify.isRtl() ? 'right' : 'left' 
                 }}
-                placeholder={Identify.__('Please enter your email')}
+                placeholder={Platform.OS === 'ios' ? Identify.__('Enter your email address') : Identify.__('Please enter your email')}
                 value={this.state.email}
                 onChangeText={(text) => { this.setState({ email: text }); }} />
             <View 
@@ -123,10 +126,15 @@ export default class ForgotPassWordPage extends SimiPageComponent{
                 <Content style={{ padding: 12 }}>
                     {this.renderFormForgot()}
                     <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'center' }}>
+                        {Identify.isRtl() ? 
+                            <TouchableOpacity onPress={() => { this.onClickLogin() }}>
+                                <Text style={{ color: Identify.theme.button_background }}>{Identify.__('Sign In')}</Text>
+                            </TouchableOpacity> : null}
                         <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Have your password? ')} </Text>
-                        <TouchableOpacity onPress={() => { this.onClickLogin() }}>
-                            <Text style={{ color: Identify.theme.button_background }}>{Identify.__('Sign In')}</Text>
-                        </TouchableOpacity>
+                        {Identify.isRtl() ? null :
+                            <TouchableOpacity onPress={() => { this.onClickLogin() }}>
+                                <Text style={{ color: Identify.theme.button_background }}>{Identify.__('Sign In')}</Text>
+                            </TouchableOpacity>}
                     </View> 
                 </Content>
             </Container>
