@@ -144,7 +144,7 @@ export default class CustomerForm extends SimiComponent {
                         onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
                         onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
                         onPress={() => this.setModalVisible(true)}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{Identify.__('Change Password')}</Text>
+                    <Text style={{ fontSize: 16 }}>{Identify.__('Change Password')}</Text>
                     <Icon type='Feather' name='chevron-right' stype={{ color: Identify.theme.icon_color }}></Icon>
                 </TouchableOpacity>
             )
