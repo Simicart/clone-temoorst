@@ -1,19 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SimiPageComponent from '@base/components/SimiPageComponent';
-import { View } from 'react-native';
+import { View, Image, Dimensions} from 'react-native';
 import { Container, Content } from 'native-base';
 import NewConnection from '@base/network/NewConnection';
 import { order_history, quoteitems } from '@helper/constants';
 import variable from '@theme/variables/material';
+
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 
 class ContactUs extends SimiPageComponent {
 
     renderPhoneLayout() {
         return (
             <Container style={{ backgroundColor: variable.appBackground }}>
+                <View style={{ width: width*0.4, height: width*0.3, alignSelf: 'center', justifyContent: 'center' }}>
+                    <Image resizeMode='center' style={{width: width*0.4, height: width*0.1, paddingBottom: 10, alignSelf: 'center' }} source={require('@media/logo.png')}/>
+                </View>
                 <Content>
-                    <View style={{ flex: 1, paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 60 }}>
+                    <View style={{ flex: 1, paddingLeft: 10, paddingRight: 10, paddingBottom: 60 }}>
                         {this.renderLayoutFromConfig('contactus_layout', 'content')}
                     </View>
                 </Content>

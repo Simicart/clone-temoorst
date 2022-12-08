@@ -1,27 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SimiComponent from '@base/components/SimiComponent';
-import { TouchableOpacity, Alert } from 'react-native';
+import { TouchableOpacity, Alert, Modal } from 'react-native';
 import { Card, CardItem, Text, Button, Icon, View } from 'native-base';
 import Identify from '@helper/Identify';
 
 const AddressItem = (props) => {
-
+    const [modalVisible, setModalVisible] = useState(false);
     const addressItem = props.address;
 
     function showDeleteItemPopup(data) {
-        Alert.alert(
-            Identify.__('Warning'),
-            Identify.__('Are you sure you want to delete this item?'),
-            [
-                { text: Identify.__('Cancel'), onPress: () => { style: 'cancel' } },
-                {
-                    text: Identify.__('OK'), onPress: () => {
-                        props.parent.deleteAddress(addressItem.entity_id);
-                    }
-                },
-            ],
-            { cancelable: true }
-        );
+        setModalVisible(true)
+        // Alert.alert(
+        //     Identify.__('Warning'),
+        //     Identify.__('Are you sure you want to delete this item?'),
+        //     [
+        //         { text: Identify.__('Cancel'), onPress: () => { style: 'cancel' } },
+        //         {
+        //             text: Identify.__('OK'), onPress: () => {
+        //                 props.parent.deleteAddress(addressItem.entity_id);
+        //             }
+        //         },
+        //     ],
+        //     { cancelable: true }
+        // );
     }
 
     function renderName() {
@@ -43,7 +44,7 @@ const AddressItem = (props) => {
         }
 
         if (name !== '') {
-            return <Text>{name}</Text>
+            return <Text style={{ fontWeight: 'bold', marginBottom: 10 }}>{name}</Text>
         }
     }
 
@@ -53,7 +54,12 @@ const AddressItem = (props) => {
             company = addressItem.company
         }
         if (company !== '') {
-            return <Text>{company}</Text>
+            return(
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Company: ')}</Text>
+                    <Text>{company}</Text>
+                </View>
+            )
         }
     }
 
@@ -63,7 +69,12 @@ const AddressItem = (props) => {
             street = addressItem.street
         }
         if (street !== '') {
-            return <Text>{street}</Text>
+            return(
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Street: ')}</Text>
+                    <Text>{street}</Text>
+                </View>
+            )
         }
     }
 
@@ -79,7 +90,12 @@ const AddressItem = (props) => {
             info += addressItem.postcode;
         }
         if (info !== '') {
-            return <Text>{info}</Text>
+            return(
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('City: ')}</Text>
+                    <Text>{info}</Text>
+                </View>
+            )
         }
     }
 
@@ -89,7 +105,12 @@ const AddressItem = (props) => {
             country = addressItem.country_name;
         }
         if (country !== '') {
-            return <Text>{country}</Text>
+            return(
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Country: ')}</Text>
+                    <Text>{country}</Text>
+                </View>
+            )
         }
     }
 
@@ -99,7 +120,12 @@ const AddressItem = (props) => {
             telephone = addressItem.telephone;
         }
         if (telephone !== '') {
-            return <Text>{telephone}</Text>
+            return (
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Phone: ')}</Text>
+                    <Text>{telephone}</Text>
+                </View>
+            )
         }
     }
 
@@ -109,7 +135,12 @@ const AddressItem = (props) => {
             email = addressItem.email;
         }
         if (email !== '') {
-            return <Text>{email}</Text>
+            return (
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Email: ')}</Text>
+                    <Text>{email}</Text>
+                </View>
+            )
         }
     }
 
@@ -143,12 +174,52 @@ const AddressItem = (props) => {
                         {renderPhone()}
                         {renderEmail()}
                     </CardItem>
-                    {!props.parent.mode.includes('checkout') && <Button style={{ position: 'absolute', top: 0, right: 0 }} transparent
+                    {!props.parent.mode.includes('checkout') && <TouchableOpacity style={{top: 0, right: 0 }}
                         onPress={() => { showDeleteItemPopup() }}>
-                        <Icon name="ios-trash" />
-                    </Button>}
+                        <Text style={{ color: '#FF4040', borderWidth: 0.5, borderColor: Identify.theme.line_color, borderRadius: 7, width: 60, padding: 5, marginLeft: 12, marginRight: 12, textAlign: 'center' }}>{Identify.__('Delete')}</Text>
+                    </TouchableOpacity>}
                 </Card>
             </TouchableOpacity>
+            <Modal 
+                visible={modalVisible} 
+                animationType='slide'
+                transparent={true}>
+                <TouchableOpacity
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                    onPress={() => setModalVisible(false)}>
+                        <TouchableOpacity 
+                            style={{ height: '32%', width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+                            activeOpacity={1}>
+                            <View 
+                                style={{
+                                    flexDirection: 'row', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'space-between', 
+                                    paddingTop: 15, 
+                                    paddingBottom: 15,
+                                    borderBottomWidth: 0.5, 
+                                    borderBottomColor: Identify.theme.line_color  }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__('Delete Address')}</Text>
+                                <TouchableOpacity onPress={() => setModalVisible(false)}>
+                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: 15 }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 30, fontSize: 20, width: '80%', alignSelf: 'center' }}>{Identify.__('Are you sure want to Delete this Address?')}</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                                <TouchableOpacity
+                                    onPress={() => props.parent.deleteAddress(addressItem.entity_id)} 
+                                    style= {{width: '40%', height: 50, borderWidth: 3, borderColor: Identify.theme.button_background, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ color: Identify.theme.button_background, fontSize: 16, fontWeight: 'bold' }}>{Identify.__('Yes')}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity 
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                    style= {{width: '40%', height: 50, borderWidth: 3, borderColor: Identify.theme.button_background, borderRadius: 10, alignItems: 'center', backgroundColor: Identify.theme.button_background, justifyContent: 'center' }}>
+                                    <Text style={{ color: Identify.theme.button_text_color, fontSize: 16, fontWeight: 'bold' }}>{Identify.__('No')}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>                        
+                </TouchableOpacity>
+            </Modal>
         </View>
     );
 }

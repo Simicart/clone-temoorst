@@ -7,14 +7,13 @@ import Identify from '@helper/Identify';
 export default class ContactUsItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            buttonColor: Identify.theme.app_background
-        }
+        this.data = this.props.data;
     }
     render() {
         switch (this.props.type) {
             case 'web':
-                this.action = () => {
+                this.data = "Visit our website";
+                this.action = () =>{
                     Linking.openURL(this.props.data)
                 }
                 break;
@@ -27,13 +26,15 @@ export default class ContactUsItem extends React.Component {
                 let phoneNumber;
                 if (Platform.OS === 'android') phoneNumber = `tel:${number}`;
                 else phoneNumber = `telprompt:${number}`
-                this.action = () => {
+                this.data = "Call us " + this.props.data;
+                this.action = () =>{
                     Linking.openURL(phoneNumber)
                 }
                 break;
             case 'email':
-                let email = `mailto:${this.props.data}`;
-                this.action = () => {
+                let email=`mailto:${this.props.data}`;
+                this.data = "Email us";
+                this.action = () =>{
                     Linking.openURL(email)
                 }
                 break;
@@ -44,28 +45,25 @@ export default class ContactUsItem extends React.Component {
                     if (dataSms.charAt(i) !== ' ') smsNumber += dataSms.charAt(i);
                 }
                 let SmsNumber = `sms:${smsNumber}`;
-                this.action = () => {
+                this.data = "Message us"
+                this.action = () =>{
                     Linking.openURL(SmsNumber)
                 }
                 break;
         }
         return (
-            <TouchableOpacity
-                style={{
-                    flexDirection: 'row',
-                    paddingTop: 20,
-                    paddingBottom: 20,
-                    marginLeft: 20,
-                    borderBottomColor: Identify.theme.line_color,
-                    borderBottomWidth: 0.5,
-                    alignItems: 'center',
-                    backgroundColor: this.state.buttonColor
-                }}
-                onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
-                onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
-                onPress={() => this.action()}>
+            <TouchableOpacity 
+            style={{ 
+                flexDirection: 'row', 
+                paddingTop: 20, 
+                paddingBottom: 20, 
+                marginLeft: 20, 
+                borderBottomColor: Identify.theme.line_color, 
+                borderBottomWidth: 0.5, 
+                alignItems: 'center'}}
+                onPress={() => this.action() }>
                 <Icon type={this.props.icon_type} name={this.props.icon_name} style={{ color: Identify.theme.icon_color }}></Icon>
-                <Text style={{ marginLeft: 20 }}>{this.props.data}</Text>
+                <Text style={{ marginLeft: 20 }}>{Identify.__(this.data)}</Text>
             </TouchableOpacity>
         )
     }

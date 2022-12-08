@@ -9,8 +9,7 @@ import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
 import { ScrollView, TouchableOpacity, View ,Text, Modal, Keyboard, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Icon, Left, Button } from 'native-base';
-import CustomerButton from './customerbutton'
-import NavigationManager from '@helper/NavigationManager';
+import { Platform } from 'react-native';
 
 const height = Dimensions.get('window').height;
 
@@ -33,17 +32,7 @@ export default class CustomerForm extends SimiComponent {
         this.state = {
             buttonColor: Identify.theme.app_background,
             modalVisible: false,
-            keyboardHeight: 0,
-            indexField: 0
         }
-    }
-    changeKeyboardStatus() {
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-    }
-    componentWillMount() {
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-		this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
 
     componentDidMount() {
@@ -54,18 +43,8 @@ export default class CustomerForm extends SimiComponent {
     componentWillUnmount() {
         if (this.props.onRef) {
             this.props.onRef(undefined)
-        }
-        this.keyboardDidShowListener.remove();
-		this.keyboardDidHideListener.remove();     
+        }     
     }
-
-    _keyboardDidShow = e => {
-		this.setState({ keyboardHeight: this.state.indexField*80 });
-	}
-
-	_keyboardDidHide = () => {
-		this.setState({ keyboardHeight: 0 });
-	}
 
     setModalVisible(value) {
         this.setState({
@@ -114,11 +93,13 @@ export default class CustomerForm extends SimiComponent {
                 </View>
             )
         }
-        fields.push(
-            <View style={{ paddingTop: 15, paddingBottom: 15, marginBottom: 10 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 20  }}>{Identify.__('Information')}</Text>
-            </View>
-        )
+        if(!this.isEditProfile && !this.social_login) {
+            if( Platform.OS === 'ios') fields.push(
+                <View style={{ paddingTop: 15, paddingBottom: 15, marginBottom: 10 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left' }}>{Identify.__('Create account')}</Text>
+                </View>
+            )
+        }
         fields.push(
             this.renderField('text', 'prefix', Identify.__('Prefix'), this.address_option.prefix_show)
         );
@@ -173,7 +154,6 @@ export default class CustomerForm extends SimiComponent {
         }
         
         else if (this.isEditProfile) {
-            console.log(this.state.keyboardHeight)
             fields.push(
                 <Modal 
                     visible={this.state.modalVisible} 
@@ -183,7 +163,7 @@ export default class CustomerForm extends SimiComponent {
                         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
                         onPress={() => this.setModalVisible(false)}>
                             <TouchableOpacity 
-                                style={{ height: 0.6*height + this.state.keyboardHeight, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+                                style={{ height: 0.6*height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                                 activeOpacity={1}>
                                 <View 
                                     style={{
@@ -196,7 +176,7 @@ export default class CustomerForm extends SimiComponent {
                                         borderBottomColor: Identify.theme.line_color,  }}>
                                     <Text style={{ fontSize: 26, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__('Change Password')}</Text>
                                     <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                        <Text style= {{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
+                                        <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: 15 }} />
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ marginLeft: 15, marginRight: 15, flex: 1, marginTop: 15 }} >

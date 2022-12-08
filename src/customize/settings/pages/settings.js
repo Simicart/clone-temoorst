@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Linking, Modal, NativeModules, Platform, Dimensions, Text, View, TouchableOpacity } from 'react-native';
+import { Linking, Modal, NativeModules, Platform, Dimensions, Text, View, TouchableOpacity, Image } from 'react-native';
 import Identify from '@helper/Identify';
 import AdvanceList from '../../advancelist';
-import { Container, Content } from "native-base";
+import { Container, Content, Icon } from "native-base";
 import Connection from '@base/network/Connection';
 import NewConnection from '@base/network/NewConnection';
 import { storeviews } from '@helper/constants';
@@ -12,6 +12,7 @@ import RNRestart from 'react-native-restart';
 import { I18nManager } from 'react-native';
 import SimiPageComponent from "@base/components/SimiPageComponent";
 import variable from '@theme/variables/material';
+import SimiCart from '../../../core/helper/simicart';
 
 const h = Dimensions.get('window').height;
 
@@ -146,26 +147,25 @@ class Viewsettings extends SimiPageComponent {
                 <TouchableOpacity
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }}
                     onPress={() => this.setModalVisible(false)}>
-                    <TouchableOpacity
-                        style={{ height: this.dataLength > 1 ? 85 + this.dataLength * 40 : 165, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
-                        activeOpacity={1}>
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                paddingTop: 15,
-                                paddingBottom: 15,
-                                borderBottomWidth: 0.5,
-                                borderBottomColor: Identify.theme.line_color
-                            }}>
-                            <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__(this.state.title)}</Text>
-                            <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                <Text style={{ color: Identify.theme.icon_color, fontSize: 26, marginRight: 15 }}>X</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />
-                    </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={{ height: this.dataLength>1 ? 85+this.dataLength*50 : 165, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+                            activeOpacity={1}>
+                            <View 
+                                style={{
+                                    flexDirection: 'row', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'space-between', 
+                                    paddingTop: 15, 
+                                    paddingBottom: 15,
+                                    borderBottomWidth: 0.5, 
+                                    borderBottomColor: Identify.theme.line_color  }}>        
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__(this.state.title)}</Text>
+                                <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: 15 }} />
+                                </TouchableOpacity>
+                            </View>
+                            <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />
+                        </TouchableOpacity>
                 </TouchableOpacity>
             </Modal>
         );
@@ -244,6 +244,7 @@ class Viewsettings extends SimiPageComponent {
     }
 
     renderPhoneLayout() {
+        console.log(SimiCart.appVersion);
         return (
             <Container style={{ paddingLeft: 15, paddingRight: 15, backgroundColor: variable.appBackground }}>
                 {this.renderModal()}
@@ -251,6 +252,15 @@ class Viewsettings extends SimiPageComponent {
                     {this.renderLayoutFromConfig('setting_layout', 'content')}
                 </Content>
                 {this.renderLayoutFromConfig('setting_layout', 'container')}
+                <TouchableOpacity onPress={() => Linking.openURL(SimiCart.ourPage_url)}>
+                    <View style={{justifyContent: 'flex-end', alignItems: 'center', marginBottom: 30}}>
+                        <View style={{flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', paddingBottom: 5}}>
+                            <Text>{Identify.__('Powered By ')}</Text>
+                            <Image style={{ height: 25, width: 100, paddingBottom: 10 }} source={require('@media/logo.png')}/>
+                        </View>
+                        <Text>{Identify.__('Copyright 2022 SimiCart. Version ' + SimiCart.appVersion)}</Text>
+                    </View>
+                </TouchableOpacity>
             </Container>
         )
     }

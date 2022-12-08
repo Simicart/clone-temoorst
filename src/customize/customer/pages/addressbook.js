@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Toast } from 'native-base';
+import { Container, Toast, Content, View } from 'native-base';
 import NewConnection from '@base/network/NewConnection';
 import { addresses, address_book_mode, address_detail_mode, checkout_mode } from "@helper/constants";
 import NavigationManager from '@helper/NavigationManager';
@@ -163,7 +163,15 @@ class AddressBookPage extends SimiPageComponent {
             return (null);
         }
         return (
+            // <Container style={{ backgroundColor: variable.appBackground }}>
+            //     {this.renderLayoutFromConfig('addressbook_layout', 'container')}
+            // </Container>
             <Container style={{ backgroundColor: variable.appBackground }}>
+                <Content>
+                    <View style={{ flex: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 30, paddingBottom: 70 }}>
+                        {this.renderLayoutFromConfig('addressbook_layout', 'content')}
+                    </View>
+                </Content>
                 {this.renderLayoutFromConfig('addressbook_layout', 'container')}
             </Container>
         );
