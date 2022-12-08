@@ -9,10 +9,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
     iconStyle: {
-        right: 0, top: 5
+        right: 0
     },
     iconStyleRtl: {
-        left: 0, top: 5
+        left: 0
     }
 })
 
