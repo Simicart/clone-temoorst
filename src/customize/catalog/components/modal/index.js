@@ -8,6 +8,12 @@ import Identify from '@helper/Identify';
 import { TouchableOpacity } from 'react-native';
 import ModalItem from './modalItem';
 const ModalComponent = (props) => {
+    useEffect(() => {
+        if (props.sorts) {
+            console.log("props.sorts: ", props.sorts);
+        }
+    }, [props.sorts]);
+    console.log("props in modal: ", props);
     const [layers, setLayers] = useState(props.layers);
     const [selectedList, setSelectedList] = useState(props?.filterTag ? props?.filterTag : []);
     const handlerFilter = () => {
@@ -32,9 +38,9 @@ const ModalComponent = (props) => {
         setSelectedList(props.filterTag ? props.filterTag : []);
 
     }, [props.filterTag])
-    if (layers) {
+    if (layers || props.sorts) {
         return (
-            <Modal visible={props.modalVisible} style={{}} animationType="slide"
+            <Modal visible={props.modalVisible} style={{ backgroundColor: 'red' }} animationType="slide"
             >
                 <View style={{ height: height - 50, width: width, borderRadius: 12, marginTop: 50, borderWidth: 1, borderColor: '#e0e0e0', borderTopRightRadius: 25, borderTopLeftRadius: 25, position: 'relative' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20, borderBottomColor: '#e0e0e0', borderBottomWidth: 1, height: 70, alignItems: 'center' }}>

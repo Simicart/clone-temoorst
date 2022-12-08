@@ -21,13 +21,15 @@ class ProductList extends SimiPageComponent {
       loadMore: true,
       showList: (Identify.getMerchantConfig().storeview.catalog.frontend.view_products_default == '0') ? true : false,
       showBottom: true,
-      isFetching: false
+      isFetching: false,
+      isLoadingMore: false,
     };
     this.cateId = this.props.cateId;
     this.limit = Device.isTablet() ? 16 : 12;
     this.offset = 0;
     this.first = true;
     this.lastY = 0;
+    this.isFetching = false;
     this.isLoadingMore = false;
     this.shouldStoreData = true;
     this.layout = 'ProductDetail';
@@ -65,7 +67,7 @@ class ProductList extends SimiPageComponent {
   }
 
   requestData(params) {
-    if (!this?.state?.loadMore && !this.state.isFetching) {
+    if (!this.state.loadMore && !this.isFetching) {
       this.props.storeData('showLoading', { type: 'full' });
     }
     let url = products;
@@ -80,20 +82,15 @@ class ProductList extends SimiPageComponent {
   }
 
   updateData(type, data_key, data) {
-    console.log("vao trong update");
-    // if (data.products && data.products.length > 0) {
-    //   this.offset = this.offset + data.product.length;
-    // }
     let canLoadMore = true;
-    if (this.offset + this.limit >= data.total || this.state.isFetching) {
+    if (this.offset + this.limit >= data.total || this.isFetching) {
       canLoadMore = false;
     }
-    this.isLoadingMore = false;
 
-    if (this.shouldStoreData && !this.state.isFetching) {
+    if (this.shouldStoreData && !this.isFetching || this.isLoadingMore) {
+      this.isLoadingMore = false;
       // this.state.data = data;
-      // this.state.loadMore = canLoadMore;
-      console.log("this.state.isFetching trong if: ", this.state.isFetching)
+      // this.state.loadMore = canLoadMore;      
       let productsData = {};
       productsData[data_key] = data;
       this.props.storeData(type, productsData);
@@ -101,11 +98,15 @@ class ProductList extends SimiPageComponent {
       if (this.state.data.products) {
         newData = this.state.data.products;
       }
-      this.setState({ data: { ...data, products: [...newData, ...data.products] }, loadMore: canLoadMore, isFetching: false });
+      this.isFetching = false;
+      this.setState({ data: { ...data, products: [...newData, ...data.products] }, loadMore: canLoadMore });
     } else {
       this.setState({ data: data, loadMore: canLoadMore, isFetching: false });
     }
-    // this.props.onSetLayers(data.layers)
+    console.log("data get: ", data);
+
+    this.props.onSetSorts(data.orders);
+    this.props.onSetLayers(data.layers);
     if (this.props.data.showLoading.type !== 'none' && !this.props.isCategory) {
       this.props.storeData('showLoading', { type: 'none' });
     }
@@ -113,8 +114,8 @@ class ProductList extends SimiPageComponent {
 
   onRefresh() {
     if (!this.state.isFetching) {
-      console.log("vao trong if");
-      this.setState({ isFetching: true, loadMore: false });
+      this.setState({ isFetching: true, loadMore: true });
+      this.isFetching = true;
       this.offset = 0;
       this.requestData(this.createParams());
     }
@@ -188,12 +189,9 @@ class ProductList extends SimiPageComponent {
     }
     this.lastY = nativeEvent.contentOffset.y;
 
-    if ((Number((nativeEvent.contentSize.height).toFixed(0)) - 1) <= Number((nativeEvent.contentOffset.y).toFixed(1)) + Number((nativeEvent.layoutMeasurement.height).toFixed(1))) {
+    if ((Number((nativeEvent.contentSize.height).toFixed(0)) - 100) <= Number((nativeEvent.contentOffset.y).toFixed(1)) + Number((nativeEvent.layoutMeasurement.height).toFixed(1))) {
       this.onEndReached();
     }
-    // if (Number((nativeEvent.contentOffset.y).toFixed(1)) < 0) {
-    //   console.log("ok refreshing!!!")
-    // }
   }
 
   shouldRenderLayoutFromConfig() {
@@ -226,6 +224,9 @@ class ProductList extends SimiPageComponent {
     if (this.props.selectedCate && !this.first) {
       if (this.props.selectedCate.entity_id !== this.cateId) {
         this.cateId = this.props.selectedCate.entity_id;
+        this.props.storeData('showLoading', { type: 'full' });
+        this.offset = 0;
+        this.setState({ data: [] })
         this.requestData(this.createParams());
       }
     }
@@ -303,7 +304,7 @@ class ProductList extends SimiPageComponent {
               onRefresh={() => this.onRefresh()}
               refreshing={this.state.isFetching}
             />
-            <Spinner color={Identify.theme.loading_color} style={(this?.state?.loadMore) ? {} : { display: 'none' }} />
+            <Spinner color={Identify.theme.loading_color} style={(this.isLoadingMore || this.state.isLoadingMore) ? {} : { display: 'none' }} />
             <View style={{ height: 60 }} />
           </ScrollView>
         </Container>

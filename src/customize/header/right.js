@@ -170,7 +170,8 @@ import { products_mode } from "@helper/constants";
 import Events from '@helper/config/events';
 import md5 from 'md5';
 import Identify from '@helper/Identify';
-
+import { listBottomButtons } from '@customize/bottomMenu';
+import { connect } from 'react-redux';
 const RightHeader = (props) => {
 
     function renderQty() {
@@ -186,7 +187,15 @@ const RightHeader = (props) => {
         ) : null;
         return (qty);
     }
-
+    function renderFilter() {
+        return (
+            <Icon name='filter'
+                style={{ fontSize: 25, color: variable.toolbarBtnColor, marginRight: Device.isTablet() ? 5 : 0, padding: 7, paddingLeft: 10, paddingRight: 10 }}
+                onPress={() => {
+                    props.storeData('setModalVisible', true);
+                }} />
+        );
+    }
     function renderCart() {
         return (
             <Icon name="cart"
@@ -212,15 +221,51 @@ const RightHeader = (props) => {
             <View style={{ width: 30, height: 40 }} />
         );
     }
-    // let plugins = dispatchEventAddItems();
-    return (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* {plugins} */}
-            {renderSearch()}
-            {renderCart()}
-            {renderQty()}
-        </View>
-    )
+    let plugins = dispatchEventAddItems();
+    // return (
+    //     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    //         {/* {plugins} */}
+    //         {renderSearch()}
+    //         {renderCart()}
+    //         {renderQty()}
+    //     </View>
+    // )
+    if (listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* {plugins} */}
+                {renderSearch()}
+            </View>
+        )
+    } else if (props.navigation.state.routeName === "ProductDetail") {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* {plugins} */}
+                {renderCart()}
+                {renderQty()}
+            </View>
+        )
+    }
+    else if (props.navigation.state.routeName === "Products") {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {renderFilter()}
+                {renderCart()}
+                {renderQty()}
+            </View>
+        )
+    }
+    else if (props.navigation.state.routeName === "SearchProducts") {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {renderFilter()}
+            </View>
+        )
+    } else {
+        return (
+            <View />
+        );
+    }
 
     function openSearchPage() {
         if (props.navigation.getParam("query")) {
@@ -269,4 +314,18 @@ export const styles = StyleSheet.create({
         position: 'absolute', right: -8, top: 3, height: 20, marginBottom: 2
     }
 });
-export default RightHeader;
+const mapStateToProps = (state) => {
+    return {
+        bottomAction: state.redux_data.bottomAction,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RightHeader);
