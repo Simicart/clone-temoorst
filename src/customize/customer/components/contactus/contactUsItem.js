@@ -1,17 +1,16 @@
 import React from 'react';
-import { View, Text, Linking, Platform} from 'react-native';
+import { View, Text, Linking, Platform } from 'react-native';
 import { Icon } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Identify from '@helper/Identify';
 
 export default class ContactUsItem extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.data = this.props.data;
     }
     render() {
-        console.log(Identify.theme)
-        switch(this.props.type){
+        switch (this.props.type) {
             case 'web':
                 this.data = "Visit our website";
                 this.action = () =>{
@@ -21,11 +20,11 @@ export default class ContactUsItem extends React.Component {
             case 'phone':
                 let data = this.props.data;
                 let number = '0';
-                for(var i=4; i<data.length; i++) {
-                    if(data.charAt(i) !== ' ') number += data.charAt(i);
+                for (var i = 4; i < data.length; i++) {
+                    if (data.charAt(i) !== ' ') number += data.charAt(i);
                 }
                 let phoneNumber;
-                if(Platform.OS === 'android') phoneNumber = `tel:${number}`;
+                if (Platform.OS === 'android') phoneNumber = `tel:${number}`;
                 else phoneNumber = `telprompt:${number}`
                 this.data = "Call us " + this.props.data;
                 this.action = () =>{
@@ -42,8 +41,8 @@ export default class ContactUsItem extends React.Component {
             case 'sms':
                 let dataSms = this.props.data;
                 let smsNumber = '0';
-                for(var i=4; i<dataSms.length; i++) {
-                    if(dataSms.charAt(i) !== ' ') smsNumber += dataSms.charAt(i);
+                for (var i = 4; i < dataSms.length; i++) {
+                    if (dataSms.charAt(i) !== ' ') smsNumber += dataSms.charAt(i);
                 }
                 let SmsNumber = `sms:${smsNumber}`;
                 this.data = "Message us"

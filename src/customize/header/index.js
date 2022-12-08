@@ -14,7 +14,6 @@ class HeaderApp extends React.Component {
         super(props);
         this.toolbarHeight = variable.toolbarHeight;
         this.paddingTop = Platform.OS === 'ios' ? 18 : 0;
-        console.log("")
     }
 
     goBack() {

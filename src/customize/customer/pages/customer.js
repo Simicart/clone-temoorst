@@ -192,7 +192,7 @@ class CustomerPage extends SimiPageComponent {
     }
 
     updateButtonStatus(status) {
-        if(this.button) {
+        if (this.button) {
             this.button.updateButtonStatus(status);
         }
     }

@@ -145,7 +145,7 @@ class Viewsettings extends SimiPageComponent {
                 visible={this.state.modalVisible}
                 onRequestClose={() => { }}>
                 <TouchableOpacity
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }}
                     onPress={() => this.setModalVisible(false)}>
                         <TouchableOpacity 
                             style={{ height: this.dataLength>1 ? 85+this.dataLength*50 : 165, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
@@ -166,7 +166,7 @@ class Viewsettings extends SimiPageComponent {
                             </View>
                             <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />
                         </TouchableOpacity>
-                    </TouchableOpacity>
+                </TouchableOpacity>
             </Modal>
         );
     }
@@ -198,7 +198,6 @@ class Viewsettings extends SimiPageComponent {
                 return null;
                 break;
             case 'language':
-                console.log(this.props.data)
                 let storeView = null;
                 if (!Identify.isEmpty(this.props.data.storeview.stores) && parseInt(this.props.data.storeview.stores.total) >= 1) {
                     this.stores = this.props.data.storeview.stores.stores;
@@ -269,7 +268,7 @@ class Viewsettings extends SimiPageComponent {
 
 //export default Settings;
 const mapStateToProps = (state) => {
-    return { data: state.redux_data.merchant_configs};
+    return { data: state.redux_data.merchant_configs };
 }
 const mapDispatchToProps = (dispatch) => {
     return {

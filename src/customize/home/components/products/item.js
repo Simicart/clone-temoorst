@@ -76,7 +76,7 @@ class Item extends React.Component {
                                     <Text style={{ fontSize: 14, marginRight: 3 }}>
                                         {Identify.__('See All')}
                                     </Text>
-                                    <Icon type="MaterialCommunityIcons" name="greater-than" style={{ fontSize: 16, color: 'red' }} size={14} color="red" />
+                                    <Icon type="MaterialCommunityIcons" name="greater-than" style={{ fontSize: 12, color: 'red' }} size={14} color="red" />
                                 </View>
                             </TouchableOpacity>
                         }

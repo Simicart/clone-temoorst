@@ -5,7 +5,7 @@ import SimiContext from '@base/components/SimiContext'
 
 export default class BaseInput extends React.Component {
 
-    constructor(props) {        
+    constructor(props) {
         super(props);
         this.keyboardType = 'default';
         this.state = {

@@ -15,6 +15,7 @@ const Item = (props) => {
             duration: 200
         }).start();
     }, [props.bottomAction]);
+    console.log("quoteitems: ", props.quoteitems);
     return (
         <TouchableOpacity
             onPress={() => {
@@ -44,6 +45,15 @@ const Item = (props) => {
                                 source={props?.data?.icon}
                                 style={{ height: 30, width: 30 }}
                             />
+                            {
+                                props.quoteitems.cart_total && props?.data?.title == 'Cart' ? (
+                                    <View style={{ position: 'absolute', top: 0, right: 0, height: 18, width: 18, backgroundColor: Identify.theme.button_background, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 99 }}>
+                                        <Text style={{ color: 'white', fontSize: 14 }}>
+                                            {props.quoteitems.cart_total}
+                                        </Text>
+                                    </View>
+                                ) : null
+                            }
                         </View>
                     )
                 }
@@ -55,6 +65,7 @@ const Item = (props) => {
 const mapStateToProps = (state) => {
     return {
         bottomAction: state.redux_data.bottomAction,
+        quoteitems: state.redux_data.quoteitems,
     };
 }
 

@@ -88,7 +88,6 @@ export default class SuggestionSearch extends SimiComponent {
     }
     renderPhoneLayout() {
         let recents = this.state.suggestion;
-        console.log("this: ", this);
         if (!this.props.parent.state.recentVisiable) {
             return (
                 <View style={{ flex: 1 }}>
@@ -119,7 +118,6 @@ export default class SuggestionSearch extends SimiComponent {
                             return (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        console.log("this onPress: ", this);
                                         this.props.parent.onChangeSearch(item.label)
                                         // this.props.parent.openSearchResults(item.label);
                                     }}

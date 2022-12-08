@@ -48,7 +48,7 @@ const BottomMenu = (props) => {
         return (
             <View style={{
                 backgroundColor: 'white',
-                padding: 10, paddingBottom: 30, shadowColor: "#000",
+                padding: 10, shadowColor: "#000",
                 shadowOffset: {
                     width: 0,
                     height: 2,
