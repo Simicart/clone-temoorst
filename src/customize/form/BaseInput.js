@@ -21,10 +21,8 @@ export default class BaseInput extends React.Component {
 
     submitEditing() {
         let indexRef = Object.keys(this.props.parent.listRefs).indexOf(this.inputKey);
-        // this.props.parent.props.parent.changeKeyboardStatus();
-        this.props.parent.props.parent.setState({ indexField: indexRef + 1 })
         let nextRefContent = Object.values(this.props.parent.listRefs)[indexRef + 1];
-
+        
         if (indexRef + 1 === Object.keys(this.props.parent.listRefs).length) {
             Keyboard.dismiss();
         } else {

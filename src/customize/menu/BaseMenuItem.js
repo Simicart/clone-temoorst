@@ -5,7 +5,6 @@ import { TouchableOpacity, View, Animated } from 'react-native';
 import Identify from '@helper/Identify';
 
 const BaseMenuItem = (props) => {
-    const [buttonColor, setButtonColor] = useState(Identify.theme.app_background);
     if (props.hasOwnProperty('add_condition') && props.add_condition() == false) {
         return null;
     }
@@ -13,15 +12,13 @@ const BaseMenuItem = (props) => {
     return (
         <TouchableOpacity 
             style={{ flex: 1 }}
-            onPressIn={() => setButtonColor(Identify.theme.button_backgound)}
-            onPressOut={() => setButtonColor(Identify.theme.app_background)}
             onPress={() => {
                 if (!props.parent.onSelectMenuItem(props.keyItem)) {
                     props.onClick();
                 }
             }}>
             <Animated.View style={{ borderBottomWidth: 0.5, borderBottomColor: Identify.theme.line_color }}>
-                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center', backgroundColor: buttonColor}}>
+                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center'}}>
                     {props.iconName && <Icon type={props.type} name={props.iconName} style={{color: props.label === 'Sign Out' ? '#FF4040' : Identify.theme.icon_color}}/>}
                     {props.hasOwnProperty('image') && <Thumbnail
                         square

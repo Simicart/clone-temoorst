@@ -20,6 +20,7 @@ class SimiCart {
   static appID = "com.simicart";
   static fullSplash = "0";
   static colorSplash = "#ffffff";
+  static ourPage_url = "https://www.simicart.com"
 }
 
 export default SimiCart;
