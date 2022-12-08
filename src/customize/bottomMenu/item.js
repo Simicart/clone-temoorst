@@ -15,7 +15,7 @@ const Item = (props) => {
             duration: 200
         }).start();
     }, [props.bottomAction]);
-    console.log("quoteitems: ", props.quoteitems);
+
     return (
         <TouchableOpacity
             onPress={() => {
