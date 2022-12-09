@@ -48,7 +48,7 @@ const ModalComponent = (props) => {
             console.log("params trong else: ", params);
             props.onFilterAction(params);
             // props.onFilterTags(selectedList);
-            // props.onSortAction(selectedSortList.key, selectedSortList.direction);
+            // props.onSortTags(selectedSortList);
         }
         props.storeData('setModalVisible', false);
     }
