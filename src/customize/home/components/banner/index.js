@@ -21,7 +21,6 @@ class Banner extends React.Component {
     }
 
     onSelectBanner(banner) {
-        console.log("click onSelectBanner");
         let data = {};
         data['event'] = 'home_action';
         data['action'] = 'selected_banner';
@@ -97,57 +96,7 @@ class Banner extends React.Component {
         }
         return (
             <TouchableOpacity key={data.banner_id} onPress={() => {
-                // console.log("item: ", item);
                 item.handlerOnClick(item);
-                // this.onSelectBanner(data);
-                // let data = {};
-                // data['event'] = 'home_action';
-                // data['action'] = 'selected_banner';
-                // data['banner_title'] = item.banner_title;
-                // data['banner_id'] = item.banner_id;
-                // let type = item.type;
-                // switch (type) {
-                //     case '1':
-                //         routeName = 'ProductDetail';
-                //         params = {
-                //             productId: item.product_id,
-                //         };
-                //         data['banner_type'] = 'product';
-                //         data['product_id'] = item.product_id;
-                //         break;
-                //     case '2':
-                //         if (item.has_children) {
-                //             routeName = 'Category';
-                //             params = {
-                //                 categoryId: item.category_id,
-                //                 categoryName: item.cat_name,
-                //             };
-                //         } else {
-                //             routeName = 'Products';
-                //             params = {
-                //                 categoryId: item.category_id,
-                //                 categoryName: item.cat_name,
-                //             };
-                //         }
-                //         data['banner_type'] = 'category';
-                //         data['category_id'] = item.category_id;
-                //         break;
-                //     case '3':
-                //         routeName = 'WebViewPage';
-                //         params = {
-                //             uri: item.banner_url,
-                //         };
-                //         data['banner_type'] = 'web';
-                //         break;
-                //     default:
-                //         break;
-                // }
-                // Events.dispatchEventAction(data, this);
-                // if (routeName === 'WebViewPage' && Identify.getMerchantConfig().storeview.base.open_url_in_app && Identify.getMerchantConfig().storeview.base.open_url_in_app != '1') {
-                //     Linking.openURL(params.uri);
-                // } else {
-                //     NavigationManager.openPage(this.props.navigation, routeName, params);
-                // }
             }}>
                 <View style={styles.item}>
                     <ParallaxImage
@@ -199,7 +148,7 @@ class Banner extends React.Component {
                     ...item,
                     ...this,
                     handlerOnClick: function (banner) {
-                        console.log("this in funtion:", this)
+
                         let data = {};
                         data['event'] = 'home_action';
                         data['action'] = 'selected_banner';

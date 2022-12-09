@@ -48,7 +48,7 @@ const ModalItem = (props) => {
         const index = prevState.map((item) => item.attribute).indexOf(props.item.attribute);
         // check TH selected co gia tri => check tiep trong TH trong mang co item khac voi item duoc chon thi replace lai  => neu khong co thi push them vao
         if (index > -1) {
-          newState = [];
+          newState = prevState;
           for (let i = 0; i < prevState.length; i++) {
             if (prevState[i].attribute == props.item.attribute && prevState[i].value !== selected.value) {
               newState.push({

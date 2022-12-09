@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native';
 import ModalItem from './modalItem';
 import ModalItemSort from './modalItemSort';
 const ModalComponent = (props) => {
-    console.log("props: ", props);
+
     const [layers, setLayers] = useState(props.layers);
     const [selectedList, setSelectedList] = useState(props?.filterTag ? props?.filterTag : []);
     const [selectedSortList, setSelectedSortList] = useState([]);
@@ -42,10 +42,12 @@ const ModalComponent = (props) => {
             props.onFilterAction(params);
             props.onFilterTags(selectedList);
         } else {
+            console.log("selectedSortList: ", selectedSortList);
             params['dir'] = selectedSortList.direction;
             params['order'] = selectedSortList.key;
+            console.log("params trong else: ", params);
             props.onFilterAction(params);
-            props.onFilterTags(selectedList);
+            // props.onFilterTags(selectedList);
             // props.onSortAction(selectedSortList.key, selectedSortList.direction);
         }
         props.storeData('setModalVisible', false);
@@ -88,7 +90,7 @@ const ModalComponent = (props) => {
                         // position: 'absolute', bottom: 0, right: 0, left: 0
                     }}>
                         <TouchableOpacity onPress={() => handlerFilter()}>
-                            <View style={{ borderRadius: 12, backgroundColor: 'red', height: 55, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ borderRadius: 12, backgroundColor: Identify.theme.button_background, height: 55, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ textAlign: 'center', fontWeight: "bold", color: "white", width: width - 50 }}>
                                     {Identify.__("APPLY")}
                                 </Text>

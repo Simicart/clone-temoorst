@@ -29,6 +29,7 @@ class Products extends SimiPageComponent {
         this.showViewAll = (Identify.getMerchantConfig().storeview.catalog.frontend.is_show_link_all_product === '1') ? true : false;
         if (this.props.navigation.getParam("categoryName")) {
             this.cateName = this.props.navigation.getParam("categoryName");
+            this.title = this.props.navigation.getParam("categoryName");
         } else {
             this.cateName = Identify.__('All categories');
         }
@@ -75,7 +76,6 @@ class Products extends SimiPageComponent {
                     { type: 'showLoading', data: { type: 'none' } },
                 ]);
             }
-
         }
     }
     setData(data) {

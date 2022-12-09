@@ -60,6 +60,10 @@ class ProductList extends SimiPageComponent {
       limit: this.limit,
       offset: this.offset
     };
+    // if (this.props.sortTags && this.props.sortTags.length > 0) {
+    //   params['dir'] = this.props.sortTags[0].direction;
+    //   params['order'] = this.props.sortTags[0].key;
+    // }
     if (this.cateId != -1) {
       params['filter[cat_id]'] = this.cateId;
     }
@@ -214,8 +218,8 @@ class ProductList extends SimiPageComponent {
       ...this.createParams(),
       ...filterParams,
     };
+
     this.shouldStoreData = false;
-    console.log("params truoc khi request: ", params);
     this.requestData(params);
   }
   componentDidUpdate() {
@@ -225,6 +229,7 @@ class ProductList extends SimiPageComponent {
         this.props.storeData('showLoading', { type: 'full' });
         this.offset = 0;
         this.setState({ data: [] })
+        this.props.onSortTags([])
         this.requestData(this.createParams());
       }
     }
