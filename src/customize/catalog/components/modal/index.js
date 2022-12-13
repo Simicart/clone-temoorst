@@ -42,10 +42,8 @@ const ModalComponent = (props) => {
             props.onFilterAction(params);
             props.onFilterTags(selectedList);
         } else {
-            console.log("selectedSortList: ", selectedSortList);
             params['dir'] = selectedSortList.direction;
             params['order'] = selectedSortList.key;
-            console.log("params trong else: ", params);
             props.onFilterAction(params);
             // props.onFilterTags(selectedList);
             // props.onSortTags(selectedSortList);

@@ -108,9 +108,7 @@ class Products extends SimiPageComponent {
         this.categoryData = data;
         return true;
     }
-    // componentDidUpdate() {
-    //     console.log("this: ", this);
-    // }
+
     shouldRenderLayoutFromConfig() {
         if (this.categoryData) {
             return true;

@@ -5,9 +5,6 @@ import Identify from '@helper/Identify';
 const ModalItemSort = (props) => {
     const [totalItem, setTotalItem] = useState(1);
     const [selected, setSelected] = useState(props.selectedSortList ? props.selectedSortList : props.item[0]);
-    useEffect(() => {
-        console.log("props.selectedSortList: ", props.selectedSortList);
-    }, [props.selectedSortList]);
     let rotateValueHolder = useRef(new Animated.Value(0)).current;
     let heightAnimated = useRef(new Animated.Value(0)).current;
     const [check, setCheck] = useState(false);

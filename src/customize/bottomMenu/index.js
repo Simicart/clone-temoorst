@@ -34,13 +34,14 @@ export const listBottomButtons = [
 
 const BottomMenu = (props) => {
     useEffect(() => {
+        console.log("props: ", props);
         if (props.navigation.state.routeName == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
             NavigationManager.openPage(props.navigation, "Login");
         }
         if (props.navigation.state.routeName != props.bottomAction) {
             props.storeData('bottomAction', props.navigation.state.routeName);
         }
-    }, [props.navigation])
+    }, [props.navigation, props?.obj])
     if (!listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
         return null;
     } else {
