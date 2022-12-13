@@ -138,14 +138,14 @@ export default class App extends React.Component {
                 return errors;
             }).then(data => {
                 if (data.errors) {
-                    console.log(data.errors)
+                    console.log("data.errors:", data.errors)
                 } else if (data.results.length > 0 && this.isNeedUpdate(simicart.appVersion, data.results[0].version)) {
                     setTimeout(
                         () => { store.dispatch({ type: 'showUpdate', data: { show: true, urlApp: data.results[0].trackViewUrl } }) }, 7000
                     )
                 }
             }).catch(error => {
-                console.log(error)
+                console.log("error: ", error);
             })
     }
     getAppInforAndroid() {

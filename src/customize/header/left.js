@@ -8,8 +8,12 @@ import NavigationManager from '@helper/NavigationManager';
 import { connect } from 'react-redux';
 import { listBottomButtons } from '../bottomMenu/index';
 const LeftHeader = (props) => {
+<<<<<<< HEAD
     useEffect(() => {
     }, [props.navigation])
+=======
+
+>>>>>>> dev
     const routeName = props.navigation.state.routeName;
     function dispatchCheckRootPages(routeName) {
         for (let i = 0; i < Events.events.root_pages.length; i++) {
