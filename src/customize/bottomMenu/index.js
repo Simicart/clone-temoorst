@@ -34,7 +34,6 @@ export const listBottomButtons = [
 
 const BottomMenu = (props) => {
     useEffect(() => {
-        console.log("props: ", props);
         if (props.navigation.state.routeName == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
             NavigationManager.openPage(props.navigation, "Login");
         }

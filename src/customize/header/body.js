@@ -8,9 +8,7 @@ import Identify from '@helper/Identify';
 import { listBottomButtons } from '@customize/bottomMenu';
 import { connect } from 'react-redux';
 const CustomizeHeaderBody = (props) => {
-    useEffect(() => {
-        // console.log("props in header body", props);
-    }, [props]);
+   
     function renderShowRouteName() {
         return (
             <Title style={{ color: variable.toolbarBtnColor, textAlign: 'center', width: '100%' }}>{Identify.__(props.navigation.state.routeName)}</Title>
