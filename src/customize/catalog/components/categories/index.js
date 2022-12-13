@@ -61,7 +61,7 @@ class Categories extends React.Component {
                             return null;
                         }
                     }}
-                    />
+                />
 
             </View>
         );
