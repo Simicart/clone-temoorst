@@ -17,10 +17,10 @@ class Banner extends React.Component {
         this.state = {
             activeSlide: 1
         }
+        this.onSelectBanner = this.onSelectBanner.bind(this);
     }
 
     onSelectBanner(banner) {
-        console.log("click onSelectBanner");
         let data = {};
         data['event'] = 'home_action';
         data['action'] = 'selected_banner';
@@ -96,7 +96,7 @@ class Banner extends React.Component {
         }
         return (
             <TouchableOpacity key={data.banner_id} onPress={() => {
-                this.onSelectBanner(data);
+                item.handlerOnClick(item);
             }}>
                 <View style={styles.item}>
                     <ParallaxImage
@@ -141,16 +141,74 @@ class Banner extends React.Component {
     render() {
         let banners = [];
 
-        let bannersData = this.props.data;
-        bannersData.sort(function (a, b) {
-            var keyA = a.sort_order,
-                keyB = b.sort_order;
-            if (keyA < keyB) return -1;
-            if (keyA > keyB) return 1;
-            return 0;
-        });
+        let bannersData = null;
+        if (this.props.data) {
+            bannersData = this.props.data.map((item) => {
+                return {
+                    ...item,
+                    ...this,
+                    handlerOnClick: function (banner) {
 
-        if (bannersData.length > 0) {
+                        let data = {};
+                        data['event'] = 'home_action';
+                        data['action'] = 'selected_banner';
+                        data['banner_title'] = banner.banner_title;
+                        data['banner_id'] = banner.banner_id;
+                        let type = banner.type;
+                        switch (type) {
+                            case '1':
+                                routeName = 'ProductDetail';
+                                params = {
+                                    productId: banner.product_id,
+                                };
+                                data['banner_type'] = 'product';
+                                data['product_id'] = banner.product_id;
+                                break;
+                            case '2':
+                                if (banner.has_children) {
+                                    routeName = 'Category';
+                                    params = {
+                                        categoryId: banner.category_id,
+                                        categoryName: banner.cat_name,
+                                    };
+                                } else {
+                                    routeName = 'Products';
+                                    params = {
+                                        categoryId: banner.category_id,
+                                        categoryName: banner.cat_name,
+                                    };
+                                }
+                                data['banner_type'] = 'category';
+                                data['category_id'] = banner.category_id;
+                                break;
+                            case '3':
+                                routeName = 'WebViewPage';
+                                params = {
+                                    uri: banner.banner_url,
+                                };
+                                data['banner_type'] = 'web';
+                                break;
+                            default:
+                                break;
+                        }
+                        Events.dispatchEventAction(data, this);
+                        if (routeName === 'WebViewPage' && Identify.getMerchantConfig().storeview.base.open_url_in_app && Identify.getMerchantConfig().storeview.base.open_url_in_app != '1') {
+                            Linking.openURL(params.uri);
+                        } else {
+                            NavigationManager.openPage(this.props.navigation, routeName, params);
+                        }
+                    }
+                }
+            });
+            bannersData.sort(function (a, b) {
+                var keyA = a.sort_order,
+                    keyB = b.sort_order;
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+        }
+        if (bannersData && bannersData.length > 0) {
             return (
                 <View style={{ ...styles.banner, paddingTop: 20 }}>
                     <Carousel

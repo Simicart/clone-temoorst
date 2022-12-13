@@ -40,7 +40,7 @@ const BottomMenu = (props) => {
         if (props.navigation.state.routeName != props.bottomAction) {
             props.storeData('bottomAction', props.navigation.state.routeName);
         }
-    }, [props.navigation])
+    }, [props.navigation, props?.obj])
     if (!listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
         return null;
     } else {

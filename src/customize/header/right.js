@@ -259,6 +259,8 @@ const RightHeader = (props) => {
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {renderFilter()}
+                {renderCart()}
+                {renderQty()}
             </View>
         )
     } else {

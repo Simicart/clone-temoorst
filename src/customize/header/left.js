@@ -8,9 +8,7 @@ import NavigationManager from '@helper/NavigationManager';
 import { connect } from 'react-redux';
 import { listBottomButtons } from '../bottomMenu/index';
 const LeftHeader = (props) => {
-    useEffect(() => {
-        console.log("props in left header: ", props);
-    }, [props.navigation])
+
     const routeName = props.navigation.state.routeName;
     function dispatchCheckRootPages(routeName) {
         for (let i = 0; i < Events.events.root_pages.length; i++) {
@@ -47,7 +45,6 @@ const LeftHeader = (props) => {
             NavigationManager.openPage(props.navigation, 'Home', {});
         }
         else {
-            console.log("props in else: ", props);
             if (listBottomButtons.map((item => item.route_name)).includes(props.navigation.state.params.previousRoute)) {
                 props.storeData('bottomAction', props.navigation.state.params.previousRoute);
             }
