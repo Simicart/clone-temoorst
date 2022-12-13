@@ -16,7 +16,7 @@ class ContactUs extends SimiPageComponent {
         return (
             <Container style={{ backgroundColor: variable.appBackground }}>
                 <View style={{ width: width*0.4, height: width*0.3, alignSelf: 'center', justifyContent: 'center' }}>
-                    <Image resizeMode='center' style={{width: width*0.4, height: width*0.1, paddingBottom: 10, alignSelf: 'center' }} source={require('@media/logo.png')}/>
+                    <Image style={{height: 60, width: 200, resizeMode: 'contain', alignSelf: 'center' }} source={require('@media/logo.png')}/>
                 </View>
                 <Content>
                     <View style={{ flex: 1, paddingLeft: 10, paddingRight: 10, paddingBottom: 60 }}>

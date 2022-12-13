@@ -134,7 +134,7 @@ class MyAccountPage extends SimiPageComponent {
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
                     onPress={() => this.setModalVisible(false)}>
                         <TouchableOpacity 
-                            style={{ height: '27%', width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+                            style={{ height: '30%', width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                             activeOpacity={1}>
                             <View 
                                 style={{
