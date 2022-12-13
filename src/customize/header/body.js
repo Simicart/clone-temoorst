@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Title } from 'native-base';
 import HeaderBody from '@base/components/layout/header/body';
 import { TouchableHighlight, Image, View, Text } from 'react-native';
 import variable from "@theme/variables/material";
 import NavigationManager from '@helper/NavigationManager';
 import Identify from '@helper/Identify';
-
+import { listBottomButtons } from '@customize/bottomMenu';
+import { connect } from 'react-redux';
 const CustomizeHeaderBody = (props) => {
+    useEffect(() => {
+        // console.log("props in header body", props);
+    }, [props]);
+    function renderShowRouteName() {
+        return (
+            <Title style={{ color: variable.toolbarBtnColor, textAlign: 'center', width: '100%' }}>{Identify.__(props.navigation.state.routeName)}</Title>
+        );
+    }
     function renderShowTitle() {
         return (
-            <Title style={{ color: variable.toolbarBtnColor, textAlign: 'center', width: '100%' }}>{Identify.__(props.parent.props.title)}</Title>
+            <Title style={{ color: variable.toolbarBtnColor, textAlign: 'center', width: '100%' }}>{Identify.__(props.parent.props.title ? props.parent.props.title : props.parent.props?.state?.title)}</Title>
         );
     }
 
@@ -26,20 +35,39 @@ const CustomizeHeaderBody = (props) => {
     }
 
 
-    if (props.parent.props.title) {
+    if (props.parent.props.title || props.parent.props?.state?.title) {
         return (
             <View style={[{ flexGrow: 1, flex: 1 }]}>
                 {renderShowTitle()}
             </View>
         );
-    } else {
+    } else if (listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
         return (
             <View style={[{ flexGrow: 1, flex: 1, zIndex: 1, justifyContent: 'center', alignItems: 'center' }]}>
                 {renderShowLogo()}
             </View>
         );
+    } else {
+        return (
+            <View style={[{ flexGrow: 1, flex: 1 }]}>
+                {renderShowRouteName()}
+            </View>
+        );
     }
 
 }
+const mapStateToProps = (state) => {
+    return {
+        bottomAction: state.redux_data.bottomAction,
+    };
+}
 
-export default CustomizeHeaderBody;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomizeHeaderBody);

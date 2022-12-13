@@ -28,6 +28,7 @@ class Product extends SimiPageComponent {
             reRender: false
         };
         this.paddingInput = new Animated.Value(0);
+        this.title = null;
     }
 
     componentWillMount() {
@@ -61,6 +62,8 @@ class Product extends SimiPageComponent {
     }
 
     setData(data) {
+        console.log("data in setData: ", data);
+        this.title = data.product.name;
         this.product = data.product;
         this.dataTracking = {
             product: data.product
@@ -72,6 +75,7 @@ class Product extends SimiPageComponent {
         let productData = {};
         productData[data.product.entity_id] = data.product;
         this.showLoading('none', false);
+        this.setState({ title: data.product.name })
         this.props.storeData('add_product_details_data', productData);
     }
 

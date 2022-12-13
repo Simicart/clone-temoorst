@@ -14,7 +14,7 @@ export default {
     simi_simigiftcard_40: require('./plugins/simi_simigiftcard_40/events').default,
     simi_simisocialshare_40: require('./plugins/simi_simisocialshare_40/events').default,
     magestore_productlabel_40: require('./plugins/magestore_productlabel_40/events').default,
-    simi_simicustompayment_40: require('../../etc/events/plugins/simi_simicustompayment_40/events').default,
+    // simi_simicustompayment_40: require('../../etc/events/plugins/simi_simicustompayment_40/events').default,
     simi_loyalty_40: require('../../etc/events/plugins/simi_loyalty_40/events').default,
     simi_simiproductreview_40: require('../../etc/events/plugins/simi_simiproductreview_40/events').default,
     simi_simiavenue_40: require('./plugins/simi_simiavenue_40/events').default,
