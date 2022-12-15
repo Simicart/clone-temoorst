@@ -17,19 +17,19 @@ const BaseMenuItem = (props) => {
                     props.onClick();
                 }
             }}>
-            <Animated.View style={{ borderBottomWidth: 0.5, borderBottomColor: Identify.theme.line_color }}>
-                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center'}}>
+            <View style={{ borderBottomWidth: 0.5, borderBottomColor: Identify.theme.line_color }}>
+                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center', flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-between'}}>
                     {props.iconName && <Icon type={props.type} name={props.iconName} style={{color: props.label === 'Sign Out' ? '#FF4040' : Identify.theme.icon_color}}/>}
                     {props.hasOwnProperty('image') && <Thumbnail
                         square
                         source={this.props.image}
                         style={{ width: 25, height: 25}} />}
-                    <Text style={{ flex: 1, textAlign: 'left', marginLeft: 10, marginRight: 10 }}>{Identify.__(props.label)}</Text>
-                    <Right>
+                    <Text style={{ flex: 1, textAlign: Identify.isRtl() ? 'right' : 'left', marginLeft: 20, marginRight: 20 }}>{Identify.__(props.label)}</Text>
+                    <View style={{ alignItems: Identify.isRtl() ? 'flex-start' : 'flex-end' }}>
                         {props.extendable && <Icon style={{ marginRight: 10 }} name={Identify.isRtl() ? 'ios-arrow-back' : "ios-arrow-forward"} />}
-                    </Right>
+                    </View>
                 </CardItem>
-            </Animated.View>
+            </View>
         </TouchableOpacity>
     );
 }

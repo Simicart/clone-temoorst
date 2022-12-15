@@ -146,22 +146,23 @@ class Viewsettings extends SimiPageComponent {
                 onRequestClose={() => { }}>
                 <TouchableOpacity
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }}
+                    activeOpacity={1}
                     onPress={() => this.setModalVisible(false)}>
                         <TouchableOpacity 
                             style={{ height: this.dataLength>1 ? 85+this.dataLength*50 : 165, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                             activeOpacity={1}>
                             <View 
                                 style={{
-                                    flexDirection: 'row', 
+                                    flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
                                     alignItems: 'center', 
                                     justifyContent: 'space-between', 
                                     paddingTop: 15, 
                                     paddingBottom: 15,
                                     borderBottomWidth: 0.5, 
                                     borderBottomColor: Identify.theme.line_color  }}>        
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__(this.state.title)}</Text>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginRight: Identify.isRtl() ? 15 : 0, marginLeft: Identify.isRtl() ? 0 : 15 }}>{Identify.__(this.state.title)}</Text>
                                 <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: 15 }} />
+                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: Identify.isRtl() ? 0 : 15, marginLeft: Identify.isRtl() ? 15 : 0 }} />
                                 </TouchableOpacity>
                             </View>
                             <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />

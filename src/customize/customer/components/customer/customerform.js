@@ -133,7 +133,7 @@ export default class CustomerForm extends SimiComponent {
             fields.push(
                 <TouchableOpacity 
                     style={{ 
-                        flexDirection: 'row', 
+                        flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
                         alignItems: 'center', 
                         justifyContent: 'space-between', 
                         paddingTop: 15, paddingBottom: 15,
@@ -144,8 +144,8 @@ export default class CustomerForm extends SimiComponent {
                         onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
                         onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
                         onPress={() => this.setModalVisible(true)}>
-                    <Text style={{ fontSize: 16 }}>{Identify.__('Change Password')}</Text>
-                    <Icon type='Feather' name='chevron-right' stype={{ color: Identify.theme.icon_color }}></Icon>
+                    <Text style={{ fontSize: 16, marginLeft: Identify.isRtl() ? 0 : 3, marginRight: Identify.isRtl() ? 3 : 0  }}>{Identify.__('Change Password')}</Text>
+                    <Icon type='Feather' name= {Identify.isRtl() ? 'chevron-left' : 'chevron-right'} stype={{ color: Identify.theme.icon_color }}></Icon>
                 </TouchableOpacity>
             )
         }
@@ -161,22 +161,23 @@ export default class CustomerForm extends SimiComponent {
                     transparent={true}>
                     <TouchableOpacity
                         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                        activeOpacity={1}
                         onPress={() => this.setModalVisible(false)}>
                             <TouchableOpacity 
                                 style={{ height: 0.6*height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                                 activeOpacity={1}>
                                 <View 
                                     style={{
-                                        flexDirection: 'row', 
+                                        flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
                                         alignItems: 'center', 
                                         justifyContent: 'space-between', 
                                         paddingTop: 15, 
                                         paddingBottom: 15,
                                         borderBottomWidth: 0.5, 
                                         borderBottomColor: Identify.theme.line_color,  }}>
-                                    <Text style={{ fontSize: 26, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__('Change Password')}</Text>
+                                    <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: Identify.isRtl() ? 0 : 15, marginRight: Identify.isRtl() ? 15 : 0 }}>{Identify.__('Change Password')}</Text>
                                     <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                        <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: 15 }} />
+                                        <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginLeft: Identify.isRtl() ? 15 : 0, marginRight: Identify.isRtl() ? 0 : 15 }} />
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ marginLeft: 15, marginRight: 15, flex: 1, marginTop: 15 }} >

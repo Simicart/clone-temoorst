@@ -10,19 +10,6 @@ const AddressItem = (props) => {
 
     function showDeleteItemPopup(data) {
         setModalVisible(true)
-        // Alert.alert(
-        //     Identify.__('Warning'),
-        //     Identify.__('Are you sure you want to delete this item?'),
-        //     [
-        //         { text: Identify.__('Cancel'), onPress: () => { style: 'cancel' } },
-        //         {
-        //             text: Identify.__('OK'), onPress: () => {
-        //                 props.parent.deleteAddress(addressItem.entity_id);
-        //             }
-        //         },
-        //     ],
-        //     { cancelable: true }
-        // );
     }
 
     function renderName() {
@@ -44,7 +31,7 @@ const AddressItem = (props) => {
         }
 
         if (name !== '') {
-            return <Text style={{ fontWeight: 'bold', marginBottom: 10 }}>{name}</Text>
+            return <Text style={{ fontWeight: 'bold', marginBottom: 10, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{name}</Text>
         }
     }
 
@@ -55,8 +42,8 @@ const AddressItem = (props) => {
         }
         if (company !== '') {
             return(
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Company: ')}</Text>
+                <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'flex-start'  }}>
+                    <Text style={{ fontWeight: 'bold', marginRight: Identify.isRtl() ? 0 : 5, marginLeft: Identify.isRtl() ? 5 : 0}}>{Identify.__('Company:')}</Text>
                     <Text>{company}</Text>
                 </View>
             )
@@ -70,8 +57,8 @@ const AddressItem = (props) => {
         }
         if (street !== '') {
             return(
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Street: ')}</Text>
+                <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'flex-start'  }}>
+                    <Text style={{ fontWeight: 'bold', marginRight: Identify.isRtl() ? 0 : 5, marginLeft: Identify.isRtl() ? 5 : 0}}>{Identify.__('Street:')}</Text>
                     <Text>{street}</Text>
                 </View>
             )
@@ -91,8 +78,8 @@ const AddressItem = (props) => {
         }
         if (info !== '') {
             return(
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('City: ')}</Text>
+                <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'flex-start'  }}>
+                    <Text style={{ fontWeight: 'bold', marginRight: Identify.isRtl() ? 0 : 5, marginLeft: Identify.isRtl() ? 5 : 0}}>{Identify.__('City:')}</Text>
                     <Text>{info}</Text>
                 </View>
             )
@@ -106,8 +93,8 @@ const AddressItem = (props) => {
         }
         if (country !== '') {
             return(
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Country: ')}</Text>
+                <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'flex-start'  }}>
+                    <Text style={{ fontWeight: 'bold', marginRight: Identify.isRtl() ? 0 : 5, marginLeft: Identify.isRtl() ? 5 : 0}}>{Identify.__('Country:')}</Text>
                     <Text>{country}</Text>
                 </View>
             )
@@ -121,8 +108,8 @@ const AddressItem = (props) => {
         }
         if (telephone !== '') {
             return (
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Phone: ')}</Text>
+                <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'flex-start'  }}>
+                    <Text style={{ fontWeight: 'bold', marginRight: Identify.isRtl() ? 0 : 5, marginLeft: Identify.isRtl() ? 5 : 0}}>{Identify.__('Phone:')}</Text>
                     <Text>{telephone}</Text>
                 </View>
             )
@@ -136,8 +123,8 @@ const AddressItem = (props) => {
         }
         if (email !== '') {
             return (
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold'}}>{Identify.__('Email: ')}</Text>
+                <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'flex-start'  }}>
+                    <Text style={{ fontWeight: 'bold', marginRight: Identify.isRtl() ? 0 : 5, marginLeft: Identify.isRtl() ? 5 : 0}}>{Identify.__('Email:')}</Text>
                     <Text>{email}</Text>
                 </View>
             )
@@ -151,8 +138,6 @@ const AddressItem = (props) => {
     return (
         <View 
             style ={{
-                marginLeft: 10,
-                marginRight: 10,
                 marginBottom: 10, 
                 flex: 1, 
                 borderRadius: 10, 
@@ -165,7 +150,7 @@ const AddressItem = (props) => {
                 shadowRadius: 30 }}>
             <TouchableOpacity style={{ borderRadius: 10 }} onPress={() => { onChooseAddress() }}>
                 <Card style={{ borderRadius: 10 ,padding: 5 }}>
-                    <CardItem style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <CardItem style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: Identify.isRtl() ? 'flex-end' : 'flex-start' }}>
                         {renderName()}
                         {renderCompany()}
                         {renderStreet()}
@@ -174,7 +159,7 @@ const AddressItem = (props) => {
                         {renderPhone()}
                         {renderEmail()}
                     </CardItem>
-                    {!props.parent.mode.includes('checkout') && <TouchableOpacity style={{top: 0, right: 0 }}
+                    {!props.parent.mode.includes('checkout') && <TouchableOpacity style={{top: 0, alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start' }}
                         onPress={() => { showDeleteItemPopup() }}>
                         <Text style={{ color: '#FF4040', borderWidth: 0.5, borderColor: Identify.theme.line_color, borderRadius: 7, width: 60, padding: 5, marginLeft: 12, marginRight: 12, textAlign: 'center' }}>{Identify.__('Delete')}</Text>
                     </TouchableOpacity>}
@@ -186,26 +171,27 @@ const AddressItem = (props) => {
                 transparent={true}>
                 <TouchableOpacity
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                    activeOpacity={1}
                     onPress={() => setModalVisible(false)}>
                         <TouchableOpacity 
                             style={{ height: '32%', width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                             activeOpacity={1}>
                             <View 
                                 style={{
-                                    flexDirection: 'row', 
+                                    flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
                                     alignItems: 'center', 
                                     justifyContent: 'space-between', 
                                     paddingTop: 15, 
                                     paddingBottom: 15,
                                     borderBottomWidth: 0.5, 
                                     borderBottomColor: Identify.theme.line_color  }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__('Delete Address')}</Text>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginHorizontal: 15 }}>{Identify.__('Delete Address')}</Text>
                                 <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: 15 }} />
+                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginHorizontal: 15 }} />
                                 </TouchableOpacity>
                             </View>
                             <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 30, fontSize: 20, width: '80%', alignSelf: 'center' }}>{Identify.__('Are you sure want to Delete this Address?')}</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                            <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
                                 <TouchableOpacity
                                     onPress={() => props.parent.deleteAddress(addressItem.entity_id)} 
                                     style= {{width: '40%', height: 50, borderWidth: 3, borderColor: Identify.theme.button_background, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>

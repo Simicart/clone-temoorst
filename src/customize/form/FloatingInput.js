@@ -13,9 +13,9 @@ export default class FloatingInput extends BaseInput {
    
     addWarningIcon = () => {
         if (this.state.success === true) {
-            return (<Icon style={{ fontSize: 22 }} name={'ios-checkmark-circle'} />)
+            return (<Icon style={{ fontSize: 22, marginLeft: Identify.isRtl() ? 10 : 0}} name={'ios-checkmark-circle'} />)
         } else if (this.state.error === true) {
-            return (<Icon style={{ fontSize: 22 }} name={'ios-close-circle'} />)
+            return (<Icon style={{ fontSize: 22, marginLeft: Identify.isRtl() ? 10 : 0}} name={'ios-close-circle'} />)
         }
         return null;
     }
@@ -49,7 +49,7 @@ export default class FloatingInput extends BaseInput {
     createInputLayout() {
         return (
             <View style={{ flexDirection: 'column', marginBottom: 20 }}>
-                <Text style={{ alignSelf: 'flex-start' }}>
+                <Text style={{ alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start' , marginStart: 3 }}>
                     {Identify.__(this.inputTitle)}
                     <Text style={{ color: 'red'}}> *</Text>
                 </Text>
@@ -57,7 +57,7 @@ export default class FloatingInput extends BaseInput {
                     <Item error={this.state.error}
                         success={this.state.success}
                         disabled={this.disabled}
-                        style={{ flexGrow: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+                        style={{ flexGrow: 1, flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignContent: 'center', justifyContent: 'center',  }}>
                         <Input
                             ref={(input) => { this.props.parent.listRefs[this.inputKey] = input }}
                             onSubmitEditing={() => { this.submitEditing() }}

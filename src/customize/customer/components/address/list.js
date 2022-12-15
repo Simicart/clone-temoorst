@@ -7,7 +7,7 @@ const AddressList = (props) => {
 
     function createListProps() {
         return {
-            style: { marginLeft: 10, marginRight: 10 },
+            style: { marginLeft: 5, marginRight: 5 },
             data:  props.addresses,
             extraData:  props.parent.props.data
         };

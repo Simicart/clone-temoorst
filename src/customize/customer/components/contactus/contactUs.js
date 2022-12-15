@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { View, Dimensions, Text } from 'react-native';
+import { View, Dimensions, Text, Image } from 'react-native';
 import Identify from '@helper/Identify';
 import ContactUsItem from './contactUsItem';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -10,12 +10,12 @@ const height = Dimensions.get("window").height;
 class ContactUs extends React.Component {
     constructor(props) {
         super(props);
-        this.listContactUs = [];
         this.merchant_configs = Identify.isEmpty(this.props.data.merchant_configs) ? null : this.props.data.merchant_configs;
-        this.listEmail = Object.values(this.merchant_configs.storeview.contactus.listEmail);
-        this.listHotline = Object.values(this.merchant_configs.storeview.contactus.listHotline);
-        this.listSms = Object.values(this.merchant_configs.storeview.contactus.listSms);
-        this.listWebsite = Object.values(this.merchant_configs.storeview.contactus.listWebsite);
+        this.listEmail = this.merchant_configs?.storeview?.contactus?.listEmail !== null ? Object.values( this.merchant_configs.storeview.contactus.listEmail) : [];
+        this.listHotline = this.merchant_configs?.storeview?.contactus.listHotline !== null ?  Object.values(this.merchant_configs.storeview.contactus.listHotline) : [];
+        this.listSms = this.merchant_configs?.storeview?.contactus?.listSms !== null ? Object.values(this.merchant_configs.storeview.contactus.listSms) : [];
+        this.listWebsite = this.merchant_configs?.storeview?.contactus?.listWebsite !== null ?  Object.values(this.merchant_configs.storeview.contactus.listWebsite) : [];
+        this.listContactUs = [];
         
         this.listEmail?.forEach(item => {
             this.listContactUs.push({type: 'email', data: item.contact_email})
@@ -60,6 +60,9 @@ class ContactUs extends React.Component {
         if(this.listContactUs.length > 0){
             return(
                 <View style={{ width: width, height: height}}>
+                    <View style={{ width: width*0.4, height: width*0.3, alignSelf: 'center', justifyContent: 'center' }}>
+                        <Image style={{height: 50, width: 200, marginBottom: 10, resizeMode: 'contain', alignSelf: 'center' }} source={require('@media/logo.png')}/>
+                    </View>
                     <ScrollView style={{ flex: 1 }}>
                         {
                             this.listContactUs.map((item, index)=> (

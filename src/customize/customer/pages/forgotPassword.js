@@ -70,13 +70,13 @@ export default class ForgotPassWordPage extends SimiPageComponent{
     }
 
     renderFormForgot = () => {
-        return <Form style={{ marginLeft: 10 , marginRight: 10, width: '100%'}}>
-            <Label style={{ width: '100%', fontWeight: 'bold', textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.__('Forget Password')}</Label>
-            <View style={{ flexDirection: 'row',  marginTop: 20, justifyContent: Identify.isRtl() ? 'flex-end' : 'flex-start' }}>
-                {Identify.isRtl() ? <Text style={{ color: 'red' }}>* </Text> : null}
-                <Text>{Identify.__('Email')}
-                </Text>
-                {Identify.isRtl() ? null: <Text style={{ color: 'red' }}> *</Text>}
+        return <Form style={{ width: '100%'}}>
+            <View style={{ marginRight: Identify.isRtl() ? 3 : 0, marginLeft: Identify.isRtl() ? 0 : 3 }}>
+                <Label style={{ width: '100%', fontWeight: 'bold', textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.__('Forget Password')}</Label>
+            </View>
+            <View style={{ flexDirection: 'row',  marginTop: 20, justifyContent: Identify.isRtl() ? 'flex-end' : 'flex-start', marginStart: 3 }}>
+                <Text>{Identify.__('Email')}</Text>
+                <Text style={{ color: 'red' }}> *</Text>
             </View>
             <Input
                 style={{
@@ -125,16 +125,12 @@ export default class ForgotPassWordPage extends SimiPageComponent{
             <Container>
                 <Content style={{ padding: 12 }}>
                     {this.renderFormForgot()}
-                    <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'center' }}>
-                        {Identify.isRtl() ? 
-                            <TouchableOpacity onPress={() => { this.onClickLogin() }}>
-                                <Text style={{ color: Identify.theme.button_background }}>{Identify.__('Sign In')}</Text>
-                            </TouchableOpacity> : null}
-                        <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Have your password? ')} </Text>
-                        {Identify.isRtl() ? null :
-                            <TouchableOpacity onPress={() => { this.onClickLogin() }}>
-                                <Text style={{ color: Identify.theme.button_background }}>{Identify.__('Sign In')}</Text>
-                            </TouchableOpacity>}
+                    <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', marginTop: 30, justifyContent: 'center' }}>
+
+                        <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Have your password?')} </Text>
+                        <TouchableOpacity onPress={() => { this.onClickLogin() }}>
+                            <Text style={{ color: Identify.theme.button_background, marginLeft: Identify.isRtl() ? 0 : 5, marginRight: Identify.isRtl() ? 5 : 0  }}>{Identify.__('Sign In')}</Text>
+                        </TouchableOpacity>
                     </View> 
                 </Content>
             </Container>

@@ -36,8 +36,8 @@ const OrderBilling = (props) => {
 
     function renderOrderNumber() {
         return (
-            <CardItem style = {{ paddingTop: 5, paddingBottom: 5, marginBottom: 10 }} listItemPadding={0}>
-                <Text style={{ fontFamily: material.fontBold, fontSize: 16 }}>{Identify.__('Order ID: ')}</Text>
+            <CardItem style = {{ paddingTop: 5, paddingBottom: 5, marginBottom: 10, flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start' }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, fontSize: 16, paddingLeft: Identify.isRtl() ? 5 : 0, paddingRight: Identify.isRtl() ? 0 : 5 }}>{Identify.__('Order ID:')}</Text>
                 <Text style={{ fontFamily: material.fontBold, fontSize: 16 }}>{props.order.increment_id}</Text>
             </CardItem>
         );
@@ -45,8 +45,8 @@ const OrderBilling = (props) => {
 
     function renderDate() {
         return (
-            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
-                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Date: ')}</Text>
+            <CardItem style = {{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start', paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656', paddingLeft: Identify.isRtl() ? 5 : 0, paddingRight: Identify.isRtl() ? 0 : 5 }}>{Identify.__('Date:')}</Text>
                 <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{props.order.updated_at}</Text>
             </CardItem>
         );
@@ -54,8 +54,8 @@ const OrderBilling = (props) => {
 
     function renderShipping() {
         return (
-            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
-                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Ship To: ')}</Text>
+            <CardItem style = {{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start', paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656', paddingLeft: Identify.isRtl() ? 5 : 0, paddingRight: Identify.isRtl() ? 0 : 5 }}>{Identify.__('Ship To:')}</Text>
                 <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{renderShipTo(props.order.shipping_address)}</Text>
             </CardItem>
         );
@@ -63,8 +63,8 @@ const OrderBilling = (props) => {
 
     function renderOrderTotal() {
         return (
-            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
-                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Order Total: ')}</Text>
+            <CardItem style = {{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start', paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656', paddingLeft: Identify.isRtl() ? 5 : 0, paddingRight: Identify.isRtl() ? 0 : 5 }}>{Identify.__('Order Total:')}</Text>
                 <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.formatPriceWithCurrency(props.order.total.grand_total_incl_tax, props.order.total.currency_symbol)}</Text>
             </CardItem>
         );
@@ -72,8 +72,8 @@ const OrderBilling = (props) => {
 
     function renderStatus() {
         return (
-            <CardItem style = {{ paddingTop: 5, paddingBottom: 5 }} listItemPadding={0}>
-                <Text style={{ fontFamily: material.fontBold, color: '#595656' }}>{Identify.__('Status: ')}</Text>
+            <CardItem style = {{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start', paddingTop: 5, paddingBottom: 5,  }} listItemPadding={0}>
+                <Text style={{ fontFamily: material.fontBold, color: '#595656', paddingLeft: Identify.isRtl() ? 5 : 0, paddingRight: Identify.isRtl() ? 0 : 5 }}>{Identify.__('Status:')}</Text>
                 <Text style={{ fontFamily: material.fontBold, color:props.order.status === 'canceled' ? 'red' : '#595656' }}>{Identify.__(props.order.status)}</Text>
             </CardItem>
         );
