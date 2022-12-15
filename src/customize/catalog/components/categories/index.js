@@ -6,6 +6,7 @@ import material from '@theme/variables/material';
 import CategoryItem from './categoryItem';
 import { FlatList } from 'react-native-gesture-handler';
 import { Spinner } from 'native-base';
+import Identify from '@helper/Identify';
 
 const width = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -48,7 +49,11 @@ class Categories extends React.Component {
         return (
             <View style={{ width: width, height: height }}>
                 <FlatList
-                    style={styles.listCategories}
+                    style={{
+                        paddingLeft: Identify.isRtl() ? 0 : width*0.04,
+                        paddingRight: Identify.isRtl() ? width*0.04 : 0,
+                        marginTop: 10,}}
+                    columnWrapperStyle={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}
                     numColumns={2}
                     onEndReached={() => this.handleOnEndReached()}
                     onEndReachedThreshold={0.5}

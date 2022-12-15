@@ -132,26 +132,27 @@ class MyAccountPage extends SimiPageComponent {
                 transparent={true}>
                 <TouchableOpacity
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                    activeOpacity={1}
                     onPress={() => this.setModalVisible(false)}>
                         <TouchableOpacity 
-                            style={{ height: '27%', width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
+                            style={{ height: '30%', width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
                             activeOpacity={1}>
                             <View 
                                 style={{
-                                    flexDirection: 'row', 
+                                    flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
                                     alignItems: 'center', 
                                     justifyContent: 'space-between', 
                                     paddingTop: 15, 
                                     paddingBottom: 15,
                                     borderBottomWidth: 0.5, 
                                     borderBottomColor: Identify.theme.line_color  }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginLeft: 15 }}>{Identify.__('Sign Out')}</Text>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginRight: Identify.isRtl() ? 15 : 0, marginLeft: Identify.isRtl() ? 0 : 15 }}>{Identify.__('Sign Out')}</Text>
                                 <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: 15 }} />
+                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: Identify.isRtl() ? 0 : 15, marginLeft: Identify.isRtl() ? 15 : 0 }} />
                                 </TouchableOpacity>
                             </View>
                             <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 30, fontSize: 20 }}>{Identify.__('Are you sure want to sign out?')}</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                            <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
                                 <TouchableOpacity
                                     onPress={() => this.logout()} 
                                     style= {{width: '40%', height: 50, borderWidth: 3, borderColor: Identify.theme.button_background, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>

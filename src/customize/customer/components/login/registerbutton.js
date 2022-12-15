@@ -16,13 +16,13 @@ const RegisterButton = (props) => {
 
     return (
         <View style={{ 
-                flexDirection: 'row', 
+                flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
                 marginTop: 30, 
                 marginBottom:30, 
                 justifyContent: 'center' }}>
-            <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Need an account? ')}</Text>
+            <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Need an account?')}</Text>
             <TouchableOpacity onPress={() => {  onClickRegister() }}>
-                <Text style={{ color: Identify.theme.button_background, fontWeight: 'bold' }}>{Identify.__('Sign Up')}</Text>
+                <Text style={{ color: Identify.theme.button_background, fontWeight: 'bold', marginLeft: Identify.isRtl() ? 0 : 5, marginRight: Identify.isRtl() ? 5 : 0  }}>{Identify.__('Sign Up')}</Text>
             </TouchableOpacity>
         </View>
     );

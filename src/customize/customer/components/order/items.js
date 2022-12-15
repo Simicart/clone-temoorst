@@ -20,22 +20,21 @@ const OrderSummary = (props) => {
     }
 
     function renderItem(item) {
+        console.log(item)
         return(
-            <Card style={{ flex: 1, borderRadius: 10, flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
-                <View style = {{ flex: 4 }}>
-                    <Image style={{ width: 120, height: 120, marginTop: 20, marginBottom: 20, marginLeft: 10, marginRight: 10 }} source={{ uri: item.image }} />
+            <Card style={{ flex: 1, borderRadius: 10, flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', marginTop: 10, marginBottom: 10 }}>
+                <View style = {{ flex: 4, justifyContent: 'center' }}>
+                    <Image style={{ width: 100, height: 100, marginTop: 20, marginBottom: 20, marginLeft: 10, marginRight: 10 }} source={{ uri: item.image }} />
                 </View>
                 <View style= {{ flexDirection: 'column', marginTop: 20, marginBottom: 20, flex: 6 }}>
-                    <Text>{item.name}</Text>
-                    <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-                        <Text style = {{ fontWeight: 'bold' }}>{Identify.formatPriceWithCurrency(item.price, props.order.total.currency_symbol)}</Text>
-                        <Text style = {{ fontWeight: 'bold' }}>{Identify.__('Quantity: ')} {parseInt(item.qty)}</Text>
-                    </View>
-                    <View style={{ flexDirection: 'column', marginTop: 20, marginBottom: 20, flex: 6 }}>
-                        <Text>{item.name}</Text>
-                        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-                            <Text style={{ fontWeight: 'bold' }}>{Identify.formatPriceWithCurrency(item.price, props.order.total.currency_symbol)}</Text>
-                            <Text style={{ fontWeight: 'bold' }}>{Identify.__('Quantity: ')} {parseInt(item.product_options.info_buyRequest.qty)}</Text>
+                    <Text style={{ marginTop: 5, marginRight: 20, marginLeft: 20, textAlign: Identify.isRtl() ? 'right' : 'left' }} numberOfLines={3}>{item.name}</Text>
+                    <View style={{ flex: 1, justifyContent: 'flex-end', marginTop: 10 }}>
+                        <Text style = {{ marginHorizontal: 20 ,fontWeight: 'bold', textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.formatPriceWithCurrency(item.price, props.order.total.currency_symbol)}</Text>
+                        <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignItems: 'center', marginBottom: 5, marginHorizontal: 20 }}>
+                            <Text style={{ fontWeight: 'bold' }}>{Identify.__('Quantity')}</Text>
+                            <View style={{ height: 25, width: 25, marginHorizontal: 5, borderRadius: 5, borderWidth: 0.5, borderColor: '#c3c3c3', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text>{parseInt(item.qty)}</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -45,7 +44,7 @@ const OrderSummary = (props) => {
 
     return (
         <View>
-            <Text style={{ paddingTop: 10, paddingBottom: 10, marginTop: 10, fontWeight: 'bold' }}>{Identify.__('Purchased Items')}</Text>
+            <Text style={{ paddingTop: 10, paddingBottom: 10, marginTop: 10, marginHorizontal: 5, fontWeight: 'bold', textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.__('Purchased Items')}</Text>
             <Card style={{ flex: 1, paddingBottom: 25, borderColor: Identify.theme.app_background, shadowColor: '#fff', borderBottomWidth: 2, borderBottomColor: Identify.theme.line_color }} key={'items'}>
                 <FlatList
                     data={items}

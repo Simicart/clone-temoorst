@@ -14,15 +14,17 @@ const RememberEmailPass = (props) => {
     }
 
     return (
-        <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity
-                style={{ flex: 1, marginTop: 25, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}
-                onPress={() => { onCheckRemember() }}>
-                <Icon name={props.parent.state.rememberMeEnable ? "ios-checkmark-circle" : "ios-radio-button-off"}
-                    style={{ fontSize: 25, left: 0 }}
-                />
-                <Text style={{ marginLeft: 10 }}>{Identify.__('Remember me')}</Text>
-            </TouchableOpacity>
+        <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-between', marginStart: 3, marginEnd: 3 }}>
+            <View>
+                <TouchableOpacity
+                    style={{ marginTop: 25, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}
+                    onPress={() => { onCheckRemember() }}>
+                    <Icon name={props.parent.state.rememberMeEnable ? "ios-checkmark-circle" : "ios-radio-button-off"}
+                        style={{ fontSize: 25}}
+                    />
+                    <Text style={{ marginLeft: 10 }}>{Identify.__('Remember me')}</Text>
+                </TouchableOpacity>
+            </View>
             <ForgotPassIcon />
         </View>
 
