@@ -2,6 +2,7 @@ import React from 'react';
 import { Share, Platform } from 'react-native';
 import { Icon } from 'native-base';
 import simicart from '../../core/helper/simicart';
+import Identify from '@helper/Identify';
 
 export default class SocialShare extends React.Component {
     constructor(props) {
@@ -38,7 +39,7 @@ export default class SocialShare extends React.Component {
     render() {
         this.initProductURL();
         return (
-            <Icon name="share" onPress={() => { this.openShareDialog() }} />
+            <Icon name="share-social-outline" style={{ color: Identify.theme.icon_color }} onPress={() => { this.openShareDialog() }} />
         );
     }
 }

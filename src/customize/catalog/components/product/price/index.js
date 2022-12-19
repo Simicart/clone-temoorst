@@ -102,7 +102,7 @@ class Price extends React.Component {
         this.state.prices = this.props.prices;
         this.style = {
             styleLabel: this.props.styleLabel ? this.props.styleLabel : { fontSize: material.textSizeSmall },
-            stylePrice: this.props.stylePrice ? this.props.stylePrice : { fontSize: material.textSizeSmall, color: material.priceColor, marginRight: 5, marginLeft: 5 },
+            stylePrice: this.props.stylePrice ? this.props.stylePrice : { fontSize: material.textSizeSmall, color: material.priceColor, fontWeight: 'bold' ,marginRight: 5, marginLeft: 5 },
             stylePriceLine: this.props.stylePriceLine ? this.props.stylePriceLine : { fontSize: material.textSizeSmall, textDecorationLine: 'line-through', color: material.priceColor, marginRight: 5, marginLeft: 5 },
             styleSpecialPrice: this.props.styleSpecialPrice ? this.props.styleSpecialPrice : { fontSize: material.textSizeSmall, color: material.secpicalPriceColor, marginRight: 5, marginLeft: 5 },
             //one row.

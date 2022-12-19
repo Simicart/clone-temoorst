@@ -44,5 +44,6 @@ export default {
         order: require('./customize/order').default,
         address: require('./customize/address').default,
         addressbook: require('./customize/addressbook').default,
+        product: require('./customize/product').default,
     }
 }

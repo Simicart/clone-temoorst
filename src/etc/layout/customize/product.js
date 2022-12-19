@@ -5,13 +5,13 @@ export default {
         default_add_to_cart: {
             active: true,
             sort_order: 1000,
-            content: require('../../../core/screens/catalog/components/product/AddToCart').default,
+            content: require('../../../customize/catalog/components/product/AddToCart').default,
             position: 'right'
         },
         default_fab: {
-            active: true,
+            active: false,
             sort_order: 2000,
-            content: require('../../../core/screens/catalog/components/product/fab').default,
+            content: require('../../../customize/catalog/components/product/fab').default,
             position: 'right'
         },
     },
@@ -19,37 +19,42 @@ export default {
         default_image_slider: {
             active: true,
             sort_order: 1000,
-            content: require('../../../core/screens/catalog/components/product/images').default,
+            content: require('../../../customize/catalog/components/product/images').default,
             position: 'left'
         },
         default_name_price: {
             active: true,
             sort_order: 2000,
-            content: require('../../../core/screens/catalog/components/product/nameprice').default,
+            content: require('../../../customize/catalog/components/product/nameprice').default,
             position: 'right'
+        },
+        default_fab: {
+            active: true,
+            sort_order: 2500,
+            content: require('../../../customize/catalog/components/product/fab').default,
         },
         default_option: {
             active: true,
             sort_order: 3000,
-            content: require('../../../core/screens/catalog/components/product/option').default,
+            content: require('../../../customize/catalog/components/product/option').default,
             position: 'right'
         },
         default_description: {
             active: true,
             sort_order: 4000,
-            content: require('../../../core/screens/catalog/components/product/description').default,
+            content: require('../../../customize/catalog/components/product/description').default,
             position: 'right'
         },
         default_techspecs: {
             active: true,
             sort_order: 5000,
-            content: require('../../../core/screens/catalog/components/product/techspecs').default,
+            content: require('../../../customize/catalog/components/product/techspecs').default,
             position: 'right'
         },
         default_related: {
             active: true,
             sort_order: 7000,
-            content: require('../../../core/screens/catalog/components/horizontalProducts').default,
+            content: require('../../../customize/catalog/components/horizontalProducts').default,
             data: {
                 api: products,
                 param: {
