@@ -22,7 +22,8 @@ import Drawer from '../src/customize/drawer';
 import Login from '../src/customize/customer/pages/login';
 
 
-import ProductDetail from '../src/core/screens/catalog/pages/product/product';
+// import ProductDetail from '../src/core/screens/catalog/pages/product/product';
+import ProductDetail from '../src/customize/catalog/pages/product/product';
 // import Cart from '../src/core/screens/checkout/pages/cart';
 import Cart from '../src/customize/checkout/pages/cart';
 import Checkout from '../src/core/screens/checkout/pages/checkout';

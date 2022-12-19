@@ -82,9 +82,9 @@ class AddWishlist extends React.Component {
         if (this.addedToWishlist == true) {
             color = "red";
         }
-        return (
-            <Icon name="md-heart" style={{ color: color }} onPress={() => { this.wishlistButtonAction() }} />
-        );
+        let icon = color == 'white' ? <Icon name="md-heart-outline" style={{ color: Identify.theme.icon_color }} onPress={() => { this.wishlistButtonAction() }}/>
+         : <Icon name="md-heart" style={{ color: color }} />
+        return icon;
     }
 
     tracking() {
