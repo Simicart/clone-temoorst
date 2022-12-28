@@ -10,7 +10,7 @@ import { View, Text, Image } from 'react-native'
 
 const DrawerItems = [
     {
-        route_name: "TrackOrder",
+        route_name: "OrderHistory",
         label: Identify.__("Track Order"),
         image: require('../images/clipboard.png'),
     },

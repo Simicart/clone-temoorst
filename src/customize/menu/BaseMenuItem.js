@@ -8,7 +8,6 @@ const BaseMenuItem = (props) => {
     if (props.hasOwnProperty('add_condition') && props.add_condition() == false) {
         return null;
     }
-    
     return (
         <TouchableOpacity 
             style={{ flex: 1 }}
@@ -18,7 +17,7 @@ const BaseMenuItem = (props) => {
                 }
             }}>
             <View style={{ borderBottomWidth: 0.5, borderBottomColor: Identify.theme.line_color }}>
-                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center', flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-between'}}>
+                <CardItem style={{ flex: 1, paddingTop: 20, paddingBottom: 20, alignItems: 'center', justifyContent: 'space-between'}}>
                     {props.iconName && <Icon type={props.type} name={props.iconName} style={{color: props.label === 'Sign Out' ? '#FF4040' : Identify.theme.icon_color}}/>}
                     {props.hasOwnProperty('image') && <Thumbnail
                         square

@@ -6,12 +6,17 @@ const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
     bannerCard: {
-        flex: 1,
+        // flex: 1,
+        // height: 50,
+        height: 450,
+        paddingBottom: 10,
         marginTop: 10,
         marginBottom: 0,
         marginLeft: 10,
         marginRight: 0,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: 'white'
     },
     bannerImage: {
         flex: 1,

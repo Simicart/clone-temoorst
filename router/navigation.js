@@ -170,7 +170,7 @@ const Router = createDrawerNavigator(
     {
         contentComponent: props => <Drawer {...props} />,
         initialRouteName: 'Splash',
-        drawerPosition: Platform.OS === 'android' ? (I18nManager.isRTL ? 'right' : 'left') : '',
+        drawerPosition: (I18nManager.isRTL ? 'right' : 'left'),
         drawerWidth: Dimensions.get('screen').width * 3 / 5 > 280 ? 280 : Dimensions.get('screen').width * 2 / 3
     }
 );

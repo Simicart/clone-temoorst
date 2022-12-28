@@ -1,8 +1,10 @@
 import React from 'react';
 import SimiComponent from "@base/components/SimiComponent";
 import { Card, Text } from 'native-base';
-import { TouchableOpacity, Image, View, ScrollView } from 'react-native';
+import { TouchableOpacity, Image, View, ScrollView, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
+import Slideshow from 'react-native-image-slider-show';
+import { SliderBox } from "react-native-image-slider-box";
 import NavigationManager from '@helper/NavigationManager';
 import Device from '@helper/device';
 import styles from './styles';
@@ -11,14 +13,19 @@ import Identify from '@helper/Identify';
 import md5 from 'md5';
 import OutStockLabel from './outStockLabel'
 import material from '@theme/variables/material';
+import ImageSlider from 'react-native-image-slider';
+
+const width = Dimensions.get('window').width;
 
 export default class ProductImagesComponent extends SimiComponent {
     constructor(props){
         super(props)
+        this.index=0;
         this.state = {
             ... this.state,
             showSwiper: false,
             index: 0,
+            text: ''
         }
     }
     
@@ -75,7 +82,7 @@ export default class ProductImagesComponent extends SimiComponent {
     renderZoom(){
         return(
             <TouchableOpacity
-                onPress={() => { this.props.product ? this.onSelectImage(this.state.index + 1) : {} }}
+                onPress={() => { this.props.product ? this.onSelectImage(this.index + 1) : {} }}
                 style={{
                     position: 'absolute',
                     zIndex: 99,
@@ -129,25 +136,10 @@ export default class ProductImagesComponent extends SimiComponent {
         }
     }
 
-    renderHorirontalImages() {
-        let data = JSON.parse(JSON.stringify(this.props.product.images));
-        return (
-            <View style={{ width: '100%', height: '20%' }}>
-                <ScrollView style={{flex: 1}} horizontal>
-                        {data.map((item, index) => this.renderItem(item, index))}
-                </ScrollView>
-                {/* <FlatList 
-                    data={data}
-                    numColumns={20}
-                    keyExtractor={(item) => item}
-                    renderItem={(item) => this.renderItem(item)} /> */}
-            </View>
-        )
-    }
-
     renderItem(item, index){
         return (
-            <TouchableOpacity onPress={() => this.setState({ index: index })}
+            <TouchableOpacity 
+                onPress={() => this.setState({ index: index })}
                 style={{ width: 60, height: '100%', marginHorizontal: 10 }}>
                 <Image 
                     style={{ 
@@ -161,8 +153,25 @@ export default class ProductImagesComponent extends SimiComponent {
             </TouchableOpacity>
         )
     }
+    
+    renderHorirontalImages() {
+        let data = JSON.parse(JSON.stringify(this.props.product.images));
+        return (
+            <View style={{ width: '100%', height: '15%', marginTop: 20 }}>
+                <ScrollView style={{flex: 1}} horizontal>
+                        {data.map((item, index) => this.renderItem(item, index))}
+                </ScrollView>
+                {/* <FlatList 
+                    data={data}
+                    numColumns={20}
+                    keyExtractor={(item) => item}
+                    renderItem={(item) => this.renderItem(item)} /> */}
+            </View>
+        )
+    }
 
     renderPhoneLayout() {
+        let data = JSON.parse(JSON.stringify(this.props.product.images));
         if (this.props.product == null) {
             return (null);
         }
@@ -171,15 +180,28 @@ export default class ProductImagesComponent extends SimiComponent {
                 <View style={{ flex: 1, marginBottom: 15 }}>
                     {this.renderZoom()}
                     {this.renderSpecialPriceLabel()}
-                    {this.state.showSwiper ? <Swiper
-                        loop={false}
-                        onIndexChanged={(index) => {
-                            this.setState({ index: index })
-                        }}
-                        key={this.props.product.images.length}
-                        horizontal={true}>
-                        {this.renderImages()}
-                    </Swiper> : null}
+                    <View style={{width: '100%', height: '82%'}}>
+                        <Slideshow 
+                            dataSource={data}
+                            height={350}
+                            containerStyle={{ width: '80%', height: '100%' }}
+                            loop={true}
+                            position={this.state.index}
+                            onPositionChanged={index => this.setState({ index: index })} 
+                            />
+                        {/* <ImageSlider
+                            style={{ flex: 1 }}
+                            loop={false}
+                            images={data}
+                            position={this.state.index}
+                            onPositionChanged={index => this.setState({ index: index })}
+                            customSlide={({item }) => (
+                                <View style= {{ flex: 1, paddingHorizontal: 40, backgroundColor: 'red', alignSelf: 'center' }}>
+                                    <Image source={{ uri: item.url }} resizeMode='stretch' style={{ width: width - 100, height: width-80, borderRadius: 10 }} />
+                                </View>
+                            )}
+                        /> */}
+                    </View>
                     {this.renderHorirontalImages()}
                     {this.renderOutStock()}
                     {this.dispatchContent()}

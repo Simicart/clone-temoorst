@@ -6,10 +6,12 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: material.isIphoneX ? 15 : 0,
     width: '100%',
-    height: 50,
+    height: 60,
+    backgroundColor: 'white',
     flexDirection: 'row',
     paddingLeft: 10,
     paddingRight: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
+    justifyContent: 'center',
   }
 })
