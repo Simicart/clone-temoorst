@@ -1,6 +1,8 @@
 import { View, Text, TouchableOpacity, Animated } from 'react-native'
 import React from 'react'
 import styles from './styles'
+import NavigationManager from '@helper/NavigationManager';
+
 const WishlistItem = (props) => {
     const animation = new Animated.Value(0);
     const inputRange = [0, 1];
@@ -19,26 +21,35 @@ const WishlistItem = (props) => {
             useNativeDriver: true,
         }).start();
     };
+
+    const openProduct = (item) => {
+        NavigationManager.openPage(props.navigation,
+            'ProductDetail', {
+            productId: item.product_id
+        })
+    }
+
     return (
         <Animated.View
             style={{ transform: [{ scale: scaleAnimation }], }}
         >
             <TouchableOpacity
-                onPress={() => { props.parent.openProduct(props.item) }}
+                onPress={() => { openProduct(props.item) }}
                 onPressIn={onPressIn}
                 onPressOut={onPressOut}
             >
                 <Animated.View key={props.item.wishlist_item_id} style={{
                     borderRadius: 12,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 0.5,
-                    },
-                    shadowOpacity: 0.20,
-                    shadowRadius: 1.41,
+                    // flex: 1,
+                    // shadowColor: "#000",
+                    // shadowOffset: {
+                    //     width: 0,
+                    //     height: 0.5,
+                    // },
+                    // shadowOpacity: 0.20,
+                    // shadowRadius: 1.41,
 
-                    elevation: 2,
+                    // elevation: 2,
 
                     borderColor: "#e0e0e0",
                     borderWidth: 1,

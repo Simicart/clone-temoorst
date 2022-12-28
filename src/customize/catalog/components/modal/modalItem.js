@@ -44,11 +44,11 @@ const ModalItem = (props) => {
   useEffect(() => {
     if (selected) {
       props.setSelectedList((prevState) => {
-        let newState;
+        let newState=[];
         const index = prevState.map((item) => item.attribute).indexOf(props.item.attribute);
         // check TH selected co gia tri => check tiep trong TH trong mang co item khac voi item duoc chon thi replace lai  => neu khong co thi push them vao
         if (index > -1) {
-          newState = prevState;
+          // newState = prevState;
           for (let i = 0; i < prevState.length; i++) {
             if (prevState[i].attribute == props.item.attribute && prevState[i].value !== selected.value) {
               newState.push({
@@ -131,9 +131,9 @@ const ModalItem = (props) => {
                           {item.label}
                         </Text>
                       </View>
-                      <View style={{ borderWidth: 1, borderRadius: 99, height: 25, width: 25, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderColor: selected && selected.value == item.value ? Identify.theme.button_background : 'black' }}>
-                        {selected && selected.value == item.value ? <View style={{ width: 15, height: 15, backgroundColor: Identify.theme.button_background, borderRadius: 99 }} /> : null}
-                      </View>
+                      {selected && selected.value == item.value ? 
+                        <Icon name={'radio-button-checked'} style={{ color: Identify.theme.button_background, fontSize: 20 }} type="MaterialIcons" />
+                        : <Icon name={'radio-button-unchecked'} style={{ color: Identify.theme.icon_color, fontSize: 20 }} type="MaterialIcons" />}
                     </View>
                   </TouchableOpacity>
                 ))

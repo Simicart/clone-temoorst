@@ -88,6 +88,7 @@ class Wishlist extends SimiPageComponent {
 
         if (requestId == 'add_to_cart') {
             this.getQuoteItems();
+            this.getWishlist(this.offset + this.limit, 0);
         }
 
         if (requestId == 'delete_item') {
@@ -161,6 +162,7 @@ class Wishlist extends SimiPageComponent {
                 .addGetData({ 'add_to_cart': '1' })
                 .connect();
             this.props.storeData('showLoading', { type: 'dialog' });
+            // this.setState({addCart: true});
             this.addCart = true;
         }
     }
@@ -172,8 +174,9 @@ class Wishlist extends SimiPageComponent {
     }
     renderWishListItemImage(item) {
         return (
-            <TouchableOpacity onPress={() => {
-                this.openProduct(item)
+            <TouchableOpacity 
+                onPress={() => {
+                    this.openProduct(item)
             }}>
                 <Image resizeMode="contain" source={{ uri: item.product_image }} style={styles.imageListItem} />
                 {/* {!item.stock_status && <Text style={styles.outOfStock}>{Identify.__('Out of stock')}</Text>} */}
@@ -308,7 +311,7 @@ class Wishlist extends SimiPageComponent {
                     {...this.generatePropsToFlatlist()}
                     keyExtractor={(item) => item.wishlist_item_id}
                     renderItem={({ item }) =>
-                        <WishlistItem item={item} renderWishListItemImage={this.renderWishListItemImage(item)} renderItemRight={this.renderItemRight(item)} />
+                        <WishlistItem item={item} navigation={this.props.navigation} renderWishListItemImage={this.renderWishListItemImage(item)} renderItemRight={this.renderItemRight(item)} />
                     }
                 />
                 <Spinner style={(this.state.loadMore) ? {} : { display: 'none' }} />

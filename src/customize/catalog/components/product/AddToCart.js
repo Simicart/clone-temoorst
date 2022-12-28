@@ -1,9 +1,9 @@
 import { Alert, Keyboard } from 'react-native';
-import Quantity from '@screens/catalog/components/product/qty';
+import Quantity from './qty';
 import { quoteitems } from '@helper/constants';
 import NewConnection from '@base/network/NewConnection';
 import styles from './AddToCartStyles';
-import { Button, Text, Toast, View } from "native-base";
+import { Button, Text, Toast, View, Card } from "native-base";
 import React from 'react';
 import { connect } from 'react-redux';
 import Identify from '@helper/Identify';
@@ -103,7 +103,7 @@ class AddToCart extends SimiComponent {
         return (
             <View style={styles.addToCart}>
                 <Quantity onRef={ref => (this.qty = ref)} />
-                <Button full style={{ flex: 1, marginLeft: 10 }} onPress={() => { this.onClickAddToCart() }}>
+                <Button full style={{ borderTopRightRadius: 7, borderBottomRightRadius: 7, width: '60%', marginTop: 10 }} onPress={() => { this.onClickAddToCart() }}>
                     <Text>{Identify.__('Add To Cart')}</Text>
                 </Button>
             </View>
