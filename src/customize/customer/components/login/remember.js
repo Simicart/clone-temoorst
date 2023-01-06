@@ -14,7 +14,7 @@ const RememberEmailPass = (props) => {
     }
 
     return (
-        <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-between', marginStart: 3, marginEnd: 3 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginStart: 3, marginEnd: 3 }}>
             <View>
                 <TouchableOpacity
                     style={{ marginTop: 25, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}

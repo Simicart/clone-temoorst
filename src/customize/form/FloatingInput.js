@@ -48,22 +48,23 @@ export default class FloatingInput extends BaseInput {
 
     createInputLayout() {
         return (
-            <View style={{ flexDirection: 'column', marginBottom: 20 }}>
-                <Text style={{ alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start' , marginStart: 3 }}>
+            <View style={{ flexDirection: 'column', marginBottom: 10, paddingBottom: 10 }}>
+                <Text style={{ alignSelf: 'flex-start' , marginStart: 3, paddingBottom: 8 }}>
                     {Identify.__(this.inputTitle)}
-                    <Text style={{ color: 'red'}}> *</Text>
+                    <Text style={{ color: 'red'}}> * </Text>
                 </Text>
-                <View style={[styles.border, { marginTop: 8 }]}>
+                <View style={styles.border}>
                     <Item error={this.state.error}
                         success={this.state.success}
                         disabled={this.disabled}
-                        style={{ flexGrow: 1, flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', alignContent: 'center', justifyContent: 'center',  }}>
+                        style={{ flexGrow: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center',  }}>
                         <Input
                             ref={(input) => { this.props.parent.listRefs[this.inputKey] = input }}
                             onSubmitEditing={() => { this.submitEditing() }}
                             returnKeyType={"done"}
                             disabled={this.disabled}
                             keyboardType={this.keyboardType}
+                            textContentType={this.inputType === 'password' ? 'oneTimeCode' : 'none'}
                             defaultValue={this.state.value}
                             placeholder={'Please enter your ' + this.inputTitle.toLowerCase()}
                             clearButtonMode={'while-editing'}

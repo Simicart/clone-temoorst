@@ -64,6 +64,7 @@ class ProductList extends SimiPageComponent {
     //   params['dir'] = this.props.sortTags[0].direction;
     //   params['order'] = this.props.sortTags[0].key;
     // }
+    console.log("params: ", params);
     if (this.cateId != -1) {
       params['filter[cat_id]'] = this.cateId;
     }
@@ -305,7 +306,7 @@ class ProductList extends SimiPageComponent {
                 );
               }}
               onRefresh={() => this.onRefresh()}
-              refreshing={this.state.isFetching}
+              refreshing={false}
             />
             <Spinner color={Identify.theme.loading_color} style={(this.isLoadingMore || this.state.isLoadingMore) ? {} : { display: 'none' }} />
             <View style={{ height: 60 }} />

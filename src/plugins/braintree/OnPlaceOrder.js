@@ -1,5 +1,5 @@
 import React from 'react';
-import BraintreeDropIn from 'react-native-braintree-payments-drop-in';
+// import BraintreeDropIn from 'react-native-braintree-payments-drop-in';
 import Identify from '@helper/Identify';
 import material from '@theme/variables/material';
 import { Toast } from 'native-base';

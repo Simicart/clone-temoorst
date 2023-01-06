@@ -45,11 +45,14 @@ export default class BorderedInput extends BaseInput {
     createInputLayout() {
         return (
             <View>
-                <View style={{ flexDirection: 'row',  marginTop: 30, marginStart: 3, justifyContent: Identify.isRtl() ? 'flex-end' : 'flex-start' }}>
-                    <Text>{Identify.__(this.props.header)}</Text>
-                    <Text style={{ color: 'red' }}> * </Text>
+                <View style={{ flexDirection: 'row',  marginTop: 30, marginStart: 3, justifyContent: 'flex-start' }}>
+                    <Text>
+                        {Identify.__(this.props.header)}
+                        <Text style={{ color: 'red' }}> * </Text>
+                    </Text>
+                    
                 </View>
-                <Item regular error={this.state.error} success={this.state.success} disabled={this.disabled} style={{ marginTop: 8, borderRadius: 5, flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
+                <Item regular error={this.state.error} success={this.state.success} disabled={this.disabled} style={{ marginTop: 8, borderRadius: 5, flexDirection: 'row' }}>
                     {this.iconName && <Icon active name={this.iconName} style={{ fontSize: 24 }} />}
                     <Input
                         ref={(input) => { this.props.parent.listRefs[this.inputKey] = input }}

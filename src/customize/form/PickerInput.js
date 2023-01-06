@@ -72,7 +72,7 @@ export default class PickerInput extends BaseInput {
         }
         return (
             <View style={styles.boundView}>
-                <Text style={[textStyle, {textAlign: Identify.isRtl() ? 'right' : 'left', paddingRight: 7, paddingLeft: 2}]}
+                <Text style={[textStyle, {textAlign: 'left', paddingRight: 7, paddingLeft: 2}]}
                     onPress={() => {
                         this.showSelectOptions();
                     }}>
@@ -107,12 +107,12 @@ export default class PickerInput extends BaseInput {
         } else {
             return (
                 <View style={{ flexDirection: 'column', marginBottom: 20 }}>
-                    <Text style={{ alignSelf: Identify.isRtl() ? 'flex-end' : 'flex-start' }}>
+                    <Text style={{ alignSelf: 'flex-start' }}>
                         {Identify.__(this.inputTitle)}
-                        <Text style={{ color: 'red'}}> *</Text>
+                        <Text style={{ color: 'red'}}> * </Text>
                     </Text>
                     <View style={[styless.border, { marginTop: 8 }]}>
-                        <Item error={this.state.error} success={this.state.success} style={[styles.item,, {flexDirection: Identify.isRtl() ? 'row-reverse' : 'row'}]} inlineLabel>
+                        <Item error={this.state.error} success={this.state.success} style={[styles.item, {flexDirection: 'row'}]} inlineLabel>
                             {this.renderShowText()}
                             <Icon style={{ color: material.textColor, paddingHorizontal: 10 }} name={Identify.isRtl() ? 'ios-arrow-back' : "ios-arrow-forward"} />
                         </Item>

@@ -8,18 +8,18 @@ import material from '@theme/variables/material';
 const OrderBilling = (props) => {
     function renderPaymentType() {
         return (
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Payment type')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.__(props.order.payment_method.toUpperCase())}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Payment type')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{Identify.__(props.order.payment_method.toUpperCase())}</Text>
             </CardItem>
         )
     }
 
     function renderShippingMethod() {
         return (
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Shipping method')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.__(props.order.shipping_method)}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Shipping method')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{Identify.__(props.order.shipping_method)}</Text>
             </CardItem>
         )
     }
@@ -30,9 +30,9 @@ const OrderBilling = (props) => {
             couponCode =  props.order.coupon_code;
         }
         return (
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Coupon code')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{couponCode}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Coupon code')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{couponCode}</Text>
             </CardItem>
         )
     }

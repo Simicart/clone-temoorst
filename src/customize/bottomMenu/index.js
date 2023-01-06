@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Identify from '@helper/Identify';
 import Item from './item';
 import NavigationManager from '@helper/NavigationManager';
+
 export const listBottomButtons = [
     {
         key: 'home_bottom',
@@ -26,7 +27,7 @@ export const listBottomButtons = [
     },
     {
         key: 'account_bottom',
-        route_name: "MyAccount",
+        route_name: 'Login' ,
         icon: require('../images/account.png'),
         title: Identify.__('Account'),
     }
@@ -34,14 +35,12 @@ export const listBottomButtons = [
 
 const BottomMenu = (props) => {
     useEffect(() => {
-        if (props.navigation.state.routeName == 'MyAccount' && Identify.isEmpty(props.customer_data)) {
-            NavigationManager.openPage(props.navigation, "Login");
-        }
         if (props.navigation.state.routeName != props.bottomAction) {
             props.storeData('bottomAction', props.navigation.state.routeName);
         }
     }, [props.navigation, props?.obj])
-    if (!listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
+    listBottomButtons[3].route_name = Identify.getCustomerData() ?  "MyAccount" : "Login";
+    if (!listBottomButtons?.map((item) => item.route_name).includes(props.navigation.state.routeName)) {
         return null;
     } else {
         return (

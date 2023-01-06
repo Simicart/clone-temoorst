@@ -10,6 +10,7 @@ import Identify from '@helper/Identify';
 import NavigationManager from '@helper/NavigationManager';
 import AppStorage from '@helper/storage';
 import Events from '@helper/config/events';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 class CustomerPage extends SimiPageComponent {
 
@@ -19,9 +20,6 @@ class CustomerPage extends SimiPageComponent {
         this.isEditProfile = this.props.navigation.getParam('isEditProfile');
         this.password = '';
         this.dispatchSplashCompleted();
-        this.state = {
-            ...this.state,
-        }
     }
 
     dispatchSplashCompleted() {
@@ -217,11 +215,16 @@ class CustomerPage extends SimiPageComponent {
     renderPhoneLayout() {
         return (
             <Container style={{ backgroundColor: variable.appBackground }}>
+                {/* <KeyboardAwareScrollView
+                    style={{flex: 1}}
+                    keyboardDismissMode="interactive"
+                    keyboardShouldPersistTaps="always"> */}
                 <Content>
                     <View style={{ flex: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 30, paddingBottom: 70 }}>
                         {this.renderLayoutFromConfig('customer_layout', 'content')}
                     </View>
                 </Content>
+                {/* </KeyboardAwareScrollView> */}
                 {this.renderLayoutFromConfig('customer_layout', 'container')}
             </Container>
         );

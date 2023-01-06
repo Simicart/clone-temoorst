@@ -8,10 +8,18 @@ import Identify from '@helper/Identify';
 import { listBottomButtons } from '@customize/bottomMenu';
 import { connect } from 'react-redux';
 const CustomizeHeaderBody = (props) => {
-   
     function renderShowRouteName() {
+        let title = '';
+        let routeName = props.navigation.state.routeName;
+        title += routeName[0];
+        for(let i=1; i<routeName.length; i++) {
+            if(routeName[i].toUpperCase() === routeName[i]) {
+                title += ' ' + routeName[i];
+            }
+            else title += routeName[i];
+        }
         return (
-            <Title style={{ color: variable.toolbarBtnColor, textAlign: 'center', width: '100%' }}>{Identify.__(props.navigation.state.routeName)}</Title>
+            <Title style={{ color: variable.toolbarBtnColor, textAlign: 'center', width: '100%' }}>{Identify.__(title)}</Title>
         );
     }
     function renderShowTitle() {
@@ -39,7 +47,8 @@ const CustomizeHeaderBody = (props) => {
                 {renderShowTitle()}
             </View>
         );
-    } else if (listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
+    } else if (listBottomButtons?.map((item) => item.route_name).includes(props.navigation.state.routeName)) {
+        props.storeData('bottomAction', props.navigation.state.routeName);
         return (
             <View style={[{ flexGrow: 1, flex: 1, zIndex: 1, justifyContent: 'center', alignItems: 'center' }]}>
                 {renderShowLogo()}

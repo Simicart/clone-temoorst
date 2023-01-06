@@ -53,13 +53,13 @@ export default class CustomerButton extends React.Component {
                 </Button>
                 {text == 'Save' ? null : 
                     <View style={{ 
-                        flexDirection: Identify.isRtl() ? 'row-reverse' : 'row',
+                        flexDirection: 'row',
                         marginTop: 30, 
-                        marginBottom:30, 
+                        marginBottom: 30, 
                         justifyContent: 'center' }}>
                         <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Already have an account?')}</Text>
                         <TouchableOpacity onPress={() => {  NavigationManager.openPage( this.props.navigation, 'Login'); }}>
-                            <Text style={{ color: Identify.theme.button_background, fontWeight: 'bold', marginLeft: Identify.isRtl() ? 0 : 5, marginRight: Identify.isRtl() ? 5 : 0 }}>{Identify.__('Sign In')}</Text>
+                            <Text style={{ color: Identify.theme.button_background, fontWeight: 'bold', marginHorizontal: 5 }}>{Identify.__('Sign In')}</Text>
                         </TouchableOpacity>
                     </View>
                 }

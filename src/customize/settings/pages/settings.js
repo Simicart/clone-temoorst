@@ -153,16 +153,17 @@ class Viewsettings extends SimiPageComponent {
                             activeOpacity={1}>
                             <View 
                                 style={{
-                                    flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
+                                    flexDirection: 'row', 
                                     alignItems: 'center', 
                                     justifyContent: 'space-between', 
+                                    marginHorizontal: 15,
                                     paddingTop: 15, 
                                     paddingBottom: 15,
                                     borderBottomWidth: 0.5, 
                                     borderBottomColor: Identify.theme.line_color  }}>        
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginRight: Identify.isRtl() ? 15 : 0, marginLeft: Identify.isRtl() ? 0 : 15 }}>{Identify.__(this.state.title)}</Text>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold' }}>{Identify.__(this.state.title)}</Text>
                                 <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: Identify.isRtl() ? 0 : 15, marginLeft: Identify.isRtl() ? 15 : 0 }} />
+                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24 }} />
                                 </TouchableOpacity>
                             </View>
                             <AdvanceList parent={this} data={this.state.data} title={this.state.title} value={this.state.value} />

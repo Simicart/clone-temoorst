@@ -230,14 +230,16 @@ const RightHeader = (props) => {
     //         {renderQty()}
     //     </View>
     // )
-    if (listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
+    if (props.navigation.state.routeName === "ProductDetail") {
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {/* {plugins} */}
-                {renderSearch()}
+                {renderCart()}
+                {renderQty()}
             </View>
         )
-    } else if (props.navigation.state.routeName === "ProductDetail") {
+    }
+    else if (props.navigation.state.routeName === "ProductDetail") {
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {/* {plugins} */}
@@ -261,6 +263,14 @@ const RightHeader = (props) => {
                 {renderFilter()}
                 {renderCart()}
                 {renderQty()}
+            </View>
+        )
+    }
+    else if (listBottomButtons?.map((item) => item.route_name).includes(props.bottomAction)) {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* {plugins} */}
+                {renderSearch()}
             </View>
         )
     } else {

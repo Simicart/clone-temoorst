@@ -1,6 +1,7 @@
 import React from 'react';
 import SimiComponent from '@base/components/SimiComponent';
 import { Button, Text, View, Card } from 'native-base';
+import { Alert } from 'react-native';
 import Identify from '@helper/Identify';
 
     const ReorderButton = (props) => {

@@ -50,10 +50,9 @@ class Categories extends React.Component {
             <View style={{ width: width, height: height }}>
                 <FlatList
                     style={{
-                        paddingLeft: Identify.isRtl() ? 0 : width*0.04,
-                        paddingRight: Identify.isRtl() ? width*0.04 : 0,
+                        marginLeft: width*0.04,
                         marginTop: 10,}}
-                    columnWrapperStyle={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}
+                    columnWrapperStyle={{ flexDirection: 'row' }}
                     numColumns={2}
                     onEndReached={() => this.handleOnEndReached()}
                     onEndReachedThreshold={0.5}

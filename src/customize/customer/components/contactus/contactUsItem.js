@@ -54,17 +54,16 @@ export default class ContactUsItem extends React.Component {
         return (
             <TouchableOpacity 
                 style={{ 
-                    flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
+                    flexDirection: 'row', 
                     paddingTop: 20, 
                     paddingBottom: 20, 
-                    marginLeft: 30,  
+                    marginLeft: 30,
                     borderBottomColor: Identify.theme.line_color, 
                     borderBottomWidth: 0.5, 
                     alignItems: 'center'}}
                 onPress={() => this.action() }>
-                    <View></View>
                     <Icon type={this.props.icon_type} name={this.props.icon_name} style={{ color: Identify.theme.icon_color }}></Icon>
-                    <Text style={{ marginLeft: Identify.isRtl() ? 0 : 20, marginRight: Identify.isRtl() ? 20 : 0, }}>{Identify.__(this.data)}</Text>
+                    <Text style={{ marginHorizontal: 20 }}>{Identify.__(this.data)}</Text>
             </TouchableOpacity>
         )
     }

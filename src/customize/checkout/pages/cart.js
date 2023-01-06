@@ -132,6 +132,25 @@ class Cart extends SimiPageComponent {
         }
     }
     qtyHandle(e) { return; }
+    removeAll(listItem) {
+        listData = Object.values(listItem);
+        this.props.storeData('showLoading', { type: 'dialog' });
+        let json = listItem;
+        listData.map((item, index) => {
+            let data = {};
+            data['event'] = 'cart_action';
+            data['action'] = 'update_cart';
+            data['item_id'] = item.item_id;
+            data['qty'] = item.qty;
+            Events.dispatchEventAction(data, this);
+        })
+        
+        new NewConnection()
+            .init(quoteitems, 'update_item', this, 'PUT')
+            .addBodyData(json)
+            .connect();
+    }
+    
     updateCart(item_id, qty) {
         this.props.storeData('showLoading', { type: 'dialog' });
         let json = {};

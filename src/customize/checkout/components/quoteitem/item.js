@@ -73,7 +73,7 @@ const QuoteItem = (props) => {
             );
         }
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 40, padding: 5, borderWidth: 1, borderColor: '#e0e0e0', borderRadius: 12, width: 120 }}>
+            <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-between', alignItems: 'center', height: 40, padding: 5, borderWidth: 1, borderColor: '#e0e0e0', borderRadius: 12, width: 120 }}>
                 <TouchableOpacity
                     onPress={() => {
                         if (parseInt(props.data.qty.toString()) == 1) {
@@ -116,20 +116,18 @@ const QuoteItem = (props) => {
         if (props.data.product_type === 'simigiftvoucher') {
             route = 'ProductGiftCardDetail'
         }
-        NavigationManager.openPage(props.parent.props.navigation,
-            route, {
-            productId: props.data.product_id,
-        })
+        // NavigationManager.openPage(props.parent.props.navigation,
+        //     route, {
+        //     productId: props.data.product_id,
+        // })
     }
     function renderImageItem() {
         if (props.parent.is_go_detail) {
             return (
-                <TouchableOpacity onPress={() => {
-                    onItemSelect()
-                }}>
+                <View>
                     <Image style={[styles.viewImage]} source={{ uri: props.data.image }} resizeMode='contain' />
                     {renderOutStock()}
-                </TouchableOpacity>
+                </View>
             )
         }
         if (typeof props.data.image === 'string') {
@@ -156,15 +154,28 @@ const QuoteItem = (props) => {
             </View>
         );
     }
-
     return (
         <TouchableOpacity
             onPressIn={onPressIn}
             onPressOut={onPressOut}
             onPress={() => {
-                NavigationManager.openPage(props.navigation, 'ProductDetail', {
-                    productId: props?.data?.product_id,
-                });
+                let route = 'ProductDetail';
+                // NavigationManager.openPage(props.navigation, 'ProductDetail', {
+                //     productId: props?.data?.product_id,
+                // });
+                if (props.data && props.data.parent_product_id) {
+                    console.log('sa');
+                    NavigationManager.openPage(props.navigation,
+                        route, {
+                        productId: props?.data.parent_product_id,
+                    })
+                } else {
+                    console.log('sb');
+                    NavigationManager.openPage(props.navigation,
+                        route, {
+                        productId: props?.data.product_id,
+                    })
+                }
             }}
         >
 

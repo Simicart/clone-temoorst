@@ -48,7 +48,11 @@ class DrawerItemCustomize extends React.Component {
                         routeName: this.props.bottomAction,
                     }
                 }
-                NavigationManager.openPage(navigation, this.props.data.route_name, this.props.data.params ? this.props.data.params : {});
+                let routeName = this.props.data.route_name;
+                if(routeName === 'OrderHistory') {
+                    routeName = Identify.getCustomerData() ? 'OrderHistory' : 'Login'
+                }
+                NavigationManager.openPage(navigation, routeName, this.props.data.params ? this.props.data.params : {});
             }
         }
     }
