@@ -36,7 +36,7 @@ const ProductDescriptionComponent = (props) => {
                     <View style={styles.cardContainer}>
                         <View style={{ flex: 1 }}>
                             <H3 style={styles.title}>{Identify.__('Description')}</H3>
-                            <HTML html={showDescription ? html : null} />
+                            <HTML html={showDescription ? html : null} tagsStyles={{ body: { textAlign: 'left' } }}/>
                         </View>
                         {/* {props.product.description && <Icon style={styles.extendIcon} name={Identify.isRtl() ? 'ios-arrow-back' : "ios-arrow-forward"} />} */}
                     </View>

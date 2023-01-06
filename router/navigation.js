@@ -20,7 +20,7 @@ import FilterSelection from '../src/core/screens/catalog/pages/products/selectio
 import Drawer from '../src/customize/drawer';
 // import Login from '../src/core/screens/customer/pages/login';
 import Login from '../src/customize/customer/pages/login';
-
+import { connect } from 'react-redux';
 
 // import ProductDetail from '../src/core/screens/catalog/pages/product/product';
 import ProductDetail from '../src/customize/catalog/pages/product/product';
@@ -40,6 +40,7 @@ import TechSpecs from '../src/core/screens/catalog/pages/product/techspecs';
 import FullImage from '../src/core/screens/catalog/pages/product/fullimage';
 // import SearchProducts from '../src/core/screens/catalog/pages/search';
 import SearchProducts from '../src/customize/catalog/pages/search';
+// import Customer from '../src/core/screens/customer/pages/customer';
 import Customer from '../src/customize/customer/pages/customer';
 import NotificationHistory from '../src/core/screens/notification/pages';
 import CreditCard from '../src/core/screens/checkout/pages/creditcard';
@@ -50,7 +51,7 @@ import PayPalExpressAddress from '../src/plugins/paypalexpress/pages/address';
 import PayPalExpressShipping from '../src/plugins/paypalexpress/pages/shipping';
 import BraintreePayment from '../src/plugins/braintree';
 import CCAvenuePayment from '../src/plugins/ccavenue';
-
+import NavigationManager from '@helper/NavigationManager';
 // import ContactUs from '../src/plugins/contactus';
 import ContactUs from "../src/customize/customer/pages/contactUs";
 import StoreLocator from '../src/plugins/storelocator';
@@ -162,6 +163,23 @@ Stack.navigationOptions = ({ navigation }) => {
     };
 };
 
+const getStateForActionStack = Stack.router.getStateForAction;
+Stack.router = {
+    ...Stack.router,
+    getStateForAction(action, state) {
+      if (action.type == 'Navigation/BACK') {
+        // console.log(props);
+        // if(state.routes[1].routeName === 'Login'){
+        //     props.storeData('bottomAction', 'Home');
+        //     NavigationManager.openPage(props.navigation, 'Home', {});
+        // }
+        console.log('We are going back...');
+        
+      }
+      return getStateForActionStack(action, state);
+    },
+};
+
 const Router = createDrawerNavigator(
     {
         Splash: { screen: Splash },
@@ -176,5 +194,18 @@ const Router = createDrawerNavigator(
 );
 
 const App = createAppContainer(Router);
+const mapStateToProps = (state) => {
+    return {
+        bottomAction: state.redux_data.bottomAction,
+    };
+}
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        storeData: (type, data) => {
+            dispatch({ type: type, data: data })
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

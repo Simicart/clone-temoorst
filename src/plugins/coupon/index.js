@@ -120,7 +120,7 @@ class Coupon extends React.Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row', paddingTop: 15, }}>
                 <View style={{ width: '70%', paddingRight: 20 }}>
-                    <TextInput disabled={hasCouponCode} style={{ flex: 1, padding: 10, height: 50, borderColor: '#e0e0e0', borderWidth: 1, paddingRight: 20, borderRadius: 8 }} placeholder={Identify.__('Enter a coupon code')} placeholderTextColor={Identify.hexToRgb(material.textColor, 0.65)} defaultValue={this.state.coupon} onChangeText={(code) => { this.couponChange(code) }} />
+                    <TextInput disabled={hasCouponCode} style={{ flex: 1, padding: 10, height: 50, borderColor: '#e0e0e0', borderWidth: 1, paddingHorizontal: 20, borderRadius: 8, textAlign: Identify.isRtl() ? 'right' : 'left' }} placeholder={Identify.__('Enter a coupon code')} placeholderTextColor={Identify.hexToRgb(material.textColor, 0.65)} defaultValue={this.state.coupon} onChangeText={(code) => { this.couponChange(code) }} />
                 </View>
                 <TouchableOpacity style={{ width: '30%' }} onPress={() => { this.couponHandle(hasCouponCode) }}>
                     <View style={{ width: '100%', height: 50, borderWidth: 1, borderRadius: 8, borderColor: Identify.theme.button_background, justifyContent: 'center', alignItems: 'center' }}>

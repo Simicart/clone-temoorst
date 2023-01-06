@@ -12,7 +12,7 @@ const ModalComponent = (props) => {
 
     const [layers, setLayers] = useState(props.layers);
     const [selectedList, setSelectedList] = useState(props?.filterTag ? props?.filterTag : []);
-    const [selectedSortList, setSelectedSortList] = useState([]);
+    const [selectedSortList, setSelectedSortList] = useState(null);
     useEffect(() => {
         if (props.sortTags) {
             setSelectedSortList(props.sortTags)
@@ -25,6 +25,7 @@ const ModalComponent = (props) => {
     }, [props.sortTags]);
     const handlerFilter = () => {
         let params = [];
+        console.log("selectedList: ", selectedList);
         if (selectedList && selectedList.length > 0) {
             for (let i = 0; i < selectedList.length; i++) {
                 let item = selectedList[i];
@@ -34,16 +35,24 @@ const ModalComponent = (props) => {
                 if (item.attribute != 'cat') {
                     params['filter[layer][' + item.attribute + ']'] = item.value;
                 }
-                if (i === selectedList.length - 1) {
+                if (selectedSortList && selectedSortList.direction && i === selectedList.length - 1) {
                     params['dir'] = selectedSortList.direction;
                     params['order'] = selectedSortList.key;
                 }
             }
+            console.log("selectedSortList: ", selectedSortList)
+            console.log("params : ", params);
             props.onFilterAction(params);
             props.onFilterTags(selectedList);
-        } else {
-            params['dir'] = selectedSortList.direction;
-            params['order'] = selectedSortList.key;
+        }else {
+            if (selectedSortList ) {
+                console.log("selectedSortList trong else if: ", selectedSortList)
+                params['dir'] = selectedSortList.direction;
+                params['order'] = selectedSortList.key;
+            }
+            console.log("params : ", params);
+            // params['dir'] = selectedSortList.direction;
+            // params['order'] = selectedSortList.key;
             props.onFilterAction(params);
             // props.onFilterTags(selectedList);
             // props.onSortTags(selectedSortList);
@@ -74,7 +83,7 @@ const ModalComponent = (props) => {
                     <ScrollView style={{ paddingHorizontal: 20, height: height - 300 }}>
                         {
                             layers?.layer_filter.map((item, index) => (
-                                <ModalItem item={item} {...props} key={index} setSelectedList={setSelectedList} selectedList={selectedList} />
+                                <ModalItem item={item} {...props} key={index} setSelectedList={setSelectedList} selectedList={selectedList} cateChilds={props.cateChilds} />
                             ))
                         }
                         {

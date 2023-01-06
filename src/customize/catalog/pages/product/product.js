@@ -62,7 +62,6 @@ class Product extends SimiPageComponent {
     }
 
     setData(data) {
-        console.log("data in setData: ", data);
         this.title = data.product.name;
         this.product = data.product;
         this.dataTracking = {

@@ -106,6 +106,44 @@ const ModalItem = (props) => {
           </TouchableOpacity>
         </View>
       </View>
+      {/* {props.item.attribute == 'category_id' ? 
+        <View>
+          {
+            check && props.cateChilds?.length > 1 ? (
+              <View>
+                {
+                  props.cateChilds?.map((item, index) => (
+                    index == 0 ? null :
+                      <TouchableOpacity
+                        onPress={() => {
+                          setSelected((prevState) => {
+                            if (!prevState || prevState.value !== item.entity_id) {
+                              return {value: item.entity_id, label: item.name};
+                            }
+                            else {
+                              return null;
+                            }
+                          });
+                        }}
+                        key={index}
+                      >
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }}>
+                          <View>
+                            <Text>
+                              {item.name}
+                            </Text>
+                          </View>
+                          {selected && selected.value == item.entity_id ? 
+                            <Icon name={'radio-button-checked'} style={{ color: Identify.theme.button_background, fontSize: 20 }} type="MaterialIcons" />
+                            : <Icon name={'radio-button-unchecked'} style={{ color: Identify.theme.icon_color, fontSize: 20 }} type="MaterialIcons" />}
+                        </View>
+                      </TouchableOpacity>
+                  ))
+                }
+              </View>
+            ) : null
+          }
+        </View> : */}
       <View>
         {
           check && props.item?.filter.length > 0 ? (
@@ -142,6 +180,7 @@ const ModalItem = (props) => {
           ) : null
         }
       </View>
+    {/* } */}
     </View>
   )
 }

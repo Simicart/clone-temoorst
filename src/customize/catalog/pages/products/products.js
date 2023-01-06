@@ -84,11 +84,13 @@ class Products extends SimiPageComponent {
             {
                 name: Identify.__('VIEW ALL'),
                 entity_id: this.cateId,
+                has_children: false,
             },
             ...data?.categories.map((item) => {
                 return {
                     name: item.name,
-                    entity_id: item.entity_id
+                    entity_id: item.entity_id,
+                    has_children: item.has_children,
                 }
             })
         ]
@@ -163,7 +165,7 @@ class Products extends SimiPageComponent {
                 <HeaderProducts cateChilds={this.cateChilds} selectedCate={this.state.selectedCate} onSelectedCategory={this.onSelectedCategory} />
                 <FilterTag {...this} />
                 <ProductList cateId={this.cateId} selectedCate={this.state.selectedCate} {...this} paramsFilter={this.state.paramsFilter} />
-                <Modal {...this} />
+                <Modal {...this} cateChilds={this.cateChilds}/>
             </Container>
         );
     }

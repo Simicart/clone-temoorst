@@ -26,9 +26,9 @@ const OrderShipping = (props) => {
             name += item.suffix;
         }
         return(
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Name')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{name}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Name')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{name}</Text>
             </CardItem>
         )
     }
@@ -39,9 +39,9 @@ const OrderShipping = (props) => {
             company = item.company
         }
         return(
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Company')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{company}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Company')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{company}</Text>
             </CardItem>
         )
     }
@@ -52,9 +52,9 @@ const OrderShipping = (props) => {
             street = item.street
         }
         return(
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Street')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{street}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Street')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{street}</Text>
             </CardItem>
         )
     }
@@ -71,9 +71,9 @@ const OrderShipping = (props) => {
             info += item.postcode;
         }
         return(
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('City')}</Text>
-                <Text style={{ color: props.order.status === 'canceled' ? 'red' : '', flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{info}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('City')}</Text>
+                <Text style={{ color: props.order.status === 'canceled' ? 'red' : '', flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{info}</Text>
             </CardItem>
         )
     }
@@ -83,9 +83,9 @@ const OrderShipping = (props) => {
         if (item.country_name !== undefined && item.country_name !== null && item.country_name !== '') {
             country = item.country_name;
             return(
-                <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                    <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Country')}</Text>
-                    <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{country}</Text>
+                <CardItem style={{ flexDirection: 'row' }}>
+                    <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Country')}</Text>
+                    <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{country}</Text>
                 </CardItem>
             )
         }
@@ -99,9 +99,9 @@ const OrderShipping = (props) => {
             telephone = item.telephone;
         }
         return(
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Phone')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{telephone}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Phone')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{telephone}</Text>
             </CardItem>
         )
     }
@@ -112,9 +112,9 @@ const OrderShipping = (props) => {
             email = item.email;
         }
         return(
-            <CardItem style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row' }}>
-                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: Identify.isRtl() ? 'right' : 'left'}]}>{Identify.__('Email')}</Text>
-                <Text style={{ flex: 7, marginLeft: Identify.isRtl() ? 0 : 10, marginRight: Identify.isRtl() ? 10 : 0, textAlign: Identify.isRtl() ? 'right' : 'left' }}>{email}</Text>
+            <CardItem style={{ flexDirection: 'row' }}>
+                <Text style={[styles.title, {color: '#595656', flex: 3, textAlign: 'left'}]}>{Identify.__('Email')}</Text>
+                <Text style={{ flex: 7, marginHorizontal: 10, textAlign: 'left' }}>{email}</Text>
             </CardItem>
         )
     }

@@ -23,9 +23,9 @@ const BaseMenuItem = (props) => {
                         square
                         source={this.props.image}
                         style={{ width: 25, height: 25}} />}
-                    <Text style={{ flex: 1, textAlign: Identify.isRtl() ? 'right' : 'left', marginLeft: 20, marginRight: 20 }}>{Identify.__(props.label)}</Text>
-                    <View style={{ alignItems: Identify.isRtl() ? 'flex-start' : 'flex-end' }}>
-                        {props.extendable && <Icon style={{ marginRight: 10 }} name={Identify.isRtl() ? 'ios-arrow-back' : "ios-arrow-forward"} />}
+                    <Text style={{ flex: 1, textAlign: 'left', marginHorizontal: 20 }}>{Identify.__(props.label)}</Text>
+                    <View style={{ alignItems: 'flex-end' }}>
+                        {props.extendable && <Icon style={{ marginHorizontal: 10 }} name={Identify.isRtl() ? 'ios-arrow-back' : "ios-arrow-forward"} />}
                     </View>
                 </CardItem>
             </View>

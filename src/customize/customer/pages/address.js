@@ -8,6 +8,7 @@ import NavigationManager from '@helper/NavigationManager';
 import variable from '@theme/variables/material';
 import { addresses, address_detail_mode, checkout_mode } from "@helper/constants";
 import Identify from "@helper/Identify";
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 class AddressDetailPage extends SimiPageComponent {
 
@@ -144,11 +145,14 @@ class AddressDetailPage extends SimiPageComponent {
     renderPhoneLayout() {
         return (
             <Container style={{ backgroundColor: variable.appBackground }}>
-                <Content>
+                <KeyboardAwareScrollView
+                    style={{flex: 1}}
+                    keyboardDismissMode="interactive"
+                    keyboardShouldPersistTaps="always">
                     <View style={{ flex: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 15, paddingBottom: 80 }}>
                         {this.renderLayoutFromConfig('address_layout', 'content')}
                     </View>
-                </Content>
+                </KeyboardAwareScrollView>
                 {this.renderLayoutFromConfig('address_layout', 'container')}
             </Container>
         );

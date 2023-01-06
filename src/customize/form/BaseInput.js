@@ -22,7 +22,7 @@ export default class BaseInput extends React.Component {
     submitEditing() {
         let indexRef = Object.keys(this.props.parent.listRefs).indexOf(this.inputKey);
         let nextRefContent = Object.values(this.props.parent.listRefs)[indexRef + 1];
-        
+        console.log(nextRefContent)
         if (indexRef + 1 === Object.keys(this.props.parent.listRefs).length) {
             Keyboard.dismiss();
         } else {

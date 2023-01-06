@@ -139,20 +139,21 @@ class MyAccountPage extends SimiPageComponent {
                             activeOpacity={1}>
                             <View 
                                 style={{
-                                    flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', 
+                                    flexDirection: 'row', 
                                     alignItems: 'center', 
-                                    justifyContent: 'space-between', 
+                                    justifyContent: 'space-between',
+                                    marginHorizontal: 15, 
                                     paddingTop: 15, 
                                     paddingBottom: 15,
                                     borderBottomWidth: 0.5, 
                                     borderBottomColor: Identify.theme.line_color  }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', marginRight: Identify.isRtl() ? 15 : 0, marginLeft: Identify.isRtl() ? 0 : 15 }}>{Identify.__('Sign Out')}</Text>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold'}}>{Identify.__('Sign Out')}</Text>
                                 <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24, marginRight: Identify.isRtl() ? 0 : 15, marginLeft: Identify.isRtl() ? 15 : 0 }} />
+                                    <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24 }} />
                                 </TouchableOpacity>
                             </View>
                             <Text style={{ textAlign: 'center', marginTop: 30, marginBottom: 30, fontSize: 20 }}>{Identify.__('Are you sure want to sign out?')}</Text>
-                            <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
                                 <TouchableOpacity
                                     onPress={() => this.logout()} 
                                     style= {{width: '40%', height: 50, borderWidth: 3, borderColor: Identify.theme.button_background, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>

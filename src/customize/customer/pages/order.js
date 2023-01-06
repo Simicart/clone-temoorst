@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SimiPageComponent from '@base/components/SimiPageComponent';
-import { View } from 'react-native';
-import { Container, Content } from 'native-base';
+import { View, Alert } from 'react-native';
+import { Container, Content, Toast } from 'native-base';
 import NewConnection from '@base/network/NewConnection';
 import { order_history, quoteitems } from '@helper/constants';
+import Identify from '@helper/Identify';
 import variable from '@theme/variables/material';
 
 class OrderPage extends SimiPageComponent {
@@ -43,7 +44,13 @@ class OrderPage extends SimiPageComponent {
                 { type: 'showLoading', data: { type: 'none' } },
                 { type: 'quoteitems', data: data }
             ]);
-            this.isUpdateCart = false;
+            this.isUpdateCart = false;  
+            Toast.show({
+                text: Identify.__('The cart is updated with items in stock'),
+                type: 'success',
+                duration: 3000,
+                position: "top",     
+            });
         } else {
             this.props.storeData('showLoading', { type: 'none' });
             this.setState(

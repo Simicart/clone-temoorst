@@ -71,12 +71,15 @@ export default class ForgotPassWordPage extends SimiPageComponent{
 
     renderFormForgot = () => {
         return <Form style={{ width: '100%'}}>
-            <View style={{ marginRight: Identify.isRtl() ? 3 : 0, marginLeft: Identify.isRtl() ? 0 : 3 }}>
-                <Label style={{ width: '100%', fontWeight: 'bold', textAlign: Identify.isRtl() ? 'right' : 'left' }}>{Identify.__('Forget Password')}</Label>
+            <View style={{ marginHorizontal: 3 }}>
+                <Label style={{ width: '100%', fontWeight: 'bold', textAlign: 'left' }}>{Identify.__('Forgot Password')}</Label>
             </View>
-            <View style={{ flexDirection: 'row',  marginTop: 20, justifyContent: Identify.isRtl() ? 'flex-end' : 'flex-start', marginStart: 3 }}>
-                <Text>{Identify.__('Email')}</Text>
-                <Text style={{ color: 'red' }}> *</Text>
+            <View style={{ flexDirection: 'row',  marginTop: 20, justifyContent: 'flex-start', marginStart: 3 }}>
+                <Text>
+                    {Identify.__('Email')}
+                    <Text style={{ color: 'red' }}> * </Text>
+                </Text>
+                
             </View>
             <Input
                 style={{
@@ -89,7 +92,7 @@ export default class ForgotPassWordPage extends SimiPageComponent{
                     height: 50,
                     marginTop: 10,
                     marginBottom: 10,
-                    textAlign: Identify.isRtl() ? 'right' : 'left' 
+                    textAlign: 'left' 
                 }}
                 placeholder={Platform.OS === 'ios' ? Identify.__('Enter your email address') : Identify.__('Please enter your email')}
                 value={this.state.email}
@@ -123,13 +126,13 @@ export default class ForgotPassWordPage extends SimiPageComponent{
     renderPhoneLayout() {
         return (
             <Container>
-                <Content style={{ padding: 12 }}>
+                <Content style={{ margin: 12 }}>
                     {this.renderFormForgot()}
-                    <View style={{ flexDirection: Identify.isRtl() ? 'row-reverse' : 'row', marginTop: 30, justifyContent: 'center' }}>
+                    <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'center' }}>
 
                         <Text styles={{ fontWeight: 'bold' }}>{Identify.__('Have your password?')} </Text>
                         <TouchableOpacity onPress={() => { this.onClickLogin() }}>
-                            <Text style={{ color: Identify.theme.button_background, marginLeft: Identify.isRtl() ? 0 : 5, marginRight: Identify.isRtl() ? 5 : 0  }}>{Identify.__('Sign In')}</Text>
+                            <Text style={{ color: Identify.theme.button_background, marginHorizontal: 5  }}>{Identify.__('Sign In')}</Text>
                         </TouchableOpacity>
                     </View> 
                 </Content>
