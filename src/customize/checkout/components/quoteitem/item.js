@@ -164,13 +164,11 @@ const QuoteItem = (props) => {
                 //     productId: props?.data?.product_id,
                 // });
                 if (props.data && props.data.parent_product_id) {
-                    console.log('sa');
                     NavigationManager.openPage(props.navigation,
                         route, {
                         productId: props?.data.parent_product_id,
                     })
                 } else {
-                    console.log('sb');
                     NavigationManager.openPage(props.navigation,
                         route, {
                         productId: props?.data.product_id,
