@@ -7,10 +7,10 @@ import DateInput from '@base/components/form/DateInput';
 import DropDownInput from '@base/components/form/DropDownInput';
 import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
-import { ScrollView, TouchableOpacity, View ,Text, Modal, Keyboard, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, TouchableOpacity, View, Text, Modal, Keyboard, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Icon, Left, Button } from 'native-base';
 import { Platform } from 'react-native';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 const height = Dimensions.get('window').height;
 
 export default class CustomerForm extends SimiComponent {
@@ -43,7 +43,7 @@ export default class CustomerForm extends SimiComponent {
     componentWillUnmount() {
         if (this.props.onRef) {
             this.props.onRef(undefined)
-        }     
+        }
     }
 
     setModalVisible(value) {
@@ -55,18 +55,18 @@ export default class CustomerForm extends SimiComponent {
         this.props.parent.updateButtonStatus(status);
     }
 
-    signUpPassword(fields){
+    signUpPassword(fields) {
         if (!this.social_login) {
             fields.push(
                 this.renderField('password', 'password', Identify.__('Password'), 'req')
             );
             fields.push(
-                this.renderField('password', 'com_password', Identify.__('Confirm Password'),'req')
+                this.renderField('password', 'com_password', Identify.__('Confirm Password'), 'req')
             );
         }
     }
 
-    changePasswordFields(){
+    changePasswordFields() {
         let changePassField = [];
         if (!this.social_login) {
             let labelPassword = Identify.__('Password');
@@ -74,8 +74,8 @@ export default class CustomerForm extends SimiComponent {
                 this.renderField('password', 'password', Identify.__('Current Password'), 'opt')
             );
             changePassField.push(
-                    this.renderField('password', 'new_password', Identify.__('New Password'), 'opt')
-                );
+                this.renderField('password', 'new_password', Identify.__('New Password'), 'opt')
+            );
             changePassField.push(
                 this.renderField('password', 'com_password', Identify.__('Confirm Password'), 'opt')
             );
@@ -93,8 +93,8 @@ export default class CustomerForm extends SimiComponent {
                 </View>
             )
         }
-        if(!this.isEditProfile && !this.social_login) {
-            if( Platform.OS === 'ios') fields.push(
+        if (!this.isEditProfile && !this.social_login) {
+            if (Platform.OS === 'ios') fields.push(
                 <View style={{ paddingTop: 15, paddingBottom: 15, marginBottom: 10 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'left' }}>{Identify.__('Create account')}</Text>
                 </View>
@@ -131,73 +131,95 @@ export default class CustomerForm extends SimiComponent {
         );
         if (this.isEditProfile) {
             fields.push(
-                <TouchableOpacity 
-                    style={{ 
-                        flexDirection: 'row', 
-                        alignItems: 'center', 
-                        justifyContent: 'space-between', 
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
                         paddingTop: 15, paddingBottom: 15,
-                        marginBottom: 10, 
-                        borderTopWidth: 0.5, 
-                        borderTopColor: Identify.theme.line_color, 
-                        backgroundColor: this.state.buttonColor}}
-                        onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
-                        onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
-                        onPress={() => this.setModalVisible(true)}>
-                    <Text style={{ fontSize: 16, marginHorizontal: 3  }}>{Identify.__('Change Password')}</Text>
-                    <Icon type='Feather' name= {Identify.isRtl() ? 'chevron-left' : 'chevron-right'} stype={{ color: Identify.theme.icon_color }}></Icon>
+                        marginBottom: 10,
+                        borderTopWidth: 0.5,
+                        borderTopColor: Identify.theme.line_color,
+                        backgroundColor: this.state.buttonColor
+                    }}
+                    onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
+                    onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
+                    onPress={() => this.setModalVisible(true)}>
+                    <Text style={{ fontSize: 16, marginHorizontal: 3 }}>{Identify.__('Change Password')}</Text>
+                    <Icon type='Feather' name={Identify.isRtl() ? 'chevron-left' : 'chevron-right'} stype={{ color: Identify.theme.icon_color }}></Icon>
                 </TouchableOpacity>
             )
         }
-        if(!this.isEditProfile) {
+        if (!this.isEditProfile) {
             this.signUpPassword(fields);
         }
-        
+
         else if (this.isEditProfile) {
             fields.push(
-                <Modal 
-                    visible={this.state.modalVisible} 
+                <Modal
+                    visible={this.state.modalVisible}
                     animationType='slide'
-                    transparent={true}>
-                    <TouchableOpacity
-                        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }} 
+                    transparent={true}
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', }}
+                >
+
+                    <View
+                        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }}
                         activeOpacity={1}
-                        onPress={() => this.setModalVisible(false)}>
-                            <TouchableOpacity 
-                                style={{ height: 0.6*height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15 }}
-                                activeOpacity={1}>
-                                <View 
-                                    style={{
-                                        flexDirection: 'row', 
-                                        alignItems: 'center', 
-                                        justifyContent: 'space-between',
-                                        marginHorizontal: 15, 
-                                        paddingTop: 15, 
-                                        paddingBottom: 15,
-                                        borderBottomWidth: 0.5, 
-                                        borderBottomColor: Identify.theme.line_color,  }}>
-                                    <Text style={{ fontSize: 22, fontWeight: 'bold' }}>{Identify.__('Change Password')}</Text>
-                                    <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                                        <Icon name='close' type='AntDesign' style= {{ color: Identify.theme.icon_color, fontSize: 24 }} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ marginLeft: 15, marginRight: 15, flex: 1, marginTop: 15 }} >
-                                    <SimiForm 
-                                        fields={this.changePasswordFields()}
-                                        parent={this}
-                                        onRef={ref => (this.formNew = ref)}
-                                        initData={this.initData}
-                                        style={{ marginBottom: 20 }}/>
-                                    <Button style={{ width: '100%', marginTop: 16, borderRadius: 10, padding: 8 }}
-                                        full
-                                        onPress={() => { this.onClickButton() }}>
-                                        <Text style={{ fontSize: 15,lineHeight: 24, color: '#FFF' }}>{Identify.__('Save')}</Text>
-                                    </Button>
-                                </View>
-                            </TouchableOpacity>                        
-                    </TouchableOpacity>
+                    // onPress={() => this.setModalVisible(false)}
+                    >
+
+                        {/* <KeyboardAvoidingView
+                            behavior={Platform.OS === "ios" ? "padding" : "height"}
+                            style={{ height: 0.6 * height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15, paddingHorizontal: 15 }}
+                        > */}
+
+
+                        <View
+                            style={{ height: 0.7 * height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15, paddingHorizontal: 15 }}
+                            activeOpacity={1}>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    marginBottom: 15,
+                                    paddingTop: 15,
+                                    paddingBottom: 15,
+                                    borderBottomWidth: 0.5,
+                                    borderBottomColor: Identify.theme.line_color,
+                                }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold' }}>{Identify.__('Change Password')}</Text>
+                                <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                                    <Icon name='close' type='AntDesign' style={{ color: Identify.theme.icon_color, fontSize: 24 }} />
+                                </TouchableOpacity>
+                            </View>
+                            <KeyboardAwareScrollView
+                            // behavior={Platform.OS === "ios" ? "padding" : "height"}
+                            // style={{ flex: 1 }}
+                            >
+                                <SimiForm
+                                    fields={this.changePasswordFields()}
+                                    parent={this}
+                                    onRef={ref => (this.formNew = ref)}
+                                    initData={this.initData}
+                                    style={{ marginBottom: 20 }} />
+                                <Button style={{ width: '100%', marginTop: 16, borderRadius: 10, padding: 8 }}
+                                    full
+                                    onPress={() => { this.onClickButton() }}>
+                                    <Text style={{ fontSize: 15, lineHeight: 24, color: '#FFF' }}>{Identify.__('Save')}</Text>
+                                </Button>
+                            </KeyboardAwareScrollView>
+
+                        </View>
+
+                        {/* </KeyboardAvoidingView> */}
+                    </View>
+
+
+
                 </Modal>
-            ) 
+            )
         }
 
         if (this.account_option.show_newsletter === '1') {
@@ -303,10 +325,15 @@ export default class CustomerForm extends SimiComponent {
 
     renderPhoneLayout() {
         return (
-            <SimiForm fields={this.createFields()}
-                parent={this}
-                onRef={ref => (this.form = ref)}
-                initData={this.initData} />
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}
+            >
+                <SimiForm fields={this.createFields()}
+                    parent={this}
+                    onRef={ref => (this.form = ref)}
+                    initData={this.initData} />
+            </KeyboardAvoidingView>
         );
     }
 
