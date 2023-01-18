@@ -82,7 +82,7 @@ export default class ProductImagesComponent extends SimiComponent {
     renderZoom(){
         return(
             <TouchableOpacity
-                onPress={() => { this.props.product ? this.onSelectImage(this.index + 1) : {} }}
+                onPress={() => { this.props.product ? this.onSelectImage(this.state.index + 1) : {} }}
                 style={{
                     position: 'absolute',
                     zIndex: 99,
@@ -180,7 +180,7 @@ export default class ProductImagesComponent extends SimiComponent {
                 <View style={{ flex: 1, marginBottom: 15 }}>
                     {this.renderZoom()}
                     {this.renderSpecialPriceLabel()}
-                    <View style={{width: '100%', height: '82%'}}>
+                    <TouchableOpacity style={{width: '100%', height: '82%'}} onPress={() => this.onSelectImage(this.state.index + 1)}>
                         <Slideshow 
                             dataSource={data}
                             height={350}
@@ -201,9 +201,11 @@ export default class ProductImagesComponent extends SimiComponent {
                                 </View>
                             )}
                         /> */}
-                    </View>
+                    </TouchableOpacity>
                     {this.renderHorirontalImages()}
-                    {this.renderOutStock()}
+                    <View style={{ width: width * 0.93 }}>
+                        {this.renderOutStock()}
+                    </View>
                     {this.dispatchContent()}
                 </View>
             </Card>

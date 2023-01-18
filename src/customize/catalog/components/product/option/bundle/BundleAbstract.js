@@ -67,7 +67,8 @@ class BundleAbstract extends OptionAbstract {
     renderAttribute = (type, obj, id, labelRequired) => {
         return (
             <View key={Identify.makeid()}>
-                <Text style={{ fontFamily: material.fontBold, marginLeft: 10, marginTop: 10 }}>{obj.title} {labelRequired}</Text>
+                {type === 'single' ? null : 
+                    <Text style={{ fontFamily: material.fontBold, marginLeft: 10, marginTop: 10 }}>{obj.title} {labelRequired}</Text>}
                 {this.renderContentAttribute(obj, type, id)}
             </View>
         )

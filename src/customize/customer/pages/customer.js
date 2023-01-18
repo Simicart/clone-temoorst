@@ -215,16 +215,17 @@ class CustomerPage extends SimiPageComponent {
     renderPhoneLayout() {
         return (
             <Container style={{ backgroundColor: variable.appBackground }}>
-                {/* <KeyboardAwareScrollView
+                <KeyboardAwareScrollView
                     style={{flex: 1}}
+                    enableAutomaticScroll={this.isEditProfile ? false : true}
                     keyboardDismissMode="interactive"
-                    keyboardShouldPersistTaps="always"> */}
-                <Content>
+                    keyboardShouldPersistTaps="always">
+                {/* <Content> */}
                     <View style={{ flex: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 30, paddingBottom: 70 }}>
                         {this.renderLayoutFromConfig('customer_layout', 'content')}
                     </View>
-                </Content>
-                {/* </KeyboardAwareScrollView> */}
+                {/* </Content> */}
+                </KeyboardAwareScrollView>
                 {this.renderLayoutFromConfig('customer_layout', 'container')}
             </Container>
         );

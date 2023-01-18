@@ -6,6 +6,7 @@ export default StyleSheet.create({
     height: 45,
     backgroundColor: 'white',
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
     borderTopLeftRadius: 7,
     borderBottomLeftRadius: 7,

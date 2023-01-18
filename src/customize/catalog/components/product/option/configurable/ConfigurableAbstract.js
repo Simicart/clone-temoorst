@@ -24,9 +24,10 @@ class ConfigurableAbstract extends OptionAbstract {
             this.current_selected[id] = value;
             this.refreshOptionWhenSelected(id, value);
             this.updatePrices();
-            this.setState(previousState => {
-                return { is_checked: !previousState.is_checked };
-            });
+            // this.setState(previousState => {
+            //     return { is_checked: !previousState.is_checked };
+            // });
+            this.state.is_checked = !this.state.is_checked;
         }
     }
     updateCanSelect(id, value) {
@@ -103,9 +104,9 @@ class ConfigurableAbstract extends OptionAbstract {
 
             let element = (
                 <View key={Identify.makeid()}>
-                    <View>
+                    {/* <View>
                         <Text style={{ fontFamily: material.fontBold, marginLeft: 10, marginTop: 10 }}>{Identify.__(attribute.label)} {labelRequired}</Text>
-                    </View>
+                    </View> */}
                     <View className="option-content">
                         <View>
                             {this.renderAttribute(attribute, attribute.id)}

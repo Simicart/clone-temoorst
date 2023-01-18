@@ -25,7 +25,6 @@ const ModalComponent = (props) => {
     }, [props.sortTags]);
     const handlerFilter = () => {
         let params = [];
-        console.log("selectedList: ", selectedList);
         if (selectedList && selectedList.length > 0) {
             for (let i = 0; i < selectedList.length; i++) {
                 let item = selectedList[i];
@@ -40,17 +39,13 @@ const ModalComponent = (props) => {
                     params['order'] = selectedSortList.key;
                 }
             }
-            console.log("selectedSortList: ", selectedSortList)
-            console.log("params : ", params);
             props.onFilterAction(params);
             props.onFilterTags(selectedList);
         }else {
             if (selectedSortList ) {
-                console.log("selectedSortList trong else if: ", selectedSortList)
                 params['dir'] = selectedSortList.direction;
                 params['order'] = selectedSortList.key;
             }
-            console.log("params : ", params);
             // params['dir'] = selectedSortList.direction;
             // params['order'] = selectedSortList.key;
             props.onFilterAction(params);

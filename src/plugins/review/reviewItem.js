@@ -11,7 +11,7 @@ class ReviewItem extends SimiComponent{
     render(){
         return(
             <View
-                style={{marginEnd: 12, width: '90%'}}
+                style={{marginEnd: 12, width: '88%'}}
             >
                 <StarRating maxStars={5}
                             rating={this.dataReview.rate_points}
