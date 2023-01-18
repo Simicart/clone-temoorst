@@ -42,7 +42,7 @@ export default StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         borderWidth: 1,
-        borderColor: 'white'
+        borderColor: 'white',
     },
     cardContainer: {
         flex: 1,

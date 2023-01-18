@@ -173,6 +173,12 @@ import Identify from '@helper/Identify';
 import { listBottomButtons } from '@customize/bottomMenu';
 import { connect } from 'react-redux';
 const RightHeader = (props) => {
+    // React.useEffect(() => {
+    //     console.log(1)
+    //     if(props.navigation.state.routeName === "ProductDetail"){
+    //         {renderQty()}
+    //     }
+    // }, [props])
 
     function renderQty() {
         let qtyStyle = { position: 'absolute', right: -5, top: 0, height: 20, paddingBottom: 2 }
@@ -181,7 +187,7 @@ const RightHeader = (props) => {
             <TouchableHighlight style={qtyStyle}
                 onPress={() => { NavigationManager.openPage(props.navigation, 'Cart', {}); }}>
                 <Badge style={{ height: 20, alignItems: "center", justifyContent: 'center' }}>
-                    <Text style={textQtyStyle}>{props.parent.props.data.cart_total}</Text>
+                    <Text style={textQtyStyle}>{props.data.cart_total}</Text>
                 </Badge>
             </TouchableHighlight>
         ) : null;
@@ -329,6 +335,7 @@ export const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         bottomAction: state.redux_data.bottomAction,
+        data: state.redux_data.quoteitems,
     };
 }
 

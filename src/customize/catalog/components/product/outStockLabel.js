@@ -28,7 +28,7 @@ const OutStockLabel = (props) => {
             }
         }
         return item;
-    } else return <Text style={[styles.outOfStock, Identify.isRtl() ? { left: 0 } : { right: 0 }, props.fontSize ? { fontSize: props.fontSize } : {}]}>{Identify.__('Out of stock')}</Text>
+    } else return <Text style={[styles.outOfStock, { right: 0 }, props.fontSize ? { fontSize: props.fontSize } : {}]}>{Identify.__('Out of stock')}</Text>
 }
 
 export default OutStockLabel;

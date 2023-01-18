@@ -103,7 +103,7 @@ class AddToCart extends SimiComponent {
         return (
             <View style={styles.addToCart}>
                 <Quantity onRef={ref => (this.qty = ref)} />
-                <Button full style={{ borderTopRightRadius: 7, borderBottomRightRadius: 7, width: '60%', marginTop: 10 }} onPress={() => { this.onClickAddToCart() }}>
+                <Button full style={{ borderTopRightRadius: 7, borderBottomRightRadius: 7, width: '55%', marginTop: 10 }} onPress={() => { this.onClickAddToCart() }}>
                     <Text>{Identify.__('Add To Cart')}</Text>
                 </Button>
             </View>

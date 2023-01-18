@@ -9,9 +9,13 @@ import CheckboxInput from '@base/components/form/CheckBoxInput'
 import Identify from '@helper/Identify';
 import { ScrollView, TouchableOpacity, View, Text, Modal, Keyboard, Dimensions, KeyboardAvoidingView } from 'react-native';
 import { Icon, Left, Button } from 'native-base';
-import { Platform } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Platform, NativeModules, LayoutAnimation } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const height = Dimensions.get('window').height;
+const {UIManager} = NativeModules;
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export default class CustomerForm extends SimiComponent {
 
@@ -24,15 +28,27 @@ export default class CustomerForm extends SimiComponent {
         this.address_option = json.storeview.customer.address_option;
         this.account_option = json.storeview.customer.account_option;
         this.gender_value = json.storeview.customer.address_option.gender_value;
-
         this.social_login = false;
         if (this.data && this.data.social_login === true) {
             this.social_login = true;
         }
+        this.modalHeight = 470;
         this.state = {
             buttonColor: Identify.theme.app_background,
             modalVisible: false,
+            modalHeight: 470,
         }
+    }
+
+    setModalHeight = (value) => {
+        LayoutAnimation.configureNext(
+            LayoutAnimation.create(
+              200,
+              'linear', 
+              'opacity',
+            ),
+          );
+        this.setState({modalHeight: value})
     }
 
     componentDidMount() {
@@ -144,7 +160,7 @@ export default class CustomerForm extends SimiComponent {
                     }}
                     onPressIn={() => this.setState({ buttonColor: Identify.theme.button_background })}
                     onPressOut={() => this.setState({ buttonColor: Identify.theme.app_background })}
-                    onPress={() => this.setModalVisible(true)}>
+                    onPress={() => [this.setModalHeight(470) ,this.setModalVisible(true)]}>
                     <Text style={{ fontSize: 16, marginHorizontal: 3 }}>{Identify.__('Change Password')}</Text>
                     <Icon type='Feather' name={Identify.isRtl() ? 'chevron-left' : 'chevron-right'} stype={{ color: Identify.theme.icon_color }}></Icon>
                 </TouchableOpacity>
@@ -160,23 +176,18 @@ export default class CustomerForm extends SimiComponent {
                     visible={this.state.modalVisible}
                     animationType='slide'
                     transparent={true}
-                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', }}
-                >
-
-                    <View
+                    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', }}>
+                    <TouchableOpacity
                         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' }}
                         activeOpacity={1}
-                    // onPress={() => this.setModalVisible(false)}
-                    >
+                        onPress={() => this.setModalVisible(false)}>
 
                         {/* <KeyboardAvoidingView
                             behavior={Platform.OS === "ios" ? "padding" : "height"}
                             style={{ height: 0.6 * height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15, paddingHorizontal: 15 }}
                         > */}
-
-
                         <View
-                            style={{ height: 0.7 * height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15, paddingHorizontal: 15 }}
+                            style={{ height: this.state.modalHeight, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15, paddingHorizontal: 15 }}
                             activeOpacity={1}>
                             <View
                                 style={{
@@ -195,6 +206,13 @@ export default class CustomerForm extends SimiComponent {
                                 </TouchableOpacity>
                             </View>
                             <KeyboardAwareScrollView
+                                style={{ flex: 1 }}
+                                // enableResetScrollToCoords={true}
+                                enableAutomaticScroll={false}
+                                keyboardOpeningTime={0.5}
+                                keyboardShouldPersistTaps='never'
+                                keyboardDismissMode="interactive"
+                                // extraScrollHeight={20}
                             // behavior={Platform.OS === "ios" ? "padding" : "height"}
                             // style={{ flex: 1 }}
                             >
@@ -214,10 +232,7 @@ export default class CustomerForm extends SimiComponent {
                         </View>
 
                         {/* </KeyboardAvoidingView> */}
-                    </View>
-
-
-
+                    </TouchableOpacity>
                 </Modal>
             )
         }
@@ -312,6 +327,8 @@ export default class CustomerForm extends SimiComponent {
                             inputValue={inputValue}
                             inputTitle={inputTitle}
                             required={required}
+                            modalHeight={this.modalHeight}
+                            setModalHeight={this.setModalHeight}
                             parent={this}
                             disabled={this.isEditProfile && inputKey === 'email' ? true : false} />
                     );
@@ -325,15 +342,11 @@ export default class CustomerForm extends SimiComponent {
 
     renderPhoneLayout() {
         return (
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={{ flex: 1 }}
-            >
+
                 <SimiForm fields={this.createFields()}
                     parent={this}
                     onRef={ref => (this.form = ref)}
                     initData={this.initData} />
-            </KeyboardAvoidingView>
         );
     }
 

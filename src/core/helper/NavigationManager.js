@@ -26,7 +26,6 @@ export default class NavigationManager {
         if (navigation == null) {
             navigation = this.savedNavigation
         }
-        console.log("pushAction: ", pushAction);
         navigation.dispatch(pushAction);
     }
 

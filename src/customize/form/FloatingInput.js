@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseInput from './BaseInput';
+import { LayoutAnimation } from 'react-native';
 import { Item, Input, Label, Icon, View, Text } from 'native-base';
 import Identify from '@helper/Identify';
 import material from '@theme/variables/material';
@@ -9,6 +10,8 @@ export default class FloatingInput extends BaseInput {
 
     constructor(props) {
         super(props);
+        this.isSubmit = false;
+        this.height = null;
     }
    
     addWarningIcon = () => {
@@ -47,6 +50,7 @@ export default class FloatingInput extends BaseInput {
     }
 
     createInputLayout() {
+        console.log(this.height);
         return (
             <View style={{ flexDirection: 'column', marginBottom: 10, paddingBottom: 10 }}>
                 <Text style={{ alignSelf: 'flex-start' , marginStart: 3, paddingBottom: 8 }}>
@@ -60,7 +64,7 @@ export default class FloatingInput extends BaseInput {
                         style={{ flexGrow: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center',  }}>
                         <Input
                             ref={(input) => { this.props.parent.listRefs[this.inputKey] = input }}
-                            onSubmitEditing={() => { this.submitEditing() }}
+                            onSubmitEditing={() => { [this.submitEditing(), this.isSubmit = true] }}
                             returnKeyType={"done"}
                             disabled={this.disabled}
                             keyboardType={this.keyboardType}
@@ -71,6 +75,23 @@ export default class FloatingInput extends BaseInput {
                             secureTextEntry={this.inputType === 'password' ? true : false}
                             onChangeText={(text) => {
                                 this.onInputValueChange(text);
+                            }}
+                            onFocus={() => {
+                                if(this.props.inputKey == 'new_password') {
+                                    this.props.setModalHeight(530)
+                                }
+                                else if(this.props.inputKey == 'com_password') {
+                                    this.props.setModalHeight(630)
+                                }
+                                else {
+                                    this.props.setModalHeight(470)
+                                }
+                            }}
+                            onBlur={() => {
+                                if((this.props.inputKey == 'new_password' && !this.isSubmit) || this.props.inputKey == 'com_password') {
+                                    this.props.setModalHeight(470)
+                                }
+                                if(this.props.inputKey == 'new_password') this.isSubmit = false;
                             }}
                             style={[
                                 this.disabled ? { color: 'gray', 

@@ -64,7 +64,6 @@ class ProductList extends SimiPageComponent {
     //   params['dir'] = this.props.sortTags[0].direction;
     //   params['order'] = this.props.sortTags[0].key;
     // }
-    console.log("params: ", params);
     if (this.cateId != -1) {
       params['filter[cat_id]'] = this.cateId;
     }

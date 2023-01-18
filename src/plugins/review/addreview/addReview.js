@@ -1,7 +1,7 @@
 import React from 'react';
 import SimiPageComponent from "@base/components/SimiPageComponent";
 import { Text, Content, Container, View, Input, Button, Textarea, Toast, Icon } from 'native-base';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import Identify from "@helper/Identify";
 import NewConnection from '@base/network/NewConnection'
 import NavigationManager from "@helper/NavigationManager";
@@ -138,11 +138,13 @@ class addReview extends SimiPageComponent {
         return (
             <Container>
                 <Content style={[{ padding: 12 }, Identify.isRtl() ? { marginLeft: 12 } : {}]}>
-                    <View style={{ paddingBottom: 30 }}>
-                        <Text style={{ marginBottom: 12 }}>{Identify.__('HOW DO YOU RATE THIS PRODUCT?')}</Text>
-                        {this.renderRateSection()}
-                        {this.renderInputFrom()}
-                    </View>
+                    <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={40}>
+                        <View style={{ paddingBottom: 30 }}>
+                            <Text style={{ marginBottom: 12 }}>{Identify.__('HOW DO YOU RATE THIS PRODUCT?')}</Text>
+                            {this.renderRateSection()}
+                            {this.renderInputFrom()}
+                        </View>
+                    </KeyboardAvoidingView>
                 </Content>
             </Container>
         )
