@@ -1,10 +1,13 @@
 import React from 'react';
 import BaseInput from './BaseInput';
-import { LayoutAnimation } from 'react-native';
+import { LayoutAnimation, Platform, Keyboard, Dimensions } from 'react-native';
 import { Item, Input, Label, Icon, View, Text } from 'native-base';
 import Identify from '@helper/Identify';
 import material from '@theme/variables/material';
 import styles from './styles';
+
+const platform = Platform.OS;
+const {height} = Dimensions.get('window');
 
 export default class FloatingInput extends BaseInput {
 
@@ -12,8 +15,32 @@ export default class FloatingInput extends BaseInput {
         super(props);
         this.isSubmit = false;
         this.height = null;
+        this.state={
+            height: 470,
+        }
     }
    
+    componentWillMount() {
+        if(platform === 'ios'){
+            this.keyboardWillShowListener = Keyboard.addListener(
+                "keyboardWillShow",
+                this.keyboardWillShow.bind(this)
+            );
+    
+            this.keyboardWillHideListener = Keyboard.addListener(
+                "keyboardWillHide",
+                this.keyboardWillHide.bind(this)
+            );
+        }
+    }
+    
+    keyboardWillShow(e) {
+        this.props.setModalHeight(height*0.9)
+    }
+    keyboardWillHide(e) {
+        this.props.setModalHeight(470)
+    }
+
     addWarningIcon = () => {
         if (this.state.success === true) {
             return (<Icon style={{ fontSize: 22, marginLeft: Identify.isRtl() ? 10 : 0}} name={'ios-checkmark-circle'} />)
@@ -50,7 +77,6 @@ export default class FloatingInput extends BaseInput {
     }
 
     createInputLayout() {
-        console.log(this.height);
         return (
             <View style={{ flexDirection: 'column', marginBottom: 10, paddingBottom: 10 }}>
                 <Text style={{ alignSelf: 'flex-start' , marginStart: 3, paddingBottom: 8 }}>
@@ -64,7 +90,7 @@ export default class FloatingInput extends BaseInput {
                         style={{ flexGrow: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center',  }}>
                         <Input
                             ref={(input) => { this.props.parent.listRefs[this.inputKey] = input }}
-                            onSubmitEditing={() => { [this.submitEditing(), this.isSubmit = true] }}
+                            onSubmitEditing={() => { [this.submitEditing(), this.isSubmit = true, platform === 'ios' ? this.props.setModalHeight(470) : null] }}
                             returnKeyType={"done"}
                             disabled={this.disabled}
                             keyboardType={this.keyboardType}
@@ -77,21 +103,29 @@ export default class FloatingInput extends BaseInput {
                                 this.onInputValueChange(text);
                             }}
                             onFocus={() => {
-                                if(this.props.inputKey == 'new_password') {
-                                    this.props.setModalHeight(530)
+                                if(platform == 'android'){
+                                    if(this.props.inputKey == 'new_password') {
+                                        this.props.setModalHeight(530)
+                                    }
+                                    else if(this.props.inputKey == 'com_password') {
+                                        this.props.setModalHeight(630)
+                                    }
+                                    else {
+                                        this.props.setModalHeight(470)
+                                    }
                                 }
-                                else if(this.props.inputKey == 'com_password') {
-                                    this.props.setModalHeight(630)
-                                }
-                                else {
-                                    this.props.setModalHeight(470)
+                                else if(this.props.inputKey == 'com_password' || this.props.inputKey == 'password' || this.props.inputKey == 'new_password'){
+                                    this.props.setModalHeight(height*0.9)
                                 }
                             }}
                             onBlur={() => {
-                                if((this.props.inputKey == 'new_password' && !this.isSubmit) || this.props.inputKey == 'com_password') {
-                                    this.props.setModalHeight(470)
+                                if(platform === 'android'){
+                                    if((this.props.inputKey == 'new_password' && !this.isSubmit) || this.props.inputKey == 'com_password') {
+                                        this.props.setModalHeight(470)
+                                    }
+                                    if(this.props.inputKey == 'new_password') this.isSubmit = false;
                                 }
-                                if(this.props.inputKey == 'new_password') this.isSubmit = false;
+                                // else this.props.setModalHeight(470)
                             }}
                             style={[
                                 this.disabled ? { color: 'gray', 

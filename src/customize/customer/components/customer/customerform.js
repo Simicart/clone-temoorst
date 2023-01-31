@@ -186,7 +186,7 @@ export default class CustomerForm extends SimiComponent {
                             behavior={Platform.OS === "ios" ? "padding" : "height"}
                             style={{ height: 0.6 * height, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15, paddingHorizontal: 15 }}
                         > */}
-                        <View
+                        <TouchableOpacity
                             style={{ height: this.state.modalHeight, width: '100%', backgroundColor: Identify.theme.app_background, borderRadius: 15, paddingHorizontal: 15 }}
                             activeOpacity={1}>
                             <View
@@ -229,7 +229,7 @@ export default class CustomerForm extends SimiComponent {
                                 </Button>
                             </KeyboardAwareScrollView>
 
-                        </View>
+                        </TouchableOpacity>
 
                         {/* </KeyboardAvoidingView> */}
                     </TouchableOpacity>
