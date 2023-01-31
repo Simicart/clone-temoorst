@@ -25,7 +25,12 @@ export default class BaseInput extends React.Component {
         if (indexRef + 1 === Object.keys(this.props.parent.listRefs).length) {
             Keyboard.dismiss();
         } else {
-            nextRefContent._root.focus();
+            if(this.props.parent.props.parent.isEditProfile && (this.inputKey == 'password' || this.inputKey == 'new_password')) Keyboard.dismiss();
+            else {
+                setTimeout(function(){
+                    nextRefContent._root.focus();
+                }, 150)
+            }
         }
     }
 
