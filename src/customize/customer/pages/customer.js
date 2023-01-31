@@ -218,8 +218,7 @@ class CustomerPage extends SimiPageComponent {
                 <KeyboardAwareScrollView
                     style={{flex: 1}}
                     enableAutomaticScroll={this.isEditProfile ? false : true}
-                    keyboardDismissMode="interactive"
-                    keyboardShouldPersistTaps="always">
+                    keyboardDismissMode="interactive">
                 {/* <Content> */}
                     <View style={{ flex: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 30, paddingBottom: 70 }}>
                         {this.renderLayoutFromConfig('customer_layout', 'content')}

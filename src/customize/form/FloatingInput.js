@@ -14,7 +14,7 @@ export default class FloatingInput extends BaseInput {
     constructor(props) {
         super(props);
         this.isSubmit = false;
-        this.height = null;
+        this.keyboardHeight = null;
         this.state={
             height: 470,
         }
@@ -35,7 +35,8 @@ export default class FloatingInput extends BaseInput {
     }
     
     keyboardWillShow(e) {
-        this.props.setModalHeight(height*0.9)
+        this.keyboardHeight = parseInt(e.endCoordinates.height);
+        this.props.setModalHeight(this.keyboardHeight + 450)
     }
     keyboardWillHide(e) {
         this.props.setModalHeight(470)
@@ -115,7 +116,7 @@ export default class FloatingInput extends BaseInput {
                                     }
                                 }
                                 else if(this.props.inputKey == 'com_password' || this.props.inputKey == 'password' || this.props.inputKey == 'new_password'){
-                                    this.props.setModalHeight(height*0.9)
+                                    this.keyboardHeight ? this.props.setModalHeight(this.keyboardHeight + 450) : null
                                 }
                             }}
                             onBlur={() => {
@@ -126,6 +127,7 @@ export default class FloatingInput extends BaseInput {
                                     if(this.props.inputKey == 'new_password') this.isSubmit = false;
                                 }
                                 // else this.props.setModalHeight(470)
+                                Keyboard.dismiss()
                             }}
                             style={[
                                 this.disabled ? { color: 'gray', 
