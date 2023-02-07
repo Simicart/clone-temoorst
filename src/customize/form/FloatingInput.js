@@ -16,12 +16,13 @@ export default class FloatingInput extends BaseInput {
         this.isSubmit = false;
         this.keyboardHeight = null;
         this.state={
+            ...this.state,
             height: 470,
         }
     }
    
     componentWillMount() {
-        if(platform === 'ios'){
+        if(platform === 'ios' && this.props.isEditProfile && (this.props.inputKey == 'com_password' || this.props.inputKey == 'password' || this.props.inputKey == 'new_password')){
             this.keyboardWillShowListener = Keyboard.addListener(
                 "keyboardWillShow",
                 this.keyboardWillShow.bind(this)
@@ -91,12 +92,12 @@ export default class FloatingInput extends BaseInput {
                         style={{ flexGrow: 1, flexDirection: 'row', alignContent: 'center', justifyContent: 'center',  }}>
                         <Input
                             ref={(input) => { this.props.parent.listRefs[this.inputKey] = input }}
-                            onSubmitEditing={() => { [this.submitEditing(), this.isSubmit = true, platform === 'ios' ? this.props.setModalHeight(470) : null] }}
+                            onSubmitEditing={() => { [this.submitEditing(), this.isSubmit = true, platform === 'ios' ? ((this.props.isEditProfile && (this.props.inputKey == 'com_password' || this.props.inputKey == 'password' || this.props.inputKey == 'new_password'))? this.props.setModalHeight(470) :  null) : null] }}
                             returnKeyType={"done"}
                             disabled={this.disabled}
                             keyboardType={this.keyboardType}
                             textContentType={this.inputType === 'password' ? 'oneTimeCode' : 'none'}
-                            defaultValue={this.state.value}
+                            defaultValue={this.inputType === 'password' ? null : this.state.value}
                             placeholder={'Please enter your ' + this.inputTitle.toLowerCase()}
                             clearButtonMode={'while-editing'}
                             secureTextEntry={this.inputType === 'password' ? true : false}
@@ -104,7 +105,7 @@ export default class FloatingInput extends BaseInput {
                                 this.onInputValueChange(text);
                             }}
                             onFocus={() => {
-                                if(platform == 'android'){
+                                if(platform == 'android' && this.props.isEditProfile){
                                     if(this.props.inputKey == 'new_password') {
                                         this.props.setModalHeight(530)
                                     }
@@ -115,19 +116,20 @@ export default class FloatingInput extends BaseInput {
                                         this.props.setModalHeight(470)
                                     }
                                 }
-                                else if(this.props.inputKey == 'com_password' || this.props.inputKey == 'password' || this.props.inputKey == 'new_password'){
+                                else if(this.props.isEditProfile && (this.props.inputKey == 'com_password' || this.props.inputKey == 'password' || this.props.inputKey == 'new_password')){
                                     this.keyboardHeight ? this.props.setModalHeight(this.keyboardHeight + 450) : null
                                 }
                             }}
                             onBlur={() => {
-                                if(platform === 'android'){
+                                if(platform === 'android' && this.props.isEditProfile){
                                     if((this.props.inputKey == 'new_password' && !this.isSubmit) || this.props.inputKey == 'com_password') {
                                         this.props.setModalHeight(470)
                                     }
                                     if(this.props.inputKey == 'new_password') this.isSubmit = false;
                                 }
-                                // else this.props.setModalHeight(470)
-                                Keyboard.dismiss()
+                                // else {
+                                //     Keyboard.dismiss();
+                                // }
                             }}
                             style={[
                                 this.disabled ? { color: 'gray', 

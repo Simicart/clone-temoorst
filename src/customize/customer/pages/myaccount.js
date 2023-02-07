@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Content, Icon } from 'native-base';
+import { Container, Content, Icon, Toast } from 'native-base';
 import Connection from '@base/network/Connection';
 import NewConnection from '@base/network/NewConnection';
 import NavigationManager from '@helper/NavigationManager';
 import AppStorage from '@helper/storage';
-import { customer_logout, address_book_mode, quoteitems } from '@helper/constants';
+import { customer_logout, address_book_mode, quoteitems, customer_deactivate } from '@helper/constants';
 import SimiPageComponent from '@base/components/SimiPageComponent';
 import variable from '@theme/variables/material';
 import Identify from '@helper/Identify';
 import Events from '@helper/config/events';
-import { Modal, Text, View, TouchableOpacity } from 'react-native'
+import { Modal, Text, View, TouchableOpacity , Alert} from 'react-native'
 
 class MyAccountPage extends SimiPageComponent {
 
@@ -55,6 +55,27 @@ class MyAccountPage extends SimiPageComponent {
     
             NavigationManager.backToRootPage(this.props.navigation);
             this.dispatchLogout();
+        } else if(requestID == 'customer_deactivate'){
+            this.props.storeData('actions', [
+                { type: 'showLoading', data: { type: 'none' } },
+                { type: 'clear_all_data', data: null },
+            ]);
+            Identify.setCustomerData(null);
+            Identify.setCustomerParams(null);
+            Connection.setCustomer(null);
+            AppStorage.removeAutologinInfo();
+            AppStorage.removeData(['credit_card']);
+            AppStorage.saveData('quote_id', '');
+
+            // this.getQuoteItems();
+
+            NavigationManager.backToRootPage(this.props.navigation);
+            this.dispatchLogout();
+            Toast.show({
+                text: Identify.__(data.message),
+                type: 'success',
+                duration: 3000,
+            })
         } else {
             if (data.quote_id && data.quote_id != null && data.quote_id != '') {
                 AppStorage.saveData('quote_id', data.quote_id);
@@ -119,10 +140,31 @@ class MyAccountPage extends SimiPageComponent {
         return true;
     }
 
+    deleteAccount () {
+        Alert.alert(
+            Identify.__('Are you sure to delete this account?'),
+            Identify.__('Deleting this account will clear all data and this action cannot be done.'),
+            [
+                { text: Identify.__('Cancel'), onPress: () => { style: 'cancel' }},
+                { text: Identify.__('Delete'), onPress: () => {
+                    try {
+                        this.props.storeData('showLoading', { type: 'dialog' });
+                        new NewConnection()
+                            .init(customer_deactivate, 'customer_deactivate', this)
+                            .connect();
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                } },
+            ],
+            { cancelable: true }
+        );
+    }
+
     renderPhoneLayout() {
         return (
-            <Container style={{ paddingLeft: 15, paddingRight: 15, backgroundColor: variable.appBackground }}>
-                <Content style={{ flex: 1, paddingTop: 15 }}>
+            <Container style={{ backgroundColor: variable.appBackground }}>
+                <Content style={{ flex: 1, paddingTop: 15, paddingLeft: 15, paddingRight: 15 }}>
                     {this.renderLayoutFromConfig('myaccount_layout', 'content')}
                 </Content>
                 {this.renderLayoutFromConfig('myaccount_layout', 'container')}
