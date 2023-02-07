@@ -2,7 +2,11 @@ import Identify from '@helper/Identify';
 
 export default {
     container: {
-        
+        default_delete_button: {
+            active: true,
+            sort_order: 1000,
+            content: require('../../../core/screens/customer/components/customer/deletebutton').default
+        },
     },
     content: {
         default_profile: {

@@ -4,6 +4,7 @@ export const homes_lite = 'simiconnector/rest/v2/homes/lite';
 export const home_spot_products = 'simiconnector/rest/v2/homeproductlists';
 export const category = 'simiconnector/rest/v2/categories';
 export const products = 'simiconnector/rest/v2/products';
+export const customer_deactivate = 'simiconnector/rest/v2/customers/deactivate';
 export const customer_login = 'simiconnector/rest/v2/customers/login';
 export const customer_logout = 'simiconnector/rest/v2/customers/logout';
 export const customers = 'simiconnector/rest/v2/customers';
